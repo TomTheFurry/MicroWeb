@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Game</title>
-    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="./main.css" />
+    <script type="text/javascript" src="./w3c-includeHTML.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="./svg/icon/icon.svg">
 </head>
 <body>
     <div id="main-box">
@@ -45,37 +48,23 @@
         <div id="continue-button" class="ctrl-console console">
             <div class="ctrl-button frame button">
                 <div>
-                    <svg viewBox="2 1 40 35">
-                        <style type="text/css">
-                            .st0 {
-                                fill: #898989;
-                            }
-                        </style>
-                        <path class="st0" d="M10.4,11.99l0,18.53c0,2.18,2.36,3.54,4.25,2.45l16.05-9.27c1.89-1.09,1.89-3.82,0-4.91L14.65,9.54
-                    C12.76,8.45,10.4,9.81,10.4,11.99z" />
-                    </svg>
+                    <div w3-include-html="./svg/icon/start.svg"></div>
                 </div>
             </div>
             <div id="leave-button" class="ctrl-button frame button">
                 <div>
-                    <svg viewBox="2 1 40 35">
-                        <style type="text/css">
-                            .st0 {
-                                fill: #898989;
-                            }
-                        </style>
-                        <g>
-                            <g>
-                                <path class="st0" d="M30.54,6.97l-12.46,1.5c-0.35,0.04-0.62,0.38-0.62,0.79v7.41h-6.76v8.4h6.76v9.69c0,0.63,0.6,1,1.06,0.67
-                            l12.46-9.05c0.2-0.15,0.32-0.4,0.32-0.67V7.76C31.31,7.29,30.95,6.92,30.54,6.97z M19.11,27.06v-3h-7.4v-6.4h7.4v-3l6.2,6.2
-                            L19.11,27.06z M28.56,15.69c-0.86,0-1.56-0.7-1.56-1.56c0-0.86,0.7-1.56,1.56-1.56c0.86,0,1.56,0.7,1.56,1.56
-                            C30.12,15,29.42,15.69,28.56,15.69z" />
-                            </g>
-                        </g>
-                    </svg>
+                    <div w3-include-html="./svg/icon/exit.svg"></div>
                 </div>
             </div>
         </div>
+
+
     </div>
+
+
+    <!-- script -->
+    <script>
+        includeHTML();
+    </script>
 </body>
 </html>

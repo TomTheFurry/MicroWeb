@@ -12,6 +12,10 @@ html, body, #main-box {
     justify-content: center;
 }
 
+.st0 {
+    fill: #898989;
+}
+
 #main-box {
     width: auto;
 }
@@ -20,7 +24,7 @@ html, body, #main-box {
     border: 8px solid #898989;
     border-radius: 15px;
     background-color: #898989;
-    transition: 0.15s;
+    transition: 50ms;
 }
 
     .frame > div {
