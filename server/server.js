@@ -11,15 +11,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const http = require("http");
 const fs = require("fs");
-const port = process.env.port || 1337;
+const port = process.env.port || 80;
 const baseWebDir = "../ia";
-const blacklist = ["/script/game.ts"];
+const blacklist = ["/script/game.js"];
 http.createServer((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
-    let loc = (_a = req.url) !== null && _a !== void 0 ? _a : "/main.html";
-    if (loc.endsWith('/') || loc.endsWith('\\'))
-        loc += "main.html";
-    let fileDir = baseWebDir + loc; //TODO: Prevent '..' excape
+    let loc = req.url;
+    if (loc == null) {
+        console.log("bad request");
+        res.writeHead(400, "bad request");
+        res.end();
+        return;
+    }
+    if (loc == "/") {
+        console.log("root redirect");
+        res.writeHead(301, { "Location": "/index.html" });
+        res.end();
+        return;
+    }
+    if (loc.includes("..")) { // Prevent '..' excape
+        console.log("Invalid loc: Contains '..'");
+        res.writeHead(404);
+        res.end();
+        return;
+    }
+    let fileDir = baseWebDir + loc;
     console.log("File request on " + fileDir);
     let type = null;
     if (loc.endsWith(".css"))
@@ -28,9 +43,11 @@ http.createServer((req, res) => __awaiter(void 0, void 0, void 0, function* () {
         type = 'application/javascript';
     if (loc.endsWith(".html"))
         type = 'text/html';
+    if (loc.endsWith(".svg"))
+        type = 'text/plain';
     if (type == null) {
-        console.log("Responded with 400");
-        res.writeHead(400);
+        console.log("Responded with 404");
+        res.writeHead(404);
         res.end();
         return;
     }

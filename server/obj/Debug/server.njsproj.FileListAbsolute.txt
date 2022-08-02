@@ -1,3 +1,0 @@
-C:\Users\a1\Desktop\New folder\MicroWeb\server\obj\Debug\server.njsproj.AssemblyReference.cache
-C:\Users\a1\Desktop\New folder\MicroWeb\server\obj\Debug\server.njsproj.CoreCompileInputs.cache
-C:\Users\a1\Desktop\New folder\MicroWeb\server\bin\Microsoft.NodejsTools.WebRole.dll
