@@ -1,6 +1,6 @@
 var time = 60.0;
 const timerCount = 50;
-const timeFrame = document.getElementById('time-frame');
+const timeBox = document.getElementById('time-frame').children[0];
 
 function startTimer() {
 	time = 60.0;
@@ -9,7 +9,7 @@ function startTimer() {
 
 function timer() {
 	time -= timerCount / 1000.0;
-	timeFrame.children[0].innerHTML = Math.ceil(time);
+	timeBox.innerHTML = Math.ceil(time);
 
 	if (time > 0.0) {
 		setTimeout(timer, timerCount);
