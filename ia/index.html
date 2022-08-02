@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Game</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script type="text/javascript" src="./w3c-includeHTML.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="./svg/icon/icon.svg">
+</head>
+<body>
+    <div id="main-box">
+        <div class="top-console console">
+            <div id="time-frame" class="ctrl-button frame">
+                <div class="noselect">
+                    60
+                </div>
+            </div>
+
+            <div class="icon-bar frame">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+
+        <div class="game-box frame button">
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+            <div class="game-button"></div>
+        </div>
+
+        <div id="continue-button" class="ctrl-console console">
+            <div class="ctrl-button frame button">
+                <div>
+                    <div w3-include-html="./svg/icon/start.svg"></div>
+                </div>
+            </div>
+            <div id="leave-button" class="ctrl-button frame button">
+                <div>
+                    <div w3-include-html="./svg/icon/exit.svg"></div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!-- script -->
+    <script type="text/javascript" src="./timer.js"></script>
+    <script>
+        includeHTML();
+        startTimer();
+    </script>
+</body>
+</html>
