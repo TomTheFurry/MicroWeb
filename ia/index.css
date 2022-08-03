@@ -20,20 +20,26 @@ html, body, #main-box {
     width: auto;
 }
 
-.noselect {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
 .frame {
     border: 8px solid #898989;
     border-radius: 15px;
     background-color: #898989;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: 50ms;
 }
+
+    .frame * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        font-family: sans-serif;
+        font-size: 36px;
+        font-weight: bold;
+    }
 
     .frame > div {
         border-radius: 10px;
@@ -42,12 +48,6 @@ html, body, #main-box {
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .frame > div {
-        font-family: sans-serif;
-        font-size: 32px;
-        font-weight: bold;
     }
 
 .button > div:hover {
@@ -99,7 +99,9 @@ body > div {
     }
 
     .ctrl-button.button > div:active {
-        box-shadow: -2px 3px 0px #000;
+        box-shadow: 0px 0px 13px #555a;
+        width: 62px;
+        height: 62px;
     }
 
 .icon-bar {
@@ -116,27 +118,309 @@ body > div {
         height: 100%;
     }
 
-.ctrl-console {
-    margin-top: 60px;
-    transition: 0.15s;
-}
-
-.top-console {
-    margin-bottom: 60px;
-    transition: 0.15s;
-}
-
 .console {
     width: 100%;
     display: flex;
     flex-flow: row;
     justify-content: space-between;
+    transition: 0.15s;
+}
+
+    .console:first-child {
+        margin-bottom: 60px;
+    }
+
+    .console:last-child {
+        margin-top: 60px;
+    }
+
+/*timer*/
+clock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+    clock:before {
+        content: "60";
+        animation: 60s 1s forwards timer_countdown, 1s 0.875s 60 timer_beat;
+    }
+
+@keyframes timer_beat {
+    40%, 80% {
+        transform: none;
+    }
+
+    50% {
+        transform: scale(1.125);
+    }
+}
+
+@keyframes timer_countdown {
+    0% {
+        content: "60";
+    }
+
+    1.66667% {
+        content: "59";
+    }
+
+    3.33333% {
+        content: "58";
+    }
+
+    5% {
+        content: "57";
+    }
+
+    6.66667% {
+        content: "56";
+    }
+
+    8.33333% {
+        content: "55";
+    }
+
+    10% {
+        content: "54";
+    }
+
+    11.66667% {
+        content: "53";
+    }
+
+    13.33333% {
+        content: "52";
+    }
+
+    15% {
+        content: "51";
+    }
+
+    16.66667% {
+        content: "50";
+    }
+
+    18.33333% {
+        content: "49";
+    }
+
+    20% {
+        content: "48";
+    }
+
+    21.66667% {
+        content: "47";
+    }
+
+    23.33333% {
+        content: "46";
+    }
+
+    25% {
+        content: "45";
+    }
+
+    26.66667% {
+        content: "44";
+    }
+
+    28.33333% {
+        content: "43";
+    }
+
+    30% {
+        content: "42";
+    }
+
+    31.66667% {
+        content: "41";
+    }
+
+    33.33333% {
+        content: "40";
+    }
+
+    35% {
+        content: "39";
+    }
+
+    36.66667% {
+        content: "38";
+    }
+
+    38.33333% {
+        content: "37";
+    }
+
+    40% {
+        content: "36";
+    }
+
+    41.66667% {
+        content: "35";
+    }
+
+    43.33333% {
+        content: "34";
+    }
+
+    45% {
+        content: "33";
+    }
+
+    46.66667% {
+        content: "32";
+    }
+
+    48.33333% {
+        content: "31";
+    }
+
+    50% {
+        content: "30";
+    }
+
+    51.66667% {
+        content: "29";
+    }
+
+    53.33333% {
+        content: "28";
+    }
+
+    55% {
+        content: "27";
+    }
+
+    56.66667% {
+        content: "26";
+    }
+
+    58.33333% {
+        content: "25";
+    }
+
+    60% {
+        content: "24";
+    }
+
+    61.66667% {
+        content: "23";
+    }
+
+    63.33333% {
+        content: "22";
+    }
+
+    65% {
+        content: "21";
+    }
+
+    66.66667% {
+        content: "20";
+    }
+
+    68.33333% {
+        content: "19";
+    }
+
+    70% {
+        content: "18";
+    }
+
+    71.66667% {
+        content: "17";
+    }
+
+    73.33333% {
+        content: "16";
+    }
+
+    75% {
+        content: "15";
+    }
+
+    76.66667% {
+        content: "14";
+    }
+
+    78.33333% {
+        content: "13";
+    }
+
+    80% {
+        content: "12";
+    }
+
+    81.66667% {
+        content: "11";
+    }
+
+    83.33333% {
+        content: "10";
+    }
+
+    85% {
+        content: "9";
+    }
+
+    86.66667% {
+        content: "8";
+    }
+
+    88.33333% {
+        content: "7";
+    }
+
+    90% {
+        content: "6";
+    }
+
+    91.66667% {
+        content: "5";
+    }
+
+    93.33333% {
+        content: "4";
+    }
+
+    95% {
+        content: "3";
+    }
+
+    96.66667% {
+        content: "2";
+    }
+
+    98.33333% {
+        content: "1";
+    }
+
+    100% {
+        content: "0";
+    }
+}
+
+@keyframes timer_beat {
+    40%, 80% {
+        transform: none;
+    }
+
+    50% {
+        transform: scale(1.125);
+    }
 }
 
 @media only screen and (max-width: 620px) {
     .frame {
         border-width: 7px;
     }
+
+        .frame > div {
+            font-size: 27px;
+        }
 
     .game-box {
         width: 400px;
@@ -149,50 +433,25 @@ body > div {
         height: 48px;
     }
 
+        .ctrl-button.button > div:active {
+            box-shadow: 0px 0px 11px #555a;
+            width: 46px;
+            height: 46px;
+        }
+
     .icon-bar {
         max-width: 270px;
         height: 48px;
     }
 
-    .ctrl-console {
-        margin-top: 45px;
-    }
-
-    .top-console {
+    .console:first-child {
         margin-bottom: 45px;
     }
-}
 
-.button1 > div:hover {
-    background-color: #fff;
-}
-
-.ctrl-button1 {
-    width: 64px;
-    height: 64px;
-    position: relative;
-    top: 10%;
-    left: 50%;
-    transform: translate(-50%,-50%)
-}
-
-    .ctrl-button1 > div {
-        width: 100%;
-        height: 100%;
+    .console:last-child {
+        margin-top: 45px;
     }
-
-.frame1 {
-    border: 8px solid #898989;
-    border-radius: 15px;
-    background-color: #898989;
-    transition: 0.15s;
 }
-
-    .frame1 > div {
-        border-radius: 10px;
-        background: #c9caca;
-        margin: 0;
-    }
 
 .center1 {
     display: block;

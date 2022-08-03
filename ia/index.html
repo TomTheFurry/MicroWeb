@@ -7,18 +7,17 @@
     <link rel="stylesheet" href="./index.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://use.typekit.net/iju2lko.css">
-    <script type="text/javascript" src="./w3c-includeHTML.js"></script>
+    <script type="text/javascript" src="./script/w3c-includeHTML.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="./svg/icon/icon.svg">
-    <title>Company</title>
 </head>
 <body>
 
     <div id="main-box">
-        <div class="top-console console">
+        <div class="console">
             <div id="time-frame" class="ctrl-button frame">
-                <div class="noselect">
-                    60
+                <div>
+                    <clock></clock>
                 </div>
             </div>
 
@@ -50,7 +49,7 @@
             <div class="game-button"></div>
         </div>
 
-        <div id="continue-button" class="ctrl-console console">
+        <div id="continue-button" class="console">
             <div class="ctrl-button frame button">
                 <div w3-include-html="./svg/icon/start.svg">
 
@@ -63,25 +62,26 @@
                     </div>
                 </div>
             </a>
-</div>
+        </div>
 
 
     </div>
 
+    <!--<div class="intro">
+        <h1 class="logo-header">
+            <span class="logo">Start</span>
+            <br />
+            <span class="logo">Now</span>
+        </h1>
+        <script src="script/app.js"></script>
+    </div>-->
 
     <!-- script -->
-    <script type="text/javascript" src="./timer.js"></script>
+    <script type="text/javascript" src="./script/timer.js"></script>
     <script>
         includeHTML();
         startTimer();
     </script>
-
-    <div class="intro">
-        <h1 class="logo-header">
-            <span class="logo">Start</span></br><span class="logo">Now</span>
-        </h1>
-        <script src="app.js"></script>
-    </div>
 
 </body>
 </html>
