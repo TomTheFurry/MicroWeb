@@ -1,23 +1,40 @@
 import http = require('http');
 import fs = require('fs');
+import { promisify } from 'util';
 const port = process.env.port || 80
 const baseWebDir = "../ia";
 const blacklist = ["/script/game.js"];
 
 http.createServer(async (req, res) => {
+    if (req.method == "GET") {
 
+
+    }
+
+    if (req.method != "GET") {
+        console.log("bad request: Method isn't 'GET'");
+        res.writeHead(400, "bad request");
+        res.end();
+        return;
+    } else {
+        await webGet(req, res);
+    }
+}).listen(port);
+
+
+
+
+async function webGet(req: http.IncomingMessage, res: http.ServerResponse) {
     let loc: String = req.url;
     if (loc == null) {
-        console.log("bad request");
+        console.log("bad request: No 'url'");
         res.writeHead(400, "bad request");
         res.end();
         return;
     }
     if (loc == "/") {
-        console.log("root redirect");
-        res.writeHead(301, { "Location": "/index.html" });
-        res.end();
-        return;
+        console.log("folder redirection to index.html");
+        loc += "index.html";
     }
 
     if (loc.includes("..")) { // Prevent '..' excape
@@ -27,35 +44,46 @@ http.createServer(async (req, res) => {
         return;
     }
 
-    let fileDir = baseWebDir + loc; 
-    console.log("File request on " + fileDir);
+    let fileDir = baseWebDir + loc;
+    if (await promisify(fs.exists)(fileDir)) {
+        if ((await promisify(fs.lstat)(fileDir)).isDirectory()) {
+            console.log("folder redirection to index.html");
+            loc += "/index.html";
+            fileDir = baseWebDir + loc;
+        }
 
-    let type : string = null;
-    if (loc.endsWith(".css")) type = 'text/css';
-    if (loc.endsWith(".js")) type = 'application/javascript';
-    if (loc.endsWith(".html")) type = 'text/html';
-    if (loc.endsWith(".svg")) type = 'text/plain';
-    
-    if (type == null) {
-        console.log("Responded with 404");
-        res.writeHead(404);
-        res.end();
-        return;
-    }
+        console.log("File request on " + fileDir);
 
-    if (blacklist.findIndex((s) => s == loc.toLowerCase()) != -1) {
-        console.log("Blacklisted! Responding with 404");
-        res.writeHead(404);
-        res.end();
-        return;
-    }
+        let type: string = null;
+        if (loc.endsWith(".css")) type = 'text/css';
+        if (loc.endsWith(".js")) type = 'application/javascript';
+        if (loc.endsWith(".html")) type = 'text/html';
+        if (loc.endsWith(".svg")) type = 'image/svg+xml';
 
-    if (fs.existsSync(fileDir)) {
+        if (type == null) {
+            console.log("File type not on whitelist. Respond with 404");
+            res.writeHead(404);
+            res.end();
+            return;
+        }
+
+        if (blacklist.findIndex((s) => s == loc.toLowerCase()) != -1) {
+            console.log("File blacklisted! Respond with 404");
+            res.writeHead(404);
+            res.end();
+            return;
+        }
         res.writeHead(200, { 'Content-Type': type });
-        res.end(fs.readFileSync(fileDir));
+        res.end(await promisify(fs.readFile)(fileDir));
     } else {
-        console.log("Responded with 404 not found");
+        console.log("Error 404: File request on " + fileDir + " not found.");
         res.writeHead(404);
-        res.end()
+        res.end();
     }
-}).listen(port);
+}
+
+
+async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
+    
+
+}
