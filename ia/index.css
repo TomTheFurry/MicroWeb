@@ -143,8 +143,8 @@ clock {
 }
 
     clock:before {
-        content: "60";
-        animation: 60s 1s forwards timer_countdown, 1s 0.875s 60 timer_beat;
+        content: attr(data-before);
+        animation: 1s 0.6s 60 timer_beat;
     }
 
 @keyframes timer_beat {
