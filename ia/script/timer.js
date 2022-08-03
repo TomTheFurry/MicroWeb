@@ -7,9 +7,14 @@ let timerInterval = null;
 
 function onTimesUp() {
     clearInterval(timerInterval);
+    TIMER.classList.remove('beat')
 }
 
 function startTimer() {
+    TIMER.setAttribute('data-before', TIME_LIMIT);
+    setTimeout(() => TIMER.classList.add('beat'), 600);
+    
+
     timerInterval = setInterval(() => {
         timePassed = timePassed += 1;
         timeLeft = TIME_LIMIT - timePassed;
@@ -20,3 +25,4 @@ function startTimer() {
         }
     }, 1000);
 }
+
