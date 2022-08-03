@@ -1,17 +1,22 @@
-var time = 60.0;
-const timerCount = 50;
-const timeBox = document.getElementById('time-frame').children[0];
+const TIMER = document.getElementById('timer');
 
-function startTimer() {
-	time = 60.0;
-	setTimeout(timer, timerCount);
+const TIME_LIMIT = 60;
+let timePassed = 0;
+let timeLeft = TIME_LIMIT;
+let timerInterval = null;
+
+function onTimesUp() {
+    clearInterval(timerInterval);
 }
 
-function timer() {
-	time -= timerCount / 1000.0;
-	timeBox.innerHTML = Math.ceil(time);
+function startTimer() {
+    timerInterval = setInterval(() => {
+        timePassed = timePassed += 1;
+        timeLeft = TIME_LIMIT - timePassed;
+        TIMER.setAttribute('data-before', TIME_LIMIT - timePassed);
 
-	if (time > 0.0) {
-		setTimeout(timer, timerCount);
-	}
+        if (timeLeft === 0) {
+            onTimesUp();
+        }
+    }, 1000);
 }
