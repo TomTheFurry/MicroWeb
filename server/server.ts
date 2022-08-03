@@ -5,32 +5,42 @@ const port = process.env.port || 80
 const baseWebDir = "../ia";
 const blacklist = ["/script/game.js"];
 
-http.createServer(async (req, res) => {
-    if (req.method == "GET") {
+var times : Number[] = [];
+
+var server = http.createServer(
+    async (req, res) => {
+        Promise.race([
+            (async () => {
+                if (req.aborted) {
+                    console.log("req aborted");
+                    return;
+                }
+                if (req.method == "GET") {
+                    if (await webGet(req, res)) return;
+                }
+                if (req.method == "POST") {
+                    if (await timePost(req, res)) return;
+                }
+                console.log("bad request: Unknown method");
+                res.writeHead(400, "bad request");
+                res.end();
+                return;
+            })(),
+            promisify(setTimeout)(500)]);
+    });
+server.setTimeout(500);
+server.listen(port);
 
 
-    }
-
-    if (req.method != "GET") {
-        console.log("bad request: Method isn't 'GET'");
-        res.writeHead(400, "bad request");
-        res.end();
-        return;
-    } else {
-        await webGet(req, res);
-    }
-}).listen(port);
 
 
-
-
-async function webGet(req: http.IncomingMessage, res: http.ServerResponse) {
+async function webGet(req: http.IncomingMessage, res: http.ServerResponse) : Promise<boolean> {
     let loc: String = req.url;
     if (loc == null) {
         console.log("bad request: No 'url'");
         res.writeHead(400, "bad request");
         res.end();
-        return;
+        return true;
     }
     if (loc == "/") {
         console.log("folder redirection to index.html");
@@ -41,7 +51,7 @@ async function webGet(req: http.IncomingMessage, res: http.ServerResponse) {
         console.log("Invalid loc: Contains '..'");
         res.writeHead(404);
         res.end();
-        return;
+        return true;
     }
 
     let fileDir = baseWebDir + loc;
@@ -64,26 +74,49 @@ async function webGet(req: http.IncomingMessage, res: http.ServerResponse) {
             console.log("File type not on whitelist. Respond with 404");
             res.writeHead(404);
             res.end();
-            return;
+            return true;
         }
 
         if (blacklist.findIndex((s) => s == loc.toLowerCase()) != -1) {
             console.log("File blacklisted! Respond with 404");
             res.writeHead(404);
             res.end();
-            return;
+            return true;
         }
         res.writeHead(200, { 'Content-Type': type });
         res.end(await promisify(fs.readFile)(fileDir));
+        return true;
     } else {
         console.log("Error 404: File request on " + fileDir + " not found.");
         res.writeHead(404);
         res.end();
+        return true;
     }
 }
 
 
 async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
+    var buffer = [];
+    for await (const r of req) buffer += r;
+    var data = buffer.join('') as string;
+
+    if (data.length == 0) return false;
+    try {
+        var jData = JSON.parse(data);
+        if (jData["postType"] != "time") return false;
+        if (!(jData["duration"] instanceof Number)) return false; 
+        var duration: Number = jData["duration"];
+        times.push(duration);
+        res.writeHead(200, { "content-type": "application/json" });
+        res.end(JSON.stringify({time: times}));
+        return true;
+    } catch (s) {
+        if ((s instanceof SyntaxError) || (s instanceof ReferenceError)) return false;
+        throw s;
+    }
+
     
+
+
 
 }
