@@ -1,6 +1,6 @@
 const TIMER = document.getElementById('timer');
 
-const TIME_LIMIT = 60;
+const TIME_LIMIT = 10;
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
@@ -24,11 +24,12 @@ function startTimer() {
         timeLeft = TIME_LIMIT - timePassed;
         TIMER.setAttribute('data-before', TIME_LIMIT - timePassed);
 
-        count();
-
         if (timeLeft === 0) {
             onTimesUp();
+            return;
         }
+
+        count();
     }, 1000);
 }
 
