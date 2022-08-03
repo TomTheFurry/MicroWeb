@@ -162,3 +162,41 @@ body > div {
         margin-bottom: 45px;
     }
 }
+
+.button1 > div:hover {
+    background-color: #fff;
+}
+
+.ctrl-button1 {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%,-50%)
+}
+
+    .ctrl-button1 > div {
+        width: 100%;
+        height: 100%;
+    }
+
+.frame1 {
+    border: 8px solid #898989;
+    border-radius: 15px;
+    background-color: #898989;
+    transition: 0.15s;
+}
+
+    .frame1 > div {
+        border-radius: 10px;
+        background: #c9caca;
+        margin: 0;
+    }
+
+.center1 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+}
