@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Game</title>
+    <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./index.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://use.typekit.net/iju2lko.css">
     <script type="text/javascript" src="./w3c-includeHTML.js"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="./svg/icon/icon.svg">
+    <title>Company</title>
 </head>
 <body>
+
     <div id="main-box">
         <div class="top-console console">
             <div id="time-frame" class="ctrl-button frame">
@@ -51,12 +56,14 @@
 
                 </div>
             </div>
-            <div id="leave-button" class="ctrl-button frame button">
-                <div w3-include-html="./svg/icon/exit.svg">
-                    
+            <a href="StartPage.html">
+                <div id="leave-button" class="ctrl-button frame button">
+                    <div w3-include-html="./svg/icon/exit.svg">
+
+                    </div>
                 </div>
-            </div>
-        </div>
+            </a>
+</div>
 
 
     </div>
@@ -68,5 +75,13 @@
         includeHTML();
         startTimer();
     </script>
+
+    <div class="intro">
+        <h1 class="logo-header">
+            <span class="logo">Start</span></br><span class="logo">Now</span>
+        </h1>
+        <script src="app.js"></script>
+    </div>
+
 </body>
 </html>
