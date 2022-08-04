@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="round" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 56.69 56.69" style="enable-background:new 0 0 56.69 56.69;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#FFFFFF;}
-</style>
-<polyline points="1.42,1.42 55.28,1.42 55.28,55.28 "/>
-<polyline class="st0" points="13.46,5.67 50.31,5.67 50.31,42.52 "/>
-<polyline points="23.39,9.21 46.06,9.21 46.06,31.89 "/>
+	 viewBox="0 0 56.7 56.7" style="enable-background:new 0 0 56.7 56.7;" xml:space="preserve">
+<path d="M1.4,1.4l53.9,53.9V1.4H1.4z M50.3,42.5L13.5,5.7h36.8V42.5z"/>
+<polyline points="23.4,9.2 46.1,9.2 46.1,31.9 "/>
 </svg>

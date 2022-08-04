@@ -14,7 +14,10 @@ html, body, #main-box {
 
 .st0 {
     fill: #898989;
+<<<<<<< HEAD
     /*fill: #000;*/
+=======
+>>>>>>> 202d66bce0a3035004228bfeca2fcb47bf095120
 }
 
 #main-box {
@@ -80,13 +83,12 @@ body > div {
     align-content: space-between;
     gap: 5px;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
 }
 
     .game-box > div {
-        padding: 10px;
-        height: calc(100% - 20px);
-        border-radius: 15px;
+        padding: 0 10px 100% 10px;
+        display: grid;
+        place-items: center;
     }
 
 .ctrl-button {

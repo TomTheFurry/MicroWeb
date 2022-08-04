@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="round" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 56.69 56.69" style="enable-background:new 0 0 56.69 56.69;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:#FFFFFF;}
-</style>
-<path d="M55.28,55.28H1.42V1.42h0C31.16,1.42,55.28,25.53,55.28,55.28L55.28,55.28z"/>
-<path class="st0" d="M51.02,51.02H5.67V13.21V5.67h0c12.51,1.55,22.8,6.8,30.99,14.87C45.01,28.76,49.7,38.46,51.02,51.02
-	L51.02,51.02z"/>
-<path d="M46.77,46.77H9.92V9.92h0c8.75,2.39,16.35,6.98,23.18,13.47C37.29,27.37,44.13,36.53,46.77,46.77L46.77,46.77z"/>
+	 viewBox="0 0 56.7 56.7" style="enable-background:new 0 0 56.7 56.7;" xml:space="preserve">
+<path d="M1.4,1.4v53.9h53.9C55.3,25.5,31.2,1.4,1.4,1.4z M5.7,13.2V5.7c12.5,1.6,22.8,6.8,31,14.9C45,28.8,49.7,38.5,51,51H5.7V13.2
+	z"/>
+<path d="M46.8,46.8H9.9V9.9l0,0c8.8,2.4,16.4,7,23.2,13.5C37.3,27.4,44.1,36.5,46.8,46.8L46.8,46.8z"/>
 </svg>
