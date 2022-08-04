@@ -86,10 +86,12 @@ var buttonOnClick = function (ev) {
 var showIcons = function () {
     icons.forEach(function (e) {
         e.hidden = false;
+        e.classList.remove('hidden');
     });
 };
 var hideIcons = function () {
     icons.forEach(function (e) {
         e.hidden = true;
+        e.classList.add('hidden');
     });
 };

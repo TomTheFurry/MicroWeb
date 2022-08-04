@@ -93,11 +93,13 @@ var buttonOnClick = function(ev : MouseEvent) {
 var showIcons = function() {
 	icons.forEach((e) => {
 		e.hidden = false;
+		e.classList.remove('hidden');
 	})
 }
 var hideIcons = function() {
 	icons.forEach((e) => {
 		e.hidden = true;
+		e.classList.add('hidden');
 	})
 }
 
