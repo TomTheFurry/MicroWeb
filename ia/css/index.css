@@ -12,6 +12,12 @@ html, body, #main-box {
     justify-content: center;
 }
 
+div {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
 .st0 {
     fill: #898989;
 }
@@ -89,11 +95,20 @@ body > div {
     grid-template-columns: repeat(4, 1fr);
 }
 
-    .game-box > div {
+    .game-box > .game-button {
+        position: relative;
+        overflow: hidden;
         padding: 0 10px 100% 10px;
-        display: grid;
-        place-items: center;
     }
+
+.game-button > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 88%;
+    height: 88%;
+}
 
 .ctrl-button {
     width: 64px;
