@@ -127,8 +127,8 @@ body > div {
 }
 
     .icon-bar > div {
-        width: 64px;
-        height: 100%;
+        width: 48px;
+        height: 48px;
     }
 
 .console {
@@ -198,7 +198,7 @@ clock {
     .game-box {
         width: 400px;
         height: 400px;
-        gap: 5px;
+        gap: 10px;
         border-width: 23px;
     }
 
@@ -214,6 +214,11 @@ clock {
     .icon-bar {
         max-width: 270px;
         height: 48px;
+    }
+
+    .icon-bar > div {
+        width: 34px;
+        height: 34px;
     }
 
     .console:first-child {
