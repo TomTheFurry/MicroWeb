@@ -17,6 +17,10 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 2000);
         setTimeout(() => {
             //intro.style.top = '-100vh';
-        }, 2300)
+            intro.classList.add('fade');
+        }, 2300);
+        setTimeout(() => {
+            startTimer();
+        }, 2600);
     })
 })
