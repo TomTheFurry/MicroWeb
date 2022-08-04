@@ -21,7 +21,7 @@ const fs = require("fs");
 const util_1 = require("util");
 const port = process.env.port || 80;
 const baseWebDir = "../ia";
-const blacklist = ["/script/game.js"];
+const blacklist = [];
 var times = [];
 var server = http.createServer((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     Promise.race([

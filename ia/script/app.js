@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
             intro.classList.add('fade');
         }, logoSpan.length * 50 + 920 + 300);
         setTimeout(() => {
-            startTimer();
+            initGame();
         }, logoSpan.length * 50 + 920 + 500);
     })
 })

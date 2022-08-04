@@ -3,7 +3,7 @@ import fs = require('fs');
 import { promisify } from 'util';
 const port = process.env.port || 80
 const baseWebDir = "../ia";
-const blacklist = ["/script/game.js"];
+const blacklist = [];
 
 var times : Number[] = [];
 
