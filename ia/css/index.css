@@ -13,7 +13,8 @@ html, body, #main-box {
 }
 
 .st0 {
-    fill: #898989;
+    /*fill: #898989;*/
+    fill: #000;
 }
 
 #main-box {
@@ -77,15 +78,15 @@ body > div {
     display: grid;
     justify-content: space-between;
     align-content: space-between;
-    /*grid-gap: 10px;*/
-    grid-template-columns: repeat(4, 24.25%);
+    gap: 5px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
 }
 
     .game-box > div {
-        padding: 0 10px 100% 10px;
+        padding: 10px;
+        height: calc(100% - 20px);
         border-radius: 15px;
-        display: grid;
-        place-items: center;
     }
 
 .ctrl-button {
@@ -186,6 +187,7 @@ clock {
     .game-box {
         width: 400px;
         height: 400px;
+        gap: 4px;
         border-width: 23px;
     }
 
