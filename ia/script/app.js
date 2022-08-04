@@ -7,20 +7,20 @@ window.addEventListener('DOMContentLoaded', () => {
         logoSpan.forEach((span, idx) => {
             setTimeout(() => {
                 span.classList.add('active');
-            }, (idx + 1) * 150)
+            }, (idx + 1) * 50)
         });
         setTimeout(() => {
             logoSpan.forEach((span, idx) => {
                 span.classList.remove('active');
                 span.classList.add('fade');
             })
-        }, 2000);
+        }, logoSpan.length * 50 + 920);
         setTimeout(() => {
             //intro.style.top = '-100vh';
             intro.classList.add('fade');
-        }, 2300);
+        }, logoSpan.length * 50 + 920 + 300);
         setTimeout(() => {
             startTimer();
-        }, 2600);
+        }, logoSpan.length * 50 + 920 + 500);
     })
 })
