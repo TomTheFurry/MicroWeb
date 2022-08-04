@@ -12,12 +12,6 @@ html, body, #main-box {
     justify-content: center;
 }
 
-div {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-}
-
 .st0 {
     fill: #898989;
 }
