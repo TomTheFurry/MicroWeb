@@ -14,22 +14,29 @@ function randInts(max: number, count: number) {
 var answer : number[];
 var answers = 4;
 var gridSize = 4;
+var appliedIcons = 16;
 
 var icons : HTMLElement[] = [];
 var boxes : HTMLElement[] = [];
 
 var successIndex = 0;
 var started = false;
+var colors = ["red", "green", "blue", "yellow"];
 
-var init = function() {
+var initGame = function() {
+	console.log("Game init")
 	let boxCount = gridSize*gridSize;
 	answer = randInts(boxCount, answers);
+	console.log(answer);
 	{
 		var list = document.getElementsByClassName("game-box")[0]
 		.getElementsByClassName("game-button");
 		boxes = [];
 		for (let i=0; i<list.length; i++) {
-			boxes.push(list.item(i) as HTMLElement);
+			let e = (list.item(i) as HTMLElement);
+			boxes.push(e);
+			e.addEventListener("click", buttonOnClick);
+			e["boxId"] = i;
 		}
 	}
 	
@@ -38,56 +45,59 @@ var init = function() {
 		.getElementsByClassName("box");
 		icons = [];
 		for (let i=0; i<list.length; i++) {
-			(list.item(i) as HTMLElement).onclick = buttonOnClick;
-			icons.push(list.item(i) as HTMLElement);
+			let e = (list.item(i) as HTMLElement);
+			icons.push(e);
 		}
 	}
 	successIndex = 0;
 
-	let selectedBoxs = randInts(icons.length, answers);
-	answer.forEach((num, i) => {
-		boxes[num].appendChild(icons[selectedBoxs[i]]);
+	let selectedIcons = randInts(icons.length, appliedIcons);
+	let selectedBoxes = randInts(boxes.length, appliedIcons);
+	
+	selectedIcons.forEach((num, i) => {
+		let e = boxes[selectedBoxes[i]].appendChild(icons[num]);
+		e.style.fill = colors[Math.floor(Math.random() * colors.length)];
 	});
 
 	showIcons();
 	setTimeout(() => {
 		hideIcons();
 		started = true;
-	}, 1000);
+		this['startTimer']();
+	}, 3000);
 }
 
 var buttonOnClick = function(ev : MouseEvent) {
 	if (!started) return;
-	let i : number = ev.target["boxId"];
+	let e = ev.target as HTMLElement;
+	if (!e) throw new ReferenceError();
+	if (e.childNodes[0]) {
+		(e.childNodes[0] as HTMLElement).hidden = false;
+	}
+	let i : number = e["boxId"];
 	if (i == answer[successIndex]) {
 		successIndex++;
-		(ev.target as HTMLElement).style.color = "#b3ffb3";
+		e.style.backgroundColor = "#b3ffb3";
 		if (successIndex >= answers)
 		{
 			window.prompt("You Win!");
-			setTimeout(window.location.reload, 500);;
+			//setTimeout(window.location.reload, 500);;
 		}
 	} else {
-		(ev.target as HTMLElement).style.color = "#ff6666";
-		window.prompt("Wrong!");
-		setTimeout(window.location.reload, 500);
+		e.style.backgroundColor = "#ff6666";
+		//window.prompt("Wrong!");
+		//setTimeout(window.location.reload, 500);
 	}
 }
 
 var showIcons = function() {
-	icons.forEach((e,i) => {
-		boxes[i].appendChild(e);
+	icons.forEach((e) => {
 		e.hidden = false;
 	})
 }
 var hideIcons = function() {
-	icons.forEach((e,i) => {
+	icons.forEach((e) => {
 		e.hidden = true;
-		if (e.parentElement) {
-			e.parentElement.removeChild(e);
-		}
 	})
 }
-
-window.onload = init;
 

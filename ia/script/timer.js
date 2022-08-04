@@ -8,7 +8,7 @@ let timerInterval = null;
 const SECOND_IN_MS = 1000;
 const UPDATE_INTERVAL = SECOND_IN_MS / 60;
 
-window.onload = () => TIMER.setAttribute('data-before', TIME_LIMIT - timePassed);
+window.addEventListener("load", () => TIMER.setAttribute('data-before', TIME_LIMIT - timePassed))
 
 function onTimesUp() {
     clearInterval(timerInterval);

@@ -27,8 +27,8 @@ div {
 }
 
 .box {
-    width: 100%;
-    height: 100%;
+    width: 75%;
+    height: 75%;
     box-sizing: border-box;
     border-width: 5%;
     
@@ -89,16 +89,16 @@ body > div {
     width: 500px;
     /*grid*/
     display: grid;
-    justify-content: space-between;
-    align-content: space-between;
-    gap: 7px;
+    gap: 12px;
     grid-template-columns: repeat(4, 1fr);
 }
 
-    .game-box > .game-button {
-        position: relative;
-        overflow: hidden;
-        padding: 0 10px 100% 10px;
+
+    .game-box > div {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1;
+        place-items: center;
     }
 
 .game-button > div {
