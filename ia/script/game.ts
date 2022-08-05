@@ -22,7 +22,10 @@ var boxes : HTMLElement[] = [];
 
 var successIndex = 0;
 var started = false;
-var colors = ["000000", "ff0000", "ffff00", "aaff00", "00bbff", "0000ff", "ff0088", "ff5500", "663300", "005522", "aa00ff", "ccbb99", "009944", "776655", "770000", "ffbbee"];
+var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00", 
+				"#00bbff", "#0000ff", "#ff0088", "#ff5500", 
+				"#663300", "#005522", "#aa00ff", "#ccbb99", 
+				"#009944", "#776655", "#770000", "#ffbbee"];
 
 var initGame = function() {
 	console.log("Game init")
