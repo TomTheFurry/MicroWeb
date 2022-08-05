@@ -97,6 +97,11 @@
 
                 </div>
             </div>
+            <div class="ctrl-button frame button" onclick="togglePopup()">
+                <div w3-include-html="./svg/icon/help.svg">
+
+                </div>
+            </div>
             <a href="./StartPage.html">
                 <div id="leave-button" class="ctrl-button frame button">
                     <div w3-include-html="./svg/icon/exit.svg">
@@ -109,6 +114,13 @@
 
     </div>
 
+    <div class="popup" id="popup-1">
+        <div class="overlay"></div>
+        <dr class="content">
+            <div class="close-btn" onclick="togglePopup()"><img src="./svg/icon/x.svg" width="15"></div>
+            <img src="./svg/icon/HowToPlay.svg" width="350">
+            <p>W<br />W<br />W<br />W<br />W<br />W<br />W<br />WWWWWWWWWWWWWWWWWWW</p>
+    </div>
 
     <div class="intro">
         <h1 class="logo-header">
@@ -117,6 +129,7 @@
         </h1>
         <script src="./script/app.js"></script>
     </div>
+    <script src="./script/help.js"></script>
     <!-- script -->
     <script type="text/javascript" src="./script/timer.js"></script>
     <script>
