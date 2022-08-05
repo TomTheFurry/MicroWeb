@@ -66,9 +66,10 @@ var initGame = function () {
         icons = [];
         for (var i = 0; i < list.length; i++) {
             var e = list.item(i);
-            e.style.stroke = "black";
-            e.style.strokeWidth = "2px";
-            e.style.strokeLinecap = "round";
+            // e.style.stroke = "black";
+            // e.style.strokeWidth = "2px";
+            // e.style.strokeLinecap = "round";
+            e.style.filter = "drop-shadow(-1px 1px 3px #0006)";
             icons.push(e);
         }
     }
