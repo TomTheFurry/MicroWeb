@@ -27,7 +27,6 @@ var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00",
     "#663300", "#005522", "#aa00ff", "#ccbb99",
     "#009944", "#776655", "#770000", "#ffbbee"];
 var startGame = function () {
-
     var _this = this;
     successIndex = 0;
     selectedIcons = randInts(icons.length, appliedIcons);
@@ -44,8 +43,7 @@ var startGame = function () {
     this['timerCount'](3300);
     setTimeout(function () {
         hideIcons();
-        started = true;
-        canClick();
+        inputAllowed = true;
         _this['startTimer']();
     }, 3300);
 };
