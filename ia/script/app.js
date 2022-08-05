@@ -12,15 +12,13 @@ window.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             logoSpan.forEach((span, idx) => {
                 span.classList.remove('active');
-                span.classList.add('fade');
+                span.classList.add('fade'); // fade time in style.css '.logo.fade'
             })
         }, logoSpan.length * 50 + 920);
         setTimeout(() => {
             //intro.style.top = '-100vh';
-            intro.classList.add('fade');
-        }, logoSpan.length * 50 + 920 + 300);
-        setTimeout(() => {
+            intro.classList.add('fade');  // fade time in style.css '.intro.fade'
             initGame();
-        }, logoSpan.length * 50 + 920 + 500);
+        }, logoSpan.length * 50 + 920);
     })
 })

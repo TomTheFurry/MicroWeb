@@ -19,7 +19,7 @@ var mIcons = [];
 var boxes = [];
 var successIndex = 0;
 var started = false;
-var colors = ["red", "green", "blue", "yellow"];
+var colors = ["000000", "ff0000", "ffff00", "aaff00", "00bbff", "0000ff", "ff0088", "ff5500", "663300", "005522", "aa00ff", "ccbb99", "009944", "776655", "770000", "ffbbee"];
 var initGame = function () {
     var _this = this;
     console.log("Game init");
@@ -63,11 +63,13 @@ var initGame = function () {
         e.style.fill = colors[Math.floor(Math.random() * colors.length)];
     });
     showIcons();
+    this['timerCount'](3300);
     setTimeout(function () {
         hideIcons();
         started = true;
+        canClick();
         _this['startTimer']();
-    }, 3000);
+    }, 3300);
 };
 var buttonOnClick = function (ev) {
     if (!started)
@@ -102,4 +104,10 @@ var hideIcons = function () {
     icons.forEach(function (e) {
         e.hidden = true;
     });
+};
+var canClick = function () {
+    document.getElementsByClassName("game-box")[0].classList.add('button');
+};
+var cannotClick = function () {
+    document.getElementsByClassName("game-box")[0].classList.remove('button');
 };
