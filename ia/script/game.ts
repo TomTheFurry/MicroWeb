@@ -16,7 +16,8 @@ var answers = 4;
 var gridSize = 4;
 var appliedIcons = 16;
 
-var icons : HTMLElement[] = [];
+var icons: HTMLElement[] = [];
+var mIcons: HTMLElement[] = [];
 var boxes : HTMLElement[] = [];
 
 var successIndex = 0;
@@ -47,6 +48,16 @@ var initGame = function() {
 		for (let i=0; i<list.length; i++) {
 			let e = (list.item(i) as HTMLElement);
 			icons.push(e);
+		}
+	}
+
+	{
+		var list = document.getElementsByClassName("mini-boxes")[0]
+			.getElementsByClassName("mini-box");
+		mIcons = [];
+		for (let i = 0; i < list.length; i++) {
+			let e = (list.item(i) as HTMLElement);
+			mIcons.push(e);
 		}
 	}
 	successIndex = 0;
