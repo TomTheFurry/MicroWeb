@@ -33,6 +33,7 @@ function startTimer(timeLimit = TIME_LIMIT) {
     setTimeout(() => TIMER.classList.add('beat'), 600);
     timerCount();
 
+    timePassed = 0;
     timerInterval = setInterval(() => {
         timePassed = timePassed += 1000;
         timeLeft = timeLimit - timePassed;

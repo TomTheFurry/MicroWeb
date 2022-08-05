@@ -11,17 +11,27 @@ function randInts(max: number, count: number) {
 	return result;
 }
 
+function randBools(count: number) {
+	var result : boolean[] = [];
+	for (var i=0; i<count; i++) {
+		result.push(Math.random() < 0.5);
+	}
+	return result;
+}
+
 var answers = 4;
 var gridSize = 4;
 var appliedIcons = 4;
 
 var icons: HTMLElement[] = [];
 var mIcons: HTMLElement[] = [];
+var mColorIcon : HTMLElement;
 var boxes : HTMLElement[] = [];
 var hintIconBox: HTMLElement;
 var selectedIcons: number[];
 var selectedBoxes: number[];
 var selectedAnswers: number[];
+var selectedAnswersIsColors: boolean[];
 
 var successIndex = 0;
 var inputAllowed = false;
@@ -36,18 +46,24 @@ var startGame = function() {
 	selectedIcons = randInts(icons.length, appliedIcons);
 	selectedBoxes = randInts(boxes.length, appliedIcons);
 	
+	var tmpColors: string[] = [];
+	tmpColors = tmpColors.concat(colors);
+	tmpColors = tmpColors.sort(() => Math.random()-0.5);
 	selectedIcons.forEach((num, i) => {
 		let e = boxes[selectedBoxes[i]].appendChild(icons[num]);
-		e.style.fill = colors[Math.floor(Math.random() * colors.length)];
+		// e.style.fill = colors[Math.floor(Math.random() * colors.length)];
+		e.style.fill = tmpColors.pop();
 	});
 	boxes.forEach((e) => {
 		e["clickable"] = true;
 	});
 	
 	selectedAnswers = randInts(appliedIcons, answers);
+	selectedAnswersIsColors = randBools(answers);
 	console.log("selectedIcons: ", selectedIcons);
 	console.log("selectedBoxes: ", selectedBoxes);
 	console.log("selectedAnswers: ", selectedAnswers);
+	console.log("selectedAnswersIsColors: ", selectedAnswersIsColors);
 
 	updateClickable();
 	showIcons();
@@ -101,6 +117,10 @@ var initGame = function() {
 			e.style.strokeLinecap = "round";
 			mIcons.push(e);
 		}
+	}
+
+	{
+		mColorIcon = document.getElementById("color-icon") as HTMLElement;
 	}
 	hintIconBox = document.getElementsByClassName("icon-bar")[0].children[0] as HTMLElement;
 	startGame();
@@ -169,11 +189,16 @@ var updateHintIcon = function() {
 		hintIconBox.removeChild(hintIconBox.children[0]);
 	}
 	if (successIndex < answers) {
-		var e : HTMLElement = mIcons[selectedIcons[selectedAnswers[successIndex]]];
-		if (e === undefined) {
-			debugger;
+		var e : HTMLElement;
+		if (selectedAnswersIsColors[successIndex]) {
+			e = mColorIcon;
+			e.style.fill = icons[selectedIcons[selectedAnswers[successIndex]]].style.fill;
 		}
-		e.style.fill = icons[selectedIcons[selectedAnswers[successIndex]]].style.fill;
+		else {
+			e = mIcons[selectedIcons[selectedAnswers[successIndex]]];
+			e.style.fill = "#fff";
+		}
+
 		hintIconBox.appendChild(e);
 	}
 }
@@ -181,6 +206,7 @@ var updateHintIcon = function() {
 function onWin() {
 	showIcons();
 	updateClickable();
+	this['onTimesUp']();
 	setTimeout(() => {
 		boxes.forEach((e) => {
 			e.style.backgroundColor = "";
@@ -188,7 +214,7 @@ function onWin() {
 				e.removeChild(e.children[0]);
 			}
 		})
-		appliedIcons+=1;
+		appliedIcons += 1;
 		startGame();
-	})
+	}, 1000);
 }

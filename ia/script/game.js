@@ -10,16 +10,25 @@ function randInts(max, count) {
     }
     return result;
 }
+function randBools(count) {
+    var result = [];
+    for (var i = 0; i < count; i++) {
+        result.push(Math.random() < 0.5);
+    }
+    return result;
+}
 var answers = 4;
 var gridSize = 4;
 var appliedIcons = 4;
 var icons = [];
 var mIcons = [];
+var mColorIcon;
 var boxes = [];
 var hintIconBox;
 var selectedIcons;
 var selectedBoxes;
 var selectedAnswers;
+var selectedAnswersIsColors;
 var successIndex = 0;
 var inputAllowed = false;
 var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00",
@@ -32,17 +41,23 @@ var startGame = function () {
     inputAllowed = false;
     selectedIcons = randInts(icons.length, appliedIcons);
     selectedBoxes = randInts(boxes.length, appliedIcons);
+    var tmpColors = [];
+    tmpColors = tmpColors.concat(colors);
+    tmpColors = tmpColors.sort(function () { return Math.random() - 0.5; });
     selectedIcons.forEach(function (num, i) {
         var e = boxes[selectedBoxes[i]].appendChild(icons[num]);
-        e.style.fill = colors[Math.floor(Math.random() * colors.length)];
+        // e.style.fill = colors[Math.floor(Math.random() * colors.length)];
+        e.style.fill = tmpColors.pop();
     });
     boxes.forEach(function (e) {
         e["clickable"] = true;
     });
     selectedAnswers = randInts(appliedIcons, answers);
+    selectedAnswersIsColors = randBools(answers);
     console.log("selectedIcons: ", selectedIcons);
     console.log("selectedBoxes: ", selectedBoxes);
     console.log("selectedAnswers: ", selectedAnswers);
+    console.log("selectedAnswersIsColors: ", selectedAnswersIsColors);
     updateClickable();
     showIcons();
     this['timerCount'](3300);
@@ -92,6 +107,9 @@ var initGame = function () {
             e.style.strokeLinecap = "round";
             mIcons.push(e);
         }
+    }
+    {
+        mColorIcon = document.getElementById("color-icon");
     }
     hintIconBox = document.getElementsByClassName("icon-bar")[0].children[0];
     startGame();
@@ -164,17 +182,22 @@ var updateHintIcon = function () {
         hintIconBox.removeChild(hintIconBox.children[0]);
     }
     if (successIndex < answers) {
-        var e = mIcons[selectedIcons[selectedAnswers[successIndex]]];
-        if (e === undefined) {
-            debugger;
+        var e;
+        if (selectedAnswersIsColors[successIndex]) {
+            e = mColorIcon;
+            e.style.fill = icons[selectedIcons[selectedAnswers[successIndex]]].style.fill;
         }
-        e.style.fill = icons[selectedIcons[selectedAnswers[successIndex]]].style.fill;
+        else {
+            e = mIcons[selectedIcons[selectedAnswers[successIndex]]];
+            e.style.fill = "#fff";
+        }
         hintIconBox.appendChild(e);
     }
 };
 function onWin() {
     showIcons();
     updateClickable();
+    this['onTimesUp']();
     setTimeout(function () {
         boxes.forEach(function (e) {
             e.style.backgroundColor = "";
@@ -184,5 +207,5 @@ function onWin() {
         });
         appliedIcons += 1;
         startGame();
-    });
+    }, 1000);
 }
