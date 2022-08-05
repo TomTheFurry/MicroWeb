@@ -20,12 +20,10 @@ html, body, #main-box {
     width: auto;
 }
 
-.box {
+.box, .mini-box {
     width: 75%;
     height: 75%;
     box-sizing: border-box;
-    border-width: 5%;
-    
 }
 
 .frame {

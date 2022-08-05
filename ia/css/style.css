@@ -7,6 +7,10 @@
     font-style: normal;
 }
 
+svg {
+    overflow: visible;
+}
+
 header {
     position: relative;
     left: 0;
