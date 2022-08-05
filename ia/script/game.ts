@@ -32,7 +32,7 @@ var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00",
 
 var startGame = function() {
 	successIndex = 0;
-
+	inputAllowed = false;
 	selectedIcons = randInts(icons.length, appliedIcons);
 	selectedBoxes = randInts(boxes.length, appliedIcons);
 	
@@ -40,18 +40,24 @@ var startGame = function() {
 		let e = boxes[selectedBoxes[i]].appendChild(icons[num]);
 		e.style.fill = colors[Math.floor(Math.random() * colors.length)];
 	});
-
+	boxes.forEach((e) => {
+		e["clickable"] = true;
+	});
+	
 	selectedAnswers = randInts(appliedIcons, answers);
 	console.log("selectedIcons: ", selectedIcons);
 	console.log("selectedBoxes: ", selectedBoxes);
 	console.log("selectedAnswers: ", selectedAnswers);
 
+	updateClickable();
 	showIcons();
 	this['timerCount'](3300);
 	setTimeout(() => {
 		hideIcons();
 		inputAllowed = true;
 		this['startTimer']();
+		updateClickable();
+		updateHintIcon();
 	}, 3300);
 }
 
@@ -64,7 +70,8 @@ var initGame = function() {
 		for (let i=0; i<list.length; i++) {
 			let e = (list.item(i) as HTMLElement);
 			boxes.push(e);
-			e.addEventListener("click", buttonOnClick);
+			e.addEventListener("touchstart", buttonOnClick);
+			e.addEventListener("mousedown", buttonOnClick);
 			e["boxId"] = i;
 		}
 	}
@@ -98,11 +105,12 @@ var initGame = function() {
 	startGame();
 }
 
-var buttonOnClick = function(ev : MouseEvent) {
+var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 	if (!inputAllowed) return;
 	let e = ev.target as HTMLElement;
 	if (!e) throw new ReferenceError();
 	if (e["boxId"] === undefined) return;
+	if (e["clickable"] !== true) return;
 	inputAllowed = false;
 	if (e.childNodes[0]) {
 		(e.childNodes[0] as HTMLElement).hidden = false;
@@ -110,6 +118,7 @@ var buttonOnClick = function(ev : MouseEvent) {
 	let i : number = e["boxId"];
 	if (i == selectedBoxes[selectedAnswers[successIndex]]) {
 		successIndex++;
+		e["clickable"] = false;
 		updateHintIcon();
 		e.style.backgroundColor = "#b3ffb3";
 		if (successIndex >= answers)
@@ -117,17 +126,30 @@ var buttonOnClick = function(ev : MouseEvent) {
 			onWin();
 		} else {
 			inputAllowed = true;
+			updateClickable();
 		}
 	} else {
 		e.style.backgroundColor = "#ff6666";
+		updateClickable();
 		setTimeout(() => {
 			if (e.childNodes[0]) {
 				(e.childNodes[0] as HTMLElement).hidden = true;
 			}
 			e.style.backgroundColor = "";
 			inputAllowed = true;
+			updateClickable();
 		}, 300);
 	}
+}
+
+var updateClickable = function() {
+	boxes.forEach((e) => {
+		if (inputAllowed && (e["clickable"] === true)) {
+			if (e.classList.contains("disable")) e.classList.remove("disable")
+		} else {
+			if (!e.classList.contains("disable")) e.classList.add("disable");
+		}
+	})
 }
 
 var showIcons = function() {
@@ -147,6 +169,9 @@ var updateHintIcon = function() {
 	}
 	if (successIndex < answers) {
 		var e : HTMLElement = mIcons[selectedIcons[selectedAnswers[successIndex]]];
+		if (e === undefined) {
+			debugger;
+		}
 		e.style.fill = icons[selectedIcons[selectedAnswers[successIndex]]].style.fill;
 		hintIconBox.appendChild(e);
 	}
@@ -154,6 +179,7 @@ var updateHintIcon = function() {
 
 function onWin() {
 	showIcons();
+	updateClickable();
 	setTimeout(() => {
 		boxes.forEach((e) => {
 			e.style.backgroundColor = "";
