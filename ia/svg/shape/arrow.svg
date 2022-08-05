@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="round" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 56.69 56.69" style="enable-background:new 0 0 56.69 56.69;" xml:space="preserve">
-<polygon points="46.32,46.32 46.32,22.27 36.3,32.29 20.76,16.76 16.76,20.76 32.29,36.3 22.27,46.32 "/>
-<path d="M55.28,55.28l0-53.86L36.36,20.33l-16.6-16.6L3.73,19.76l16.6,16.6L1.42,55.28L55.28,55.28z M9.74,19.76L19.76,9.74
-	l13.59,13.59l2.94,2.94l3.01-3.01l12.03-12.03l0,40.09l-40.09,0l12.03-12.03l3.01-3.01l-2.94-2.94L9.74,19.76z"/>
+	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+<path d="M36.1,14.1L34,16.1L23.9,6.1l-5.7-5.7l-5.7,5.7l-6.5,6.5l-5.7,5.7l5.7,5.7L16.1,34l-2.1,2.1L0.4,49.7h19.3h22h8v-8v-22V0.4
+	L36.1,14.1z M45.7,19.7v22v4h-4h-22h-9.6l6.8-6.8l4.9-4.9L8.9,21.1l-2.8-2.8l2.8-2.8l6.5-6.5l2.8-2.8l2.8,2.8L34,21.8l4.9-4.9
+	l6.8-6.8V19.7z"/>
+<polygon points="19.7,41.7 41.7,41.7 41.7,19.7 34,27.5 18.3,11.7 11.7,18.3 27.5,34 "/>
 </svg>

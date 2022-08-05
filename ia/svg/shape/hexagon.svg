@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="round" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 56.69 56.69" style="enable-background:new 0 0 56.69 56.69;" xml:space="preserve">
-<path d="M41.81,5.03H14.88L1.42,28.35l13.46,23.32h26.93l13.46-23.32L41.81,5.03z M39.69,47.99H17.01L5.67,28.35L17.01,8.71h22.68
-	l11.34,19.64L39.69,47.99z"/>
-<polygon points="37.56,12.39 19.13,12.39 9.92,28.35 19.13,44.3 37.56,44.3 46.77,28.35 "/>
+	 viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+<path d="M47.2,21L39.6,7.7l-2.3-4h-4.6H17.4h-4.6l-2.3,4L2.8,21l-2.3,4l2.3,4l7.7,13.3l2.3,4h4.6h15.3h4.6l2.3-4L47.2,29l2.3-4
+	L47.2,21z M43.8,27l-7.7,13.3l-1.2,2h-2.3H17.4H15l-1.2-2L6.2,27l-1.2-2l1.2-2l7.7-13.2l1.2-2h2.3h15.3H35l1.2,2L43.8,23l1.2,2
+	L43.8,27z"/>
+<polygon points="17.4,38.2 32.6,38.2 40.3,25 32.6,11.8 17.4,11.8 9.7,25 "/>
 </svg>
