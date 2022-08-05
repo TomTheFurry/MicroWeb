@@ -25,7 +25,10 @@ var selectedAnswers: number[];
 
 var successIndex = 0;
 var inputAllowed = false;
-var colors = ["red", "green", "blue", "yellow"];
+var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00", 
+				"#00bbff", "#0000ff", "#ff0088", "#ff5500", 
+				"#663300", "#005522", "#aa00ff", "#ccbb99", 
+				"#009944", "#776655", "#770000", "#ffbbee"];
 
 var startGame = function() {
 	successIndex = 0;
@@ -44,12 +47,12 @@ var startGame = function() {
 	console.log("selectedAnswers: ", selectedAnswers);
 
 	showIcons();
+	this['timerCount'](3300);
 	setTimeout(() => {
 		hideIcons();
-		updateHintIcon();
 		inputAllowed = true;
 		this['startTimer']();
-	}, 3000);
+	}, 3300);
 }
 
 var initGame = function() {

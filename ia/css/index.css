@@ -100,7 +100,7 @@ body > div {
         place-items: center;
     }
 
-    .game-box > .game-button:active {
+    .game-box.button > .game-button:active {
         transition: 15ms;
     }
 
@@ -237,4 +237,9 @@ clock {
 
 .hidden {
     visibility: hidden;
+}
+
+.disable {
+    pointer-events: none;
+    cursor: default;
 }

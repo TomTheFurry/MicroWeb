@@ -22,8 +22,12 @@ var selectedBoxes;
 var selectedAnswers;
 var successIndex = 0;
 var inputAllowed = false;
-var colors = ["red", "green", "blue", "yellow"];
+var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00",
+    "#00bbff", "#0000ff", "#ff0088", "#ff5500",
+    "#663300", "#005522", "#aa00ff", "#ccbb99",
+    "#009944", "#776655", "#770000", "#ffbbee"];
 var startGame = function () {
+
     var _this = this;
     successIndex = 0;
     selectedIcons = randInts(icons.length, appliedIcons);
@@ -37,12 +41,13 @@ var startGame = function () {
     console.log("selectedBoxes: ", selectedBoxes);
     console.log("selectedAnswers: ", selectedAnswers);
     showIcons();
+    this['timerCount'](3300);
     setTimeout(function () {
         hideIcons();
-        updateHintIcon();
-        inputAllowed = true;
+        started = true;
+        canClick();
         _this['startTimer']();
-    }, 3000);
+    }, 3300);
 };
 var initGame = function () {
     console.log("Game init");

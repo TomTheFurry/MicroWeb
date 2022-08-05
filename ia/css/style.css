@@ -38,7 +38,7 @@ header {
 }
 
     .intro.fade {
-        animation: 300ms forwards intro-fade;
+        animation: 600ms forwards intro-fade;
     }
 
 @keyframes intro-fade {
