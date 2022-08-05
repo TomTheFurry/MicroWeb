@@ -58,7 +58,7 @@ var timerCount = (countTime = SECOND_IN_MS) => {
 
         time += UPDATE_INTERVAL;
 
-        if (!isRunning || time > countTime + UPDATE_INTERVAL ) {
+        if (time > countTime + UPDATE_INTERVAL ) {
             TIMER.style = '';
             
             clearInterval(intervalID);
