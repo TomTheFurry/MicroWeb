@@ -299,7 +299,9 @@ function onWin() {
                 e.removeChild(e.children[0]);
             }
         });
-        appliedIcons += 1;
+        if (appliedIcons < gridSize * gridSize) {
+            appliedIcons += 1;
+        }
         level += 1;
         startGame();
     }));
