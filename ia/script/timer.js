@@ -21,6 +21,7 @@ function onTimesUp() {
     console.log('remove')
     setTimeout(() => TIMER.classList.remove('beat'), 400);
     TIMER.classList.remove('counting');
+    gameTimeUp();
 }
 
 function startTimer(timeLimit = TIME_LIMIT) {
