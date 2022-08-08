@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.35 11.34">
+<style type="text/css">
+  .st0{fill:#0000ff;}
+  .st1{fill:#ff0000;}
+  .st2{fill:#009944;}
+  .st3{fill:#aa00ff;}
+</style>
+<g>
+	<g>
+		<path class="st0" d="M0.52,2.54h1.02v8.52H0.52V2.54z M1.11,10.1h4.88v0.96H1.11V10.1z"/>
+		<path class="st1" d="M6.52,2.54h1.1l2.25,7l2.25-7h1.1l-2.87,8.52H9.38L6.52,2.54z"/>
+		<path class="st2" d="M14.44,2.54h1.02v8.52h-1.02V2.54z M15.03,10.1h4.88v0.96h-4.88V10.1z"/>
+		<path class="st3" d="M28.36,7.53v0.96h-3.94V7.53H28.36z"/>
+	</g>
+</g>
+</svg>
