@@ -239,7 +239,7 @@ var updateHintIcon = function () {
 function onWin() {
     showIcons();
     updateClickable();
-    this['onTimesUp']();
+    this['timerInit']();
     this['timerCount'](1000);
     this['scoreEndLv']();
     Promise.race([delayed(1000), new Promise((res) => {

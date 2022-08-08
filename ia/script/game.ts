@@ -259,7 +259,7 @@ var updateHintIcon = function() {
 function onWin() {
 	showIcons();
 	updateClickable();
-	this['onTimesUp']();
+	this['timerInit']();
 	// time count anim
 	this['timerCount'](1000);
 	// score
