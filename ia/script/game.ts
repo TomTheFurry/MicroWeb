@@ -1,3 +1,5 @@
+const START_TIME = 3300;  // time before start
+
 function promisify(f) {
 	return function (...args) { // return a wrapper-function (*)
 	  return new Promise((resolve, reject) => {
@@ -91,10 +93,12 @@ var startGame = function() {
 	// init score in new level
 	this['scoreInitLv']();
 	// set level display
-	let lvBox = document.getElementsByClassName('lv');
-	for (let i=0; i<lvBox.length; i++) {
-		let e = (lvBox.item(i) as HTMLElement);
-		e.innerHTML = level.toString();
+	{
+		let lvBox = document.getElementsByClassName('lv');
+		for (let i=0; i<lvBox.length; i++) {
+			let e = (lvBox.item(i) as HTMLElement);
+			e.innerHTML = level.toString();
+		}
 	}
 	
 	selectedAnswers = randInts(appliedIcons, answers);
@@ -109,15 +113,32 @@ var startGame = function() {
 	updateClickable();
 	showIcons();
 	this['setTime'](10000);
-	this['timerCount'](3300);
+	// this['timerCount'](START_TIME);
+	{
+		// set start count anim
+		let startCount = document.getElementsByClassName('game-start-count');
+		for (let i=0; i<startCount.length; i++) {
+			let e = (startCount.item(i) as HTMLElement);
+			e.setAttribute('style', `--count-time: ${START_TIME}ms;`);
+			e.classList.add('count');
+		}
+	}
 	const gameBox = document.getElementsByClassName("game-box")[0];
-	Promise.race([delayed(3300), new Promise(async (res) => {
+	Promise.race([delayed(START_TIME), new Promise(async (res) => {
 		await delayed(300);
 		gameBox.addEventListener("click", res, {once:true});
 		(gameBox as HTMLElement).classList.add('pointer');
 	})]).then(() => {
 		hideIcons();
 		(gameBox as HTMLElement).classList.remove('pointer');
+		{
+			// remove start count anim
+			let startCount = document.getElementsByClassName('game-start-count');
+			for (let i=0; i<startCount.length; i++) {
+				let e = (startCount.item(i) as HTMLElement);
+				e.classList.remove('count');
+			}
+		}
 		inputAllowed = true;
 		boxes.forEach((e) => {
 			e.style.backgroundColor = clickableColor;
@@ -312,8 +333,9 @@ function gameTimeUp() {
 	updateClickable();
 	showIcons();
 	delayed(4000).then(() => {
-		const e = document.getElementsByClassName("game-box")[0];
-		e.addEventListener("click", () => {
+		const gameBox = document.getElementsByClassName("game-box")[0];
+		(gameBox as HTMLElement).classList.remove('pointer');
+		gameBox.addEventListener("click", () => {
 			console.log("Reloading levels");
 			window.location.reload();
 		}, {once:true});

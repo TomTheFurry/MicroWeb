@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+const START_TIME = 3300;
 function promisify(f) {
     return function (...args) {
         return new Promise((resolve, reject) => {
@@ -83,10 +84,12 @@ var startGame = function () {
         e["clickable"] = true;
     });
     this['scoreInitLv']();
-    let lvBox = document.getElementsByClassName('lv');
-    for (let i = 0; i < lvBox.length; i++) {
-        let e = lvBox.item(i);
-        e.innerHTML = level.toString();
+    {
+        let lvBox = document.getElementsByClassName('lv');
+        for (let i = 0; i < lvBox.length; i++) {
+            let e = lvBox.item(i);
+            e.innerHTML = level.toString();
+        }
     }
     selectedAnswers = randInts(appliedIcons, answers);
     selectedAnswersIsColors = randBools(answers);
@@ -99,15 +102,29 @@ var startGame = function () {
     updateClickable();
     showIcons();
     this['setTime'](10000);
-    this['timerCount'](3300);
+    {
+        let startCount = document.getElementsByClassName('game-start-count');
+        for (let i = 0; i < startCount.length; i++) {
+            let e = startCount.item(i);
+            e.setAttribute('style', `--count-time: ${START_TIME}ms;`);
+            e.classList.add('count');
+        }
+    }
     const gameBox = document.getElementsByClassName("game-box")[0];
-    Promise.race([delayed(3300), new Promise((res) => __awaiter(this, void 0, void 0, function* () {
+    Promise.race([delayed(START_TIME), new Promise((res) => __awaiter(this, void 0, void 0, function* () {
             yield delayed(300);
             gameBox.addEventListener("click", res, { once: true });
             gameBox.classList.add('pointer');
         }))]).then(() => {
         hideIcons();
         gameBox.classList.remove('pointer');
+        {
+            let startCount = document.getElementsByClassName('game-start-count');
+            for (let i = 0; i < startCount.length; i++) {
+                let e = startCount.item(i);
+                e.classList.remove('count');
+            }
+        }
         inputAllowed = true;
         boxes.forEach((e) => {
             e.style.backgroundColor = clickableColor;
@@ -291,8 +308,9 @@ function gameTimeUp() {
     updateClickable();
     showIcons();
     delayed(4000).then(() => {
-        const e = document.getElementsByClassName("game-box")[0];
-        e.addEventListener("click", () => {
+        const gameBox = document.getElementsByClassName("game-box")[0];
+        gameBox.classList.remove('pointer');
+        gameBox.addEventListener("click", () => {
             console.log("Reloading levels");
             window.location.reload();
         }, { once: true });

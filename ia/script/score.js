@@ -1,12 +1,13 @@
 const BOUNS_SCORE = 30;
 const CORRECT_SCORE = 10;
+const INCORRECT_SCORE = -5;
 
 var score = 0;
 var inputIncorrect = false;
 
 var scoreInitLv = () => {
     inputIncorrect = false;
-    scoreUpdate(0);
+    scoreUpdate(); // 0
 }
 
 var scoreCorrect = () => {
@@ -15,7 +16,7 @@ var scoreCorrect = () => {
 
 var scoreIncorrect = () => {
     inputIncorrect = true;
-    scoreUpdate(-5);
+    scoreUpdate(INCORRECT_SCORE);
 }
 
 var scoreEndLv = () => {
@@ -24,7 +25,7 @@ var scoreEndLv = () => {
     }
 }
 
-var scoreUpdate = (s) => {
+var scoreUpdate = (s = 0) => {
     score += s;
     let scoreBox = document.getElementsByClassName('score');
 	for (let i=0; i<scoreBox.length; i++) {
