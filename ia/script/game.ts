@@ -40,6 +40,8 @@ function randBools(count: number) {
 	return result;
 }
 
+var level = 1;
+
 var answers = 4;
 var gridSize = 4;
 var appliedIcons = 4;
@@ -86,13 +88,24 @@ var startGame = function() {
 	boxes.forEach((e) => {
 		e["clickable"] = true;
 	});
+
+	// init score in new level
+	this['scoreInitLv']();
+	// set level display
+	let lvBox = document.getElementsByClassName('lv');
+	for (let i=0; i<lvBox.length; i++) {
+		let e = (lvBox.item(i) as HTMLElement);
+		e.innerHTML = level.toString();
+	}
 	
 	selectedAnswers = randInts(appliedIcons, answers);
 	selectedAnswersIsColors = randBools(answers);
-	console.log("selectedIcons: ", selectedIcons);
-	console.log("selectedBoxes: ", selectedBoxes);
-	console.log("selectedAnswers: ", selectedAnswers);
-	console.log("selectedAnswersIsColors: ", selectedAnswersIsColors);
+	{
+		console.log("selectedIcons: ", selectedIcons);
+		console.log("selectedBoxes: ", selectedBoxes);
+		console.log("selectedAnswers: ", selectedAnswers);
+		console.log("selectedAnswersIsColors: ", selectedAnswersIsColors);
+	}
 
 	updateClickable();
 	showIcons();
@@ -175,6 +188,8 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 	}
 	let i : number = e["boxId"];
 	if (i == selectedBoxes[selectedAnswers[successIndex]]) {
+		// correct
+		window['scoreCorrect']();  // score
 		successIndex++;
 		e["clickable"] = false;
 		updateHintIcon();
@@ -187,6 +202,8 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 			updateClickable();
 		}
 	} else {
+		// incorrect
+		window['scoreIncorrect']();  // score
 		e.style.backgroundColor = "#ff6666";
 		updateClickable();
 		setTimeout(() => {
@@ -241,14 +258,13 @@ var updateHintIcon = function() {
 }
 
 function onWin() {
-	inputAllowed = false;
-	boxes.forEach((e) => {
-		if (e['clickable'])
-			e.style.backgroundColor = "";
-	});
 	showIcons();
 	updateClickable();
 	this['onTimesUp']();
+	// time count anim
+	this['timerCount'](1000);
+	// score
+	this['scoreEndLv']();
 	Promise.race([delayed(1000), new Promise((res) => {
 		const e = document.getElementsByClassName("game-box")[0];
 		setTimeout(() => e.addEventListener("click", res, {once:true}), 100);
@@ -262,6 +278,7 @@ function onWin() {
 			}
 		})
 		appliedIcons += 1;
+		level += 1;
 		startGame();
 	});
 }

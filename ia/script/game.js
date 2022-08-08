@@ -42,6 +42,7 @@ function randBools(count) {
     }
     return result;
 }
+var level = 1;
 var answers = 4;
 var gridSize = 4;
 var appliedIcons = 4;
@@ -81,12 +82,22 @@ var startGame = function () {
     boxes.forEach((e) => {
         e["clickable"] = true;
     });
+    // init score in new level
+    this['scoreInitLv']();
+    // set level display
+    var lvBox = document.getElementsByClassName('lv');
+    for (var i = 0; i < lvBox.length; i++) {
+        var e = lvBox.item(i);
+        e.innerHTML = level.toString();
+    }
     selectedAnswers = randInts(appliedIcons, answers);
     selectedAnswersIsColors = randBools(answers);
-    console.log("selectedIcons: ", selectedIcons);
-    console.log("selectedBoxes: ", selectedBoxes);
-    console.log("selectedAnswers: ", selectedAnswers);
-    console.log("selectedAnswersIsColors: ", selectedAnswersIsColors);
+    {
+        console.log("selectedIcons: ", selectedIcons);
+        console.log("selectedBoxes: ", selectedBoxes);
+        console.log("selectedAnswers: ", selectedAnswers);
+        console.log("selectedAnswersIsColors: ", selectedAnswersIsColors);
+    }
     updateClickable();
     showIcons();
     this['setTime'](10000);
@@ -161,6 +172,8 @@ var buttonOnClick = function (ev) {
     }
     let i = e["boxId"];
     if (i == selectedBoxes[selectedAnswers[successIndex]]) {
+        // correct
+        window['scoreCorrect'](); // score
         successIndex++;
         e["clickable"] = false;
         updateHintIcon();
@@ -174,6 +187,8 @@ var buttonOnClick = function (ev) {
         }
     }
     else {
+        // incorrect
+        window['scoreIncorrect'](); // score
         e.style.backgroundColor = "#ff6666";
         updateClickable();
         setTimeout(() => {

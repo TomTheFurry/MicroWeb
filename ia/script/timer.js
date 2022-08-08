@@ -16,7 +16,7 @@ window.addEventListener('load', () => setTime());
 function onTimesUp() {
     isRunning = false;
     clearInterval(timerInterval);
-    clearInterval(intervalID);
+    endCount();
     // remove class 'button' form game-box
     console.log('remove')
     setTimeout(() => TIMER.classList.remove('beat'), 400);
@@ -53,7 +53,7 @@ var timerCount = (countTime = SECOND_IN_MS) => {
     TIMER.style = '--time-left: 0%';
 
     let time = UPDATE_INTERVAL;
-    clearInterval(intervalID);
+    endCount();
     intervalID = setInterval(() => {
         const passedTime = time / countTime * 100;
         TIMER.style = `--time-left: ${passedTime}%`;
@@ -63,9 +63,14 @@ var timerCount = (countTime = SECOND_IN_MS) => {
         if (time > countTime + UPDATE_INTERVAL ) {
             TIMER.style = '';
             
-            clearInterval(intervalID);
+            endCount();
         }
     }, UPDATE_INTERVAL);
+}
+
+var endCount = () => {
+    TIMER.style = '--time-left: 0%';
+    clearInterval(intervalID);
 }
 
 var setTime = (time = TIME_LIMIT) => {
