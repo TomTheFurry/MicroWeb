@@ -267,5 +267,12 @@ function gameTimeUp() {
     });
     updateClickable();
     showIcons();
+    delayed(1000).then(() => {
+        const e = document.getElementsByClassName("game-box")[0];
+        e.addEventListener("click", () => {
+            console.log("Reloading levels");
+            window.location.reload();
+        }, { once: true });
+    });
 }
 //# sourceMappingURL=game.js.map
