@@ -37,14 +37,19 @@ var selectedAnswersIsColors: boolean[];
 
 var successIndex = 0;
 var inputAllowed = false;
+var inputPaused = false;
 var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00", 
 				"#00bbff", "#0000ff", "#ff0088", "#ff5500", 
 				"#663300", "#005522", "#aa00ff", "#ccbb99", 
 				"#009944", "#776655", "#770000", "#ffbbee"];
 
+var clickableColor = "#eeeeee";
+
+
 var startGame = function() {
 	successIndex = 0;
 	inputAllowed = false;
+	inputPaused = false;
 	selectedIcons = randInts(icons.length, appliedIcons);
 	selectedBoxes = randInts(boxes.length, appliedIcons);
 	
@@ -80,10 +85,14 @@ var startGame = function() {
 
 	updateClickable();
 	showIcons();
+	this['setTime'](10000);
 	this['timerCount'](3300);
 	setTimeout(() => {
 		hideIcons();
 		inputAllowed = true;
+		boxes.forEach((e) => {
+			e.style.backgroundColor = clickableColor;
+		});
 		this['startTimer']();
 		updateClickable();
 		updateHintIcon();
@@ -141,14 +150,14 @@ var initGame = function() {
 }
 
 var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
-	if (!inputAllowed) return;
+	if (!inputAllowed || inputPaused) return;
 	let e = ev.target as HTMLElement;
 	if (!e) throw new ReferenceError();
 	if (e["boxId"] === undefined) return;
 	if (e["clickable"] !== true) return;
-	inputAllowed = false;
+	inputPaused = true;
 	if (e.childNodes[0]) {
-		(e.childNodes[0] as HTMLElement).hidden = false;
+		(e.childNodes[0] as HTMLElement).style.opacity = "1.0";
 	}
 	let i : number = e["boxId"];
 	if (i == selectedBoxes[selectedAnswers[successIndex]]) {
@@ -162,7 +171,7 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 		{
 			onWin();
 		} else {
-			inputAllowed = true;
+			inputPaused = false;
 			updateClickable();
 		}
 	} else {
@@ -172,18 +181,18 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 		updateClickable();
 		setTimeout(() => {
 			if (e.childNodes[0]) {
-				(e.childNodes[0] as HTMLElement).hidden = true;
+				(e.childNodes[0] as HTMLElement).style.opacity = "0.0";
 			}
-			e.style.backgroundColor = "";
-			inputAllowed = true;
+			e.style.backgroundColor = clickableColor;
+			inputPaused = false;
 			updateClickable();
-		}, 300);
+		}, 500);
 	}
 }
 
 var updateClickable = function() {
 	boxes.forEach((e) => {
-		if (inputAllowed && (e["clickable"] === true)) {
+		if (inputAllowed && !inputPaused && (e["clickable"] === true)) {
 			if (e.classList.contains("disable")) e.classList.remove("disable")
 		} else {
 			if (!e.classList.contains("disable")) e.classList.add("disable");
@@ -193,12 +202,12 @@ var updateClickable = function() {
 
 var showIcons = function() {
 	icons.forEach((e) => {
-		e.hidden = false;
+		e.style.opacity = "1.0";
 	})
 }
 var hideIcons = function() {
 	icons.forEach((e) => {
-		e.hidden = true;
+		e.style.opacity = "0.0";
 	})
 }
 
@@ -222,7 +231,6 @@ var updateHintIcon = function() {
 }
 
 function onWin() {
-
 	showIcons();
 	updateClickable();
 	this['onTimesUp']();
@@ -241,4 +249,16 @@ function onWin() {
 		level += 1;
 		startGame();
 	}, 1000);
+}
+
+function gameTimeUp() {
+	inputAllowed = false;
+	boxes.forEach((e) => {
+		if (e.style.backgroundColor == clickableColor)
+			e.style.backgroundColor = "";
+	});
+	updateClickable();
+	showIcons();
+
+
 }
