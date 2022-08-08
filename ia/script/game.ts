@@ -1,3 +1,24 @@
+function promisify(f) {
+	return function (...args) { // return a wrapper-function (*)
+	  return new Promise((resolve, reject) => {
+		function callback(err, result) { // our custom callback for f (**)
+		  if (err) {
+			reject(err);
+		  } else {
+			resolve(result);
+		  }
+		}
+  
+		args.push(callback); // append our custom callback to the end of f arguments
+  
+		f.call(this, ...args); // call the original function
+	  });
+	};
+  }
+
+
+
+
 function randInts(max: number, count: number) {
 	var array : number[] = [];
 	for (var i=0; i<max; i++) {
@@ -43,6 +64,9 @@ var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00",
 
 var clickableColor = "#eeeeee";
 
+const delayed = function(ms : number) {
+	return new Promise((res) => setTimeout(res, ms));
+}
 
 var startGame = function() {
 	successIndex = 0;
@@ -74,7 +98,10 @@ var startGame = function() {
 	showIcons();
 	this['setTime'](10000);
 	this['timerCount'](3300);
-	setTimeout(() => {
+	Promise.race([delayed(3300), new Promise((res) => {
+		const e = document.getElementsByClassName("game-box")[0];
+		e.addEventListener("click", res, {once:true});
+	})]).then(() => {
 		hideIcons();
 		inputAllowed = true;
 		boxes.forEach((e) => {
@@ -83,7 +110,7 @@ var startGame = function() {
 		this['startTimer']();
 		updateClickable();
 		updateHintIcon();
-	}, 3300);
+	});
 }
 
 var initGame = function() {
@@ -222,25 +249,27 @@ function onWin() {
 	showIcons();
 	updateClickable();
 	this['onTimesUp']();
-	setTimeout(() => {
+	Promise.race([delayed(1000), new Promise((res) => {
+		const e = document.getElementsByClassName("game-box")[0];
+		setTimeout(() => e.addEventListener("click", res, {once:true}), 100);
+	})]).then(async () => {
 		hideIcons();
-		setTimeout(() => {
-			boxes.forEach((e) => {
-				e.style.backgroundColor = "";
-				if (e.children[0]) {
-					e.removeChild(e.children[0]);
-				}
-			})
-			appliedIcons += 1;
-			startGame();
-		},300);
-	}, 1000);
+		await delayed(300);
+		boxes.forEach((e) => {
+			e.style.backgroundColor = "";
+			if (e.children[0]) {
+				e.removeChild(e.children[0]);
+			}
+		})
+		appliedIcons += 1;
+		startGame();
+	});
 }
 
 function gameTimeUp() {
 	inputAllowed = false;
 	boxes.forEach((e) => {
-		if (e.style.backgroundColor == clickableColor)
+		if (e['clickable'])
 			e.style.backgroundColor = "";
 	});
 	updateClickable();

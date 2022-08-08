@@ -1,9 +1,34 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+function promisify(f) {
+    return function (...args) {
+        return new Promise((resolve, reject) => {
+            function callback(err, result) {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(result);
+                }
+            }
+            args.push(callback);
+            f.call(this, ...args);
+        });
+    };
+}
 function randInts(max, count) {
     var array = [];
     for (var i = 0; i < max; i++) {
         array.push(i);
     }
-    array = array.sort(function () { return Math.random() - 0.5; });
+    array = array.sort(() => Math.random() - 0.5);
     var result = [];
     for (var i = 0; i < count; i++) {
         result.push(array[i]);
@@ -37,8 +62,10 @@ var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00",
     "#663300", "#005522", "#aa00ff", "#ccbb99",
     "#009944", "#776655", "#770000", "#ffbbee"];
 var clickableColor = "#eeeeee";
+const delayed = function (ms) {
+    return new Promise((res) => setTimeout(res, ms));
+};
 var startGame = function () {
-    var _this = this;
     successIndex = 0;
     inputAllowed = false;
     inputPaused = false;
@@ -46,13 +73,12 @@ var startGame = function () {
     selectedBoxes = randInts(boxes.length, appliedIcons);
     var tmpColors = [];
     tmpColors = tmpColors.concat(colors);
-    tmpColors = tmpColors.sort(function () { return Math.random() - 0.5; });
-    selectedIcons.forEach(function (num, i) {
-        var e = boxes[selectedBoxes[i]].appendChild(icons[num]);
-        // e.style.fill = colors[Math.floor(Math.random() * colors.length)];
+    tmpColors = tmpColors.sort(() => Math.random() - 0.5);
+    selectedIcons.forEach((num, i) => {
+        let e = boxes[selectedBoxes[i]].appendChild(icons[num]);
         e.style.fill = tmpColors.pop();
     });
-    boxes.forEach(function (e) {
+    boxes.forEach((e) => {
         e["clickable"] = true;
     });
     selectedAnswers = randInts(appliedIcons, answers);
@@ -65,16 +91,19 @@ var startGame = function () {
     showIcons();
     this['setTime'](10000);
     this['timerCount'](3300);
-    setTimeout(function () {
+    Promise.race([delayed(3300), new Promise((res) => {
+            const e = document.getElementsByClassName("game-box")[0];
+            e.addEventListener("click", res, { once: true });
+        })]).then(() => {
         hideIcons();
         inputAllowed = true;
-        boxes.forEach(function (e) {
+        boxes.forEach((e) => {
             e.style.backgroundColor = clickableColor;
         });
-        _this['startTimer']();
+        this['startTimer']();
         updateClickable();
         updateHintIcon();
-    }, 3300);
+    });
 };
 var initGame = function () {
     console.log("Game init");
@@ -82,8 +111,8 @@ var initGame = function () {
         var list = document.getElementsByClassName("game-box")[0]
             .getElementsByClassName("game-button");
         boxes = [];
-        for (var i = 0; i < list.length; i++) {
-            var e = list.item(i);
+        for (let i = 0; i < list.length; i++) {
+            let e = list.item(i);
             boxes.push(e);
             e.addEventListener("touchstart", buttonOnClick);
             e.addEventListener("mousedown", buttonOnClick);
@@ -94,11 +123,8 @@ var initGame = function () {
         var list = document.getElementsByClassName("boxes")[0]
             .getElementsByClassName("box");
         icons = [];
-        for (var i = 0; i < list.length; i++) {
-            var e = list.item(i);
-            // e.style.stroke = "black";
-            // e.style.strokeWidth = "2px";
-            // e.style.strokeLinecap = "round";
+        for (let i = 0; i < list.length; i++) {
+            let e = list.item(i);
             e.style.filter = "drop-shadow(-1px 1px 3px #0006)";
             icons.push(e);
         }
@@ -107,11 +133,8 @@ var initGame = function () {
         var list = document.getElementsByClassName("mini-boxes")[0]
             .getElementsByClassName("mini-box");
         mIcons = [];
-        for (var i = 0; i < list.length; i++) {
-            var e = list.item(i);
-            // e.style.stroke = "black";
-            // e.style.strokeWidth = "2px";
-            // e.style.strokeLinecap = "round";
+        for (let i = 0; i < list.length; i++) {
+            let e = list.item(i);
             e.style.filter = "drop-shadow(-1px 1px 3px #0006)";
             mIcons.push(e);
         }
@@ -125,7 +148,7 @@ var initGame = function () {
 var buttonOnClick = function (ev) {
     if (!inputAllowed || inputPaused)
         return;
-    var e = ev.target;
+    let e = ev.target;
     if (!e)
         throw new ReferenceError();
     if (e["boxId"] === undefined)
@@ -136,7 +159,7 @@ var buttonOnClick = function (ev) {
     if (e.childNodes[0]) {
         e.childNodes[0].style.opacity = "1.0";
     }
-    var i = e["boxId"];
+    let i = e["boxId"];
     if (i == selectedBoxes[selectedAnswers[successIndex]]) {
         successIndex++;
         e["clickable"] = false;
@@ -153,7 +176,7 @@ var buttonOnClick = function (ev) {
     else {
         e.style.backgroundColor = "#ff6666";
         updateClickable();
-        setTimeout(function () {
+        setTimeout(() => {
             if (e.childNodes[0]) {
                 e.childNodes[0].style.opacity = "0.0";
             }
@@ -164,7 +187,7 @@ var buttonOnClick = function (ev) {
     }
 };
 var updateClickable = function () {
-    boxes.forEach(function (e) {
+    boxes.forEach((e) => {
         if (inputAllowed && !inputPaused && (e["clickable"] === true)) {
             if (e.classList.contains("disable"))
                 e.classList.remove("disable");
@@ -176,12 +199,12 @@ var updateClickable = function () {
     });
 };
 var showIcons = function () {
-    icons.forEach(function (e) {
+    icons.forEach((e) => {
         e.style.opacity = "1.0";
     });
 };
 var hideIcons = function () {
-    icons.forEach(function (e) {
+    icons.forEach((e) => {
         e.style.opacity = "0.0";
     });
 };
@@ -204,33 +227,36 @@ var updateHintIcon = function () {
 };
 function onWin() {
     inputAllowed = false;
-    boxes.forEach(function (e) {
+    boxes.forEach((e) => {
         if (e['clickable'])
             e.style.backgroundColor = "";
     });
     showIcons();
     updateClickable();
     this['onTimesUp']();
-    setTimeout(function () {
+    Promise.race([delayed(1000), new Promise((res) => {
+            const e = document.getElementsByClassName("game-box")[0];
+            setTimeout(() => e.addEventListener("click", res, { once: true }), 100);
+        })]).then(() => __awaiter(this, void 0, void 0, function* () {
         hideIcons();
-        setTimeout(function () {
-            boxes.forEach(function (e) {
-                e.style.backgroundColor = "";
-                if (e.children[0]) {
-                    e.removeChild(e.children[0]);
-                }
-            });
-            appliedIcons += 1;
-            startGame();
-        }, 300);
-    }, 1000);
+        yield delayed(300);
+        boxes.forEach((e) => {
+            e.style.backgroundColor = "";
+            if (e.children[0]) {
+                e.removeChild(e.children[0]);
+            }
+        });
+        appliedIcons += 1;
+        startGame();
+    }));
 }
 function gameTimeUp() {
     inputAllowed = false;
-    boxes.forEach(function (e) {
-        if (e.style.backgroundColor == clickableColor)
+    boxes.forEach((e) => {
+        if (e['clickable'])
             e.style.backgroundColor = "";
     });
     updateClickable();
     showIcons();
 }
+//# sourceMappingURL=game.js.map
