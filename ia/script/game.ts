@@ -182,12 +182,12 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 	if (e["boxId"] === undefined) return;
 	if (e["clickable"] !== true) return;
 	inputPaused = true;
-	if (e.childNodes[0]) {
-		(e.childNodes[0] as HTMLElement).style.opacity = "1.0";
-	}
 	let i : number = e["boxId"];
 	if (i == selectedBoxes[selectedAnswers[successIndex]]) {
 		// correct
+		if (e.childNodes[0]) {
+			(e.childNodes[0] as HTMLElement).style.opacity = "1.0";
+		}
 		window['scoreCorrect']();  // score
 		successIndex++;
 		e["clickable"] = false;
@@ -204,12 +204,11 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 		// incorrect
 		window['scoreIncorrect']();  // score
 		e.style.backgroundColor = "#ff6666";
+		showClickableIcons();
 		updateClickable();
 		setTimeout(() => {
-			if (e.childNodes[0]) {
-				(e.childNodes[0] as HTMLElement).style.opacity = "0.0";
-			}
-			e.style.backgroundColor = clickableColor;
+			hideClickableIcons();
+			e.style.backgroundColor = inputAllowed ? clickableColor : "";
 			inputPaused = false;
 			updateClickable();
 		}, 500);
@@ -234,6 +233,20 @@ var showIcons = function() {
 var hideIcons = function() {
 	icons.forEach((e) => {
 		e.style.opacity = "0.0";
+	})
+}
+var showClickableIcons = function() {
+	boxes.forEach((e) => {
+		if (e['clickable'] && e.childNodes[0]) {
+			(e.childNodes[0] as HTMLElement).style.opacity = "1.0";
+		};
+	})
+}
+var hideClickableIcons = function() {
+	boxes.forEach((e) => {
+		if (e['clickable'] && e.childNodes[0]) {
+			(e.childNodes[0] as HTMLElement).style.opacity = "0.0";
+		};
 	})
 }
 

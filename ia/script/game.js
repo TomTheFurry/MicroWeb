@@ -165,11 +165,11 @@ var buttonOnClick = function (ev) {
     if (e["clickable"] !== true)
         return;
     inputPaused = true;
-    if (e.childNodes[0]) {
-        e.childNodes[0].style.opacity = "1.0";
-    }
     let i = e["boxId"];
     if (i == selectedBoxes[selectedAnswers[successIndex]]) {
+        if (e.childNodes[0]) {
+            e.childNodes[0].style.opacity = "1.0";
+        }
         window['scoreCorrect']();
         successIndex++;
         e["clickable"] = false;
@@ -186,12 +186,11 @@ var buttonOnClick = function (ev) {
     else {
         window['scoreIncorrect']();
         e.style.backgroundColor = "#ff6666";
+        showClickableIcons();
         updateClickable();
         setTimeout(() => {
-            if (e.childNodes[0]) {
-                e.childNodes[0].style.opacity = "0.0";
-            }
-            e.style.backgroundColor = clickableColor;
+            hideClickableIcons();
+            e.style.backgroundColor = inputAllowed ? clickableColor : "";
             inputPaused = false;
             updateClickable();
         }, 500);
@@ -217,6 +216,22 @@ var showIcons = function () {
 var hideIcons = function () {
     icons.forEach((e) => {
         e.style.opacity = "0.0";
+    });
+};
+var showClickableIcons = function () {
+    boxes.forEach((e) => {
+        if (e['clickable'] && e.childNodes[0]) {
+            e.childNodes[0].style.opacity = "1.0";
+        }
+        ;
+    });
+};
+var hideClickableIcons = function () {
+    boxes.forEach((e) => {
+        if (e['clickable'] && e.childNodes[0]) {
+            e.childNodes[0].style.opacity = "0.0";
+        }
+        ;
     });
 };
 var updateHintIcon = function () {

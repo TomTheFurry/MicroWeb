@@ -15,6 +15,7 @@ var scoreCorrect = () => {
 
 var scoreIncorrect = () => {
     inputIncorrect = true;
+    scoreUpdate(-5);
 }
 
 var scoreEndLv = () => {
