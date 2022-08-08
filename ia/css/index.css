@@ -293,3 +293,10 @@ clock {
     transition: all 300ms ease-in-out;
     transform: translate(-50%, -50%) scale(1);
 }
+
+h3 {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    font-size: 25px;
+}
