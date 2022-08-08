@@ -89,6 +89,8 @@ var startGame = function() {
 	});
 	boxes.forEach((e) => {
 		e["clickable"] = true;
+		e.classList.remove('correct');
+		e.classList.remove('incorrect');
 	});
 	// init score in new level
 	this['scoreInitLv']();
@@ -217,6 +219,7 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 		e["clickable"] = false;
 		updateHintIcon();
 		e.style.backgroundColor = "#b3ffb3";
+		e.classList.add('correct');
 		if (successIndex >= answers)
 		{
 			onWin();
@@ -230,12 +233,15 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 		e.style.backgroundColor = "#ff6666";
 		showClickableIcons();
 		updateClickable();
+		// incorrect anim
 		new Promise(async() => {
+			e.classList.add('incorrect');
 			await delayed(100);
 			hideClickableIcons();
 			await delayed(200);
 			e.style.backgroundColor = inputAllowed ? clickableColor : "";
 			inputPaused = false;
+			e.classList.remove('incorrect');
 			updateClickable();
 		});
 	}
@@ -334,7 +340,7 @@ function gameTimeUp() {
 	showIcons();
 	delayed(4000).then(() => {
 		const gameBox = document.getElementsByClassName("game-box")[0];
-		(gameBox as HTMLElement).classList.remove('pointer');
+		(gameBox as HTMLElement).classList.add('pointer');
 		gameBox.addEventListener("click", () => {
 			console.log("Reloading levels");
 			window.location.reload();

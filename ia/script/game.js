@@ -82,6 +82,8 @@ var startGame = function () {
     });
     boxes.forEach((e) => {
         e["clickable"] = true;
+        e.classList.remove('correct');
+        e.classList.remove('incorrect');
     });
     this['scoreInitLv']();
     {
@@ -195,6 +197,7 @@ var buttonOnClick = function (ev) {
         e["clickable"] = false;
         updateHintIcon();
         e.style.backgroundColor = "#b3ffb3";
+        e.classList.add('correct');
         if (successIndex >= answers) {
             onWin();
         }
@@ -209,11 +212,13 @@ var buttonOnClick = function (ev) {
         showClickableIcons();
         updateClickable();
         new Promise(() => __awaiter(this, void 0, void 0, function* () {
+            e.classList.add('incorrect');
             yield delayed(100);
             hideClickableIcons();
             yield delayed(200);
             e.style.backgroundColor = inputAllowed ? clickableColor : "";
             inputPaused = false;
+            e.classList.remove('incorrect');
             updateClickable();
         }));
     }
@@ -309,7 +314,7 @@ function gameTimeUp() {
     showIcons();
     delayed(4000).then(() => {
         const gameBox = document.getElementsByClassName("game-box")[0];
-        gameBox.classList.remove('pointer');
+        gameBox.classList.add('pointer');
         gameBox.addEventListener("click", () => {
             console.log("Reloading levels");
             window.location.reload();

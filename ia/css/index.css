@@ -56,6 +56,13 @@ html, body, #main-box {
         overflow: hidden;
     }
 
+    .frame > div > .frame-box {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+
 .button > div:hover {
     background-color: #fff !important;
 }
@@ -105,12 +112,47 @@ body > div {
     }
 
     .game-box.button > .game-button:active {
+        width: 100% !important;
+        height: 100% !important;
         transition: 15ms;
     }
 
+    .game-box.button > .game-button.correct {
+        animation: 150ms 1 game-button-correct;
+    }
+
+    @keyframes game-button-correct {
+        0% {
+            animation-timing-function: ease-out;
+        }
+        50% {
+            transform: scale(1.0675);
+            animation-timing-function: ease-in;
+        }
+    }
+
+    .game-box.button > .game-button.incorrect {
+        animation: 75ms 3 linear game-button-incorrect;
+    }
+
+    @keyframes game-button-incorrect {
+        20% {
+            transform: translate(-1.5%, -1.5%);
+        }
+        40% {
+            transform: translate(-1.5%, 1.5%);
+        }
+        60% {
+            transform: translate(1.5%, 1.5%);
+        }
+        80% {
+            transform: translate(1.5%, -1.5%);
+        }
+    }
+
 .ctrl-button {
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
 }
 
     .ctrl-button > div {
@@ -121,7 +163,7 @@ body > div {
 
 .icon-bar {
     max-width: 360px;
-    height: 64px;
+    height: 72px;
     display: flex;
     flex-flow: row;
     gap: 8px;
@@ -129,8 +171,8 @@ body > div {
 }
 
     .icon-bar > div {
-        width: 48px;
-        height: 48px;
+        width: 56px;
+        height: 56px;
     }
 
 .info-box {
@@ -159,6 +201,7 @@ body > div {
 clock {
     height: 100%;
     width: 100%;
+    font-size: 40px !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -268,8 +311,8 @@ clock {
     }
 
     .ctrl-button {
-        width: 48px;
-        height: 48px;
+        width: 56px;
+        height: 56px;
     }
 
     .button > div:active {
@@ -278,12 +321,12 @@ clock {
 
     .icon-bar {
         max-width: 270px;
-        height: 48px;
+        height: 56px;
     }
 
         .icon-bar > div {
-            width: 34px;
-            height: 34px;
+            width: 42px;
+            height: 42px;
         }
 
     .console:first-child {
@@ -292,6 +335,10 @@ clock {
 
     .console:last-child {
         margin-top: 45px;
+    }
+
+    clock {
+        font-size: 30px !important;
     }
 }
 

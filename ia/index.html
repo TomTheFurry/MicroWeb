@@ -100,19 +100,19 @@
 
         <div id="continue-button" class="console">
             <div class="ctrl-button frame button">
-                <div w3-include-html="./svg/icon/start.svg">
-
+                <div>
+                    <div class="frame-box" w3-include-html="./svg/icon/start.svg"></div>
                 </div>
             </div>
             <div class="ctrl-button frame button" onclick="togglePopup()">
-                <div w3-include-html="./svg/icon/help.svg">
-
+                <div>
+                    <div class="frame-box"  w3-include-html="./svg/icon/help.svg"></div>
                 </div>
             </div>
             <a href="./StartPage.html">
                 <div id="leave-button" class="ctrl-button frame button">
-                    <div w3-include-html="./svg/icon/exit.svg">
-
+                    <div>
+                        <div class="frame-box"  w3-include-html="./svg/icon/exit.svg"></div>
                     </div>
                 </div>
             </a>
@@ -137,12 +137,12 @@
         </h1>
         <script src="./script/app.js"></script>
     </div>
-    <script src="./script/help.js"></script>
+    
     <!-- script -->
+    <script src="./script/help.js"></script>
     <script type="text/javascript" src="./script/timer.js"></script>
     <script>
         includeHTML();
-        //startTimer();
     </script>
 
 </body>
