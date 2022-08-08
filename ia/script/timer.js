@@ -13,20 +13,23 @@ const UPDATE_INTERVAL = SECOND_IN_MS / 60;
 
 window.addEventListener('load', () => setTime());
 
-function onTimesUp() {
+function timerInit() {
     isRunning = false;
     clearInterval(timerInterval);
     endCount();
     // remove class 'button' form game-box
-    console.log('remove')
     setTimeout(() => TIMER.classList.remove('beat'), 400);
     TIMER.classList.remove('counting');
+}
+
+function onTimesUp() {
+    timerInit();
     gameTimeUp();
 }
 
 function startTimer(timeLimit = TIME_LIMIT) {
     if (isRunning) {
-        onTimesUp();
+        timerInit();
     }
 
     isRunning = true;
