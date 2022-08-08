@@ -100,10 +100,11 @@ var startGame = function () {
     showIcons();
     this['setTime'](10000);
     this['timerCount'](3300);
-    Promise.race([delayed(3300), new Promise((res) => {
+    Promise.race([delayed(3300), new Promise((res) => __awaiter(this, void 0, void 0, function* () {
+            yield delayed(300);
             const e = document.getElementsByClassName("game-box")[0];
             e.addEventListener("click", res, { once: true });
-        })]).then(() => {
+        }))]).then(() => {
         hideIcons();
         inputAllowed = true;
         boxes.forEach((e) => {
@@ -188,12 +189,14 @@ var buttonOnClick = function (ev) {
         e.style.backgroundColor = "#ff6666";
         showClickableIcons();
         updateClickable();
-        setTimeout(() => {
+        new Promise(() => __awaiter(this, void 0, void 0, function* () {
+            yield delayed(100);
             hideClickableIcons();
+            yield delayed(200);
             e.style.backgroundColor = inputAllowed ? clickableColor : "";
             inputPaused = false;
             updateClickable();
-        }, 500);
+        }));
     }
 };
 var updateClickable = function () {
@@ -257,10 +260,11 @@ function onWin() {
     this['timerInit']();
     this['timerCount'](1000);
     this['scoreEndLv']();
-    Promise.race([delayed(1000), new Promise((res) => {
+    Promise.race([delayed(1000), new Promise((res) => __awaiter(this, void 0, void 0, function* () {
+            yield delayed(300);
             const e = document.getElementsByClassName("game-box")[0];
-            setTimeout(() => e.addEventListener("click", res, { once: true }), 100);
-        })]).then(() => __awaiter(this, void 0, void 0, function* () {
+            e.addEventListener("click", res, { once: true });
+        }))]).then(() => __awaiter(this, void 0, void 0, function* () {
         hideIcons();
         yield delayed(300);
         boxes.forEach((e) => {
@@ -282,7 +286,7 @@ function gameTimeUp() {
     });
     updateClickable();
     showIcons();
-    delayed(1000).then(() => {
+    delayed(4000).then(() => {
         const e = document.getElementsByClassName("game-box")[0];
         e.addEventListener("click", () => {
             console.log("Reloading levels");

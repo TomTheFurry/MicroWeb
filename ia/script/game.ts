@@ -110,7 +110,8 @@ var startGame = function() {
 	showIcons();
 	this['setTime'](10000);
 	this['timerCount'](3300);
-	Promise.race([delayed(3300), new Promise((res) => {
+	Promise.race([delayed(3300), new Promise(async (res) => {
+		await delayed(300);
 		const e = document.getElementsByClassName("game-box")[0];
 		e.addEventListener("click", res, {once:true});
 	})]).then(() => {
@@ -206,12 +207,14 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 		e.style.backgroundColor = "#ff6666";
 		showClickableIcons();
 		updateClickable();
-		setTimeout(() => {
+		new Promise(async() => {
+			await delayed(100);
 			hideClickableIcons();
+			await delayed(200);
 			e.style.backgroundColor = inputAllowed ? clickableColor : "";
 			inputPaused = false;
 			updateClickable();
-		}, 500);
+		});
 	}
 }
 
@@ -277,9 +280,10 @@ function onWin() {
 	this['timerCount'](1000);
 	// score
 	this['scoreEndLv']();
-	Promise.race([delayed(1000), new Promise((res) => {
+	Promise.race([delayed(1000), new Promise(async (res) => {
+		await delayed(300);
 		const e = document.getElementsByClassName("game-box")[0];
-		setTimeout(() => e.addEventListener("click", res, {once:true}), 100);
+		e.addEventListener("click", res, {once:true});
 	})]).then(async () => {
 		hideIcons();
 		await delayed(300);
@@ -303,7 +307,7 @@ function gameTimeUp() {
 	});
 	updateClickable();
 	showIcons();
-	delayed(1000).then(() => {
+	delayed(4000).then(() => {
 		const e = document.getElementsByClassName("game-box")[0];
 		e.addEventListener("click", () => {
 			console.log("Reloading levels");
