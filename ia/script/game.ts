@@ -82,11 +82,7 @@ var startGame = function() {
 	tmpColors = tmpColors.sort(() => Math.random()-0.5);
 	selectedIcons.forEach((num, i) => {
 		let e = boxes[selectedBoxes[i]].appendChild(icons[num]);
-		// e.style.fill = colors[Math.floor(Math.random() * colors.length)];
-		e.style.fill = tmpColors.pop();
-	});
-	boxes.forEach((e) => {
-		e["clickable"] = true;
+		// e.style.fill = colors[Math.floor(Math.random() * colors.lenrue;
 	});
 
 	// init score in new level
