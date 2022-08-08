@@ -92,6 +92,10 @@ body > div {
     align-items: center;
 }
 
+.game-box.pointer {
+    cursor: pointer;
+}
+
     .game-box > .game-button {
         width: 100%;
         height: 100%;
