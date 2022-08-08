@@ -118,7 +118,7 @@ body > div {
     }
 
     .game-box.button > .game-button.correct {
-        animation: 150ms 1 game-button-correct;
+        animation: 175ms 1 game-button-correct;
     }
 
     @keyframes game-button-correct {
