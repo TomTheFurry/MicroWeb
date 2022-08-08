@@ -64,7 +64,7 @@ var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00",
 				"#663300", "#005522", "#aa00ff", "#ccbb99", 
 				"#009944", "#776655", "#770000", "#ffbbee"];
 
-var clickableColor = "#eeeeee";
+var clickableColor = "#e8e8e8";
 
 const delayed = function(ms : number) {
 	return new Promise((res) => setTimeout(res, ms));
