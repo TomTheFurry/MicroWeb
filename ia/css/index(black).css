@@ -1,3 +1,7 @@
+body {
+    background-color: #1e1e1e;
+}
+
 * {
     transition: 0.2s;
 }
@@ -11,7 +15,7 @@ html, body, #main-box {
 }
 
 .st0 {
-    fill: #ffffff;
+    fill: #777;
 }
 
 #main-box {
@@ -28,7 +32,7 @@ html, body, #main-box {
 /*.frame {
     border: 8px solid #888;
     border-radius: 15px;
-    box-shadow: 0 0 13px #555a;
+    box-shadow: 0 0 13px #666;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,13 +52,13 @@ html, body, #main-box {
 
     .frame > div {
         border-radius: 10px;
-        background: #ffffff;
+        background: #777;
         margin: 0;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        box-shadow: 0 0 13px #555a;
+        box-shadow: 0 0 13px #666;
     }
 
     .frame > div > .frame-box {
@@ -65,14 +69,14 @@ html, body, #main-box {
     }
 
 .button > div:hover {
-    background-color: #fff !important;
+    background-color: #777 !important;
     transform: scale(1.1);
 }
 
 .button > div:active {
-    box-shadow: 0px 0px 13px #555a;
-    width: 97%;
-    height: 97%;
+    box-shadow: 0px 0px 13px #666;
+    width: 75%;
+    height: 75%;
 }
 
 h1 {
@@ -88,9 +92,9 @@ body > div {
 }
 
 .game-box {
-    border: 30px solid #ffffff;
+    border: 30px solid #1e1e1e;
     border-radius: 24px;
-    box-shadow: 0 0 13px #555a;
+    /*box-shadow: 0 0 13px #666;*/
     height: 500px;
     width: 500px;
     position: relative;
@@ -201,6 +205,7 @@ body > div {
 
 /*timer*/
 clock {
+    color: #fff;
     height: 100%;
     width: 100%;
     font-size: 40px !important;
@@ -318,7 +323,7 @@ clock {
     }
 
     .button > div:active {
-        box-shadow: 0px 0px 11px #555a;
+        box-shadow: 0px 0px 11px #666;
     }
 
     .icon-bar {
@@ -376,7 +381,7 @@ clock {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    background: #fff;
+    background: #666;
     width: 450px;
     z-index: 2;
     text-align: center;
@@ -393,7 +398,7 @@ clock {
     top: 20px;
     width: 30px;
     height: 30px;
-    background: #fff;
+    background: #666;
     font-size: 25px;
     font-weight: 600;
     line-height: 30px;
@@ -412,6 +417,7 @@ clock {
 }
 
 h3 {
+    color: #fff;
     position: relative;
     display: inline-block;
     text-align: center;
