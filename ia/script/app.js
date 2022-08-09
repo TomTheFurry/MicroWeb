@@ -1,9 +1,11 @@
-let intro = document.querySelector('.intro');
-let logo = document.querySelector('.logo-header');
-let logoSpan = document.querySelectorAll('.logo');
+const GAME_BOX = document.getElementById('game-box');
 
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
+        let intro = document.querySelector('.intro');
+        let logo = document.querySelector('.logo-header');
+        let logoSpan = document.querySelectorAll('.logo');
+
         logoSpan.forEach((span, idx) => {
             setTimeout(() => {
                 span.classList.add('active');
