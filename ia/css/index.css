@@ -2,7 +2,7 @@
     transition: 0.2s;
 }
 
-html, body, #main-box {
+html, body, .main-box {
     margin: 0px;
     display: flex;
     flex-flow: column;
@@ -14,11 +14,11 @@ html, body, #main-box {
     fill: #898989;
 }
 
-#main-box {
+.main-box {
     width: auto;
 }
 
-.box, .mini-box {
+.icon, .mini-icon {
     width: 75%;
     height: 75%;
     box-sizing: border-box;
@@ -191,11 +191,11 @@ body > div {
     transition: 0.15s;
 }
 
-    .console:first-child {
+    .console:first-of-type {
         margin-bottom: 60px;
     }
 
-    .console:last-child {
+    .console:last-of-type {
         margin-top: 60px;
     }
 

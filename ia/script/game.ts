@@ -167,8 +167,8 @@ var initGame = function() {
 	}
 	
 	{
-		var list = document.getElementsByClassName("boxes")[0]
-		.getElementsByClassName("box");
+		var list = document.getElementsByClassName("icons")[0]
+		.getElementsByClassName("icon");
 		icons = [];
 		for (let i=0; i<list.length; i++) {
 			let e = (list.item(i) as HTMLElement);
@@ -181,8 +181,8 @@ var initGame = function() {
 	}
 
 	{
-		var list = document.getElementsByClassName("mini-boxes")[0]
-			.getElementsByClassName("mini-box");
+		var list = document.getElementsByClassName("mini-icons")[0]
+			.getElementsByClassName("mini-icon");
 		mIcons = [];
 		for (let i = 0; i < list.length; i++) {
 			let e = (list.item(i) as HTMLElement);

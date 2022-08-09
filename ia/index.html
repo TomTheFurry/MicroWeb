@@ -16,7 +16,7 @@
 </head>
 <body>
 
-    <div id="main-box">
+    <div id="game-box" class="main-box">
         <div class="console">
             <div id="time-frame" class="ctrl-button frame">
                 <div>
@@ -33,47 +33,6 @@
             <div class="icon-bar frame">
                 <div></div>
             </div>
-
-            <div class="boxes" style="display: none">
-                <div class="box" w3-include-html="./svg/shape/3star.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/arc.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/arrow.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/diamond.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/hexagon.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/oval.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/parallelogram.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/pentagon.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/right_angle.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/round.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/square.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/star.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/trapezoid.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/triangle.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/wire.svg"></div> 
-                <div class="box" w3-include-html="./svg/shape/x_mark.svg"></div> 
-            </div>
-            <div class="mini-boxes" style="display: none">
-                <div class="mini-box" w3-include-html="./svg/shapeMini/3starM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/arcM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/arrowM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/diamondM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/hexagonM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/ovalM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/parallelogramM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/pentagonM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/right_angleM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/roundM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/squareM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/starM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/trapezoidM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/triangleM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/wireM.svg"></div> 
-                <div class="mini-box" w3-include-html="./svg/shapeMini/x_markM.svg"></div> 
-            </div>
-            <div class="mini-boxes" style="display:none">
-                <div id="color-icon" class="mini-box" w3-include-html="./svg/shapeMini/color.svg"></div>
-            </div>
-
         </div>
 
         <div class="game-box frame button">
@@ -93,9 +52,7 @@
             <div class="game-button"></div>
             <div class="game-button"></div>
             <div class="game-button"></div>
-            <div id="game-start-count" class="game-start-count disable">
-
-            </div>
+            <div id="game-start-count" class="game-start-count disable"></div>
         </div>
 
         <div id="continue-button" class="console">
@@ -118,29 +75,76 @@
             </a>
         </div>
 
+        <span class="store">
+            <div class="icons" style="display: none">
+                <div class="icon" w3-include-html="./svg/shape/3star.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/arc.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/arrow.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/diamond.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/hexagon.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/oval.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/parallelogram.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/pentagon.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/right_angle.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/round.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/square.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/star.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/trapezoid.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/triangle.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/wire.svg"></div> 
+                <div class="icon" w3-include-html="./svg/shape/x_mark.svg"></div> 
+            </div>
+            <div class="mini-icons" style="display: none">
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/3starM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/arcM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/arrowM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/diamondM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/hexagonM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/ovalM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/parallelogramM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/pentagonM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/right_angleM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/roundM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/squareM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/starM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/trapezoidM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/triangleM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/wireM.svg"></div> 
+                <div class="mini-icon" w3-include-html="./svg/shapeMini/x_markM.svg"></div> 
+            </div>
+            <div class="mini-icons" style="display:none">
+                <div id="color-icon" class="mini-icon" w3-include-html="./svg/shapeMini/color.svg"></div>
+            </div>
 
+ 
+            <div class="popup" id="popup-1">
+                <div class="overlay"></div>
+                <dr class="content">
+                    <div class="close-btn" onclick="togglePopup()"><img src="./svg/icon/x.svg" width="15"></div>
+                    <img src="./svg/icon/HowToPlay.svg" width="350">
+                    <p>W<br />W<br />W<br />W<br />W<br />W<br />W<br />WWWWWWWWWWWWWWWWWWW</p>
+            </div>
+        
+            <div class="intro">
+                <h1 class="logo-header">
+        
+                    <span class="logo" style="color:#aa00ff">S</span><span class="logo" style="color:#00bbff">t</span><span class="logo" style="color:#776655">a</span><span class="logo" style="color:#009944">r</span><span class="logo" style="color:#ccbb99">t</span><br/>
+                    <span class="logo" style="color:#ff0000">N</span><span class="logo" style="color:#00bbff">o</span><span class="logo" style="color:#ff5500">w</span>
+                </h1>
+                <script src="./script/app.js"></script>
+            </div>
+        </span>
+        
+
+        <!-- script -->
+        <script src="./script/help.js"></script>
+        <script type="text/javascript" src="./script/timer.js"></script>
     </div>
+    <!-- end of game-box -->
 
-    <div class="popup" id="popup-1">
-        <div class="overlay"></div>
-        <dr class="content">
-            <div class="close-btn" onclick="togglePopup()"><img src="./svg/icon/x.svg" width="15"></div>
-            <img src="./svg/icon/HowToPlay.svg" width="350">
-            <p>W<br />W<br />W<br />W<br />W<br />W<br />W<br />WWWWWWWWWWWWWWWWWWW</p>
-    </div>
-
-    <div class="intro">
-        <h1 class="logo-header">
-
-            <span class="logo" style="color:#aa00ff">S</span><span class="logo" style="color:#00bbff">t</span><span class="logo" style="color:#776655">a</span><span class="logo" style="color:#009944">r</span><span class="logo" style="color:#ccbb99">t</span><br/>
-            <span class="logo" style="color:#ff0000">N</span><span class="logo" style="color:#00bbff">o</span><span class="logo" style="color:#ff5500">w</span>
-        </h1>
-        <script src="./script/app.js"></script>
-    </div>
+    
     
     <!-- script -->
-    <script src="./script/help.js"></script>
-    <script type="text/javascript" src="./script/timer.js"></script>
     <script>
         includeHTML();
     </script>
