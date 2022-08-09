@@ -63,9 +63,7 @@ var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00",
     "#00bbff", "#0000ff", "#ff0088", "#ff5500",
     "#663300", "#005522", "#aa00ff", "#ccbb99",
     "#009944", "#776655", "#ddeeff", "#ffbbee"];
-var cssDisabledTile = "tile-disabled";
-var cssCorrectTile = "tile-correct";
-var cssIncorrectTile = "tile-incorrect";
+var clickableColor = "#e2e2e2";
 const delayed = function (ms) {
     return new Promise((res) => setTimeout(res, ms));
 };
@@ -84,8 +82,8 @@ var startGame = function () {
     });
     boxes.forEach((e) => {
         e["clickable"] = true;
-        e.classList.remove(cssIncorrectTile);
-        e.classList.remove(cssCorrectTile);
+        e.classList.remove('correct');
+        e.classList.remove('incorrect');
     });
     this['scoreInitLv']();
     {
@@ -130,6 +128,9 @@ var startGame = function () {
             }
         }
         inputAllowed = true;
+        boxes.forEach((e) => {
+            e.style.backgroundColor = clickableColor;
+        });
         this['startTimer']();
         updateClickable();
         updateHintIcon();
@@ -155,6 +156,7 @@ var initGame = function () {
         icons = [];
         for (let i = 0; i < list.length; i++) {
             let e = list.item(i);
+            e.style.filter = "drop-shadow(-1px 1px 3px #0006)";
             icons.push(e);
         }
     }
@@ -164,6 +166,7 @@ var initGame = function () {
         mIcons = [];
         for (let i = 0; i < list.length; i++) {
             let e = list.item(i);
+            e.style.filter = "drop-shadow(-1px 1px 3px #0006)";
             mIcons.push(e);
         }
     }
@@ -193,7 +196,7 @@ var buttonOnClick = function (ev) {
         successIndex++;
         e["clickable"] = false;
         updateHintIcon();
-        e.classList.add(cssCorrectTile);
+        e.classList.add('correct');
         if (successIndex >= answers) {
             onWin();
         }
@@ -207,12 +210,12 @@ var buttonOnClick = function (ev) {
         showClickableIcons();
         updateClickable();
         new Promise(() => __awaiter(this, void 0, void 0, function* () {
-            e.classList.add(cssIncorrectTile);
+            e.classList.add('incorrect');
             yield delayed(100);
             hideClickableIcons();
             yield delayed(200);
             inputPaused = false;
-            e.classList.remove(cssIncorrectTile);
+            e.classList.remove('incorrect');
             updateClickable();
         }));
     }
@@ -220,12 +223,12 @@ var buttonOnClick = function (ev) {
 var updateClickable = function () {
     boxes.forEach((e) => {
         if (inputAllowed && !inputPaused && (e["clickable"] === true)) {
-            if (e.classList.contains(cssDisabledTile))
-                e.classList.remove(cssDisabledTile);
+            if (e.classList.contains("disable"))
+                e.classList.remove("disable");
         }
         else {
-            if (!e.classList.contains(cssDisabledTile))
-                e.classList.add(cssDisabledTile);
+            if (!e.classList.contains("disable"))
+                e.classList.add("disable");
         }
     });
 };

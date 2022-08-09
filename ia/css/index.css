@@ -120,6 +120,7 @@ body > div {
     }
 
     .game-box.button > .game-button.correct {
+        background-color: #b3ffb3 !important;
         animation: 175ms 1 game-button-correct;
     }
 
@@ -134,21 +135,22 @@ body > div {
     }
 
     .game-box.button > .game-button.incorrect {
-        animation: 75ms 3 linear game-button-incorrect;
+        background-color: #ff6666 !important;
+        animation: 56ms 3  linear game-button-incorrect;
     }
 
     @keyframes game-button-incorrect {
         20% {
-            transform: translate(-1.5%, -1.5%);
+            transform: translate(-2%, -2%);
         }
         40% {
-            transform: translate(-1.5%, 1.5%);
+            transform: translate(-2%, 2%);
         }
         60% {
-            transform: translate(1.5%, 1.5%);
+            transform: translate(2%, 2%);
         }
         80% {
-            transform: translate(1.5%, -1.5%);
+            transform: translate(2%, -2%);
         }
     }
 
@@ -239,6 +241,7 @@ clock {
     }
 }
 
+/* start count */
 .game-start-count {
     transition: 0ms;
     visibility: hidden;
