@@ -196,7 +196,6 @@ var buttonOnClick = function (ev) {
         successIndex++;
         e["clickable"] = false;
         updateHintIcon();
-        e.style.backgroundColor = "#b3ffb3";
         e.classList.add('correct');
         if (successIndex >= answers) {
             onWin();
@@ -208,7 +207,6 @@ var buttonOnClick = function (ev) {
     }
     else {
         window['scoreIncorrect']();
-        e.style.backgroundColor = "#ff6666";
         showClickableIcons();
         updateClickable();
         new Promise(() => __awaiter(this, void 0, void 0, function* () {
@@ -216,7 +214,6 @@ var buttonOnClick = function (ev) {
             yield delayed(100);
             hideClickableIcons();
             yield delayed(200);
-            e.style.backgroundColor = inputAllowed ? clickableColor : "";
             inputPaused = false;
             e.classList.remove('incorrect');
             updateClickable();

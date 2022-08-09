@@ -218,7 +218,6 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 		successIndex++;
 		e["clickable"] = false;
 		updateHintIcon();
-		e.style.backgroundColor = "#b3ffb3";
 		e.classList.add('correct');
 		if (successIndex >= answers)
 		{
@@ -230,7 +229,6 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 	} else {
 		// incorrect
 		window['scoreIncorrect']();  // score
-		e.style.backgroundColor = "#ff6666";
 		showClickableIcons();
 		updateClickable();
 		// incorrect anim
@@ -239,7 +237,7 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 			await delayed(100);
 			hideClickableIcons();
 			await delayed(200);
-			e.style.backgroundColor = inputAllowed ? clickableColor : "";
+			// e.style.backgroundColor = inputAllowed ? clickableColor : "";
 			inputPaused = false;
 			e.classList.remove('incorrect');
 			updateClickable();
