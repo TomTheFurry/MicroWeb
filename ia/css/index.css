@@ -23,6 +23,7 @@ html, body, .main-box {
     height: 75%;
     box-sizing: border-box;
     pointer-events: none;
+    filter: drop-shadow(-1px 1px 3px #0006);
 }
 
 .frame {
@@ -109,6 +110,7 @@ body > div {
         height: 100%;
         aspect-ratio: 1;
         place-items: center;
+        background-color: #e2e2e2;
     }
 
     .game-box.button > .game-button:active {
@@ -117,7 +119,13 @@ body > div {
         transition: 15ms;
     }
 
-    .game-box.button > .game-button.correct {
+    .game-box.button > .game-button.tile-disabled {
+        pointer-events: none;
+        cursor: default;
+        background-color: #c9caca;
+    }
+
+    .game-box.button > .game-button.tile-correct {
         background-color: #b3ffb3 !important;
         animation: 175ms 1 game-button-correct;
     }
@@ -126,29 +134,33 @@ body > div {
         0% {
             animation-timing-function: ease-out;
         }
+        10% {
+            transform: translate(0, -10%);
+            transform: scale(1.05);
+        }
         50% {
-            transform: scale(1.0675);
+            transform: scale(1.1);
             animation-timing-function: ease-in;
         }
     }
 
-    .game-box.button > .game-button.incorrect {
+    .game-box.button > .game-button.tile-incorrect {
         background-color: #ff6666 !important;
-        animation: 56ms 3  linear game-button-incorrect;
+        animation: 56ms 3 linear game-button-incorrect;
     }
 
     @keyframes game-button-incorrect {
         20% {
-            transform: translate(-2%, -2%);
+            transform: translate(-5%, -5%);
         }
         40% {
-            transform: translate(-2%, 2%);
+            transform: translate(-5%, 5%);
         }
         60% {
-            transform: translate(2%, 2%);
+            transform: translate(5%, 5%);
         }
         80% {
-            transform: translate(2%, -2%);
+            transform: translate(5%, -5%);
         }
     }
 
@@ -240,6 +252,10 @@ clock {
 }
 
 /* start count */
+#game-start-wrapper {
+    
+}
+
 .game-start-count {
     transition: 0ms;
     visibility: hidden;
@@ -264,6 +280,7 @@ clock {
     -webkit-mask-size: 100%;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
+
 }
 
     .game-start-count::after {
@@ -354,11 +371,6 @@ clock {
 
 .hidden {
     visibility: hidden;
-}
-
-.disable {
-    pointer-events: none;
-    cursor: default;
 }
 
 .popup .overlay {
