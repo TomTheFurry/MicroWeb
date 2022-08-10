@@ -1,6 +1,7 @@
 const GAME_BOX = document.getElementById('game-box');
 
-window.addEventListener('DOMContentLoaded', () => {
+// window.addEventListener('DOMContentLoaded', gameBoxIntroStart);  
+var gameBoxIntroStart = () => {
     setTimeout(() => {
         let intro = GAME_BOX.querySelector('.intro');
         let logo = GAME_BOX.querySelector('.logo-header');
@@ -23,4 +24,4 @@ window.addEventListener('DOMContentLoaded', () => {
             initGame();
         }, logoSpan.length * 50 + 920);
     })
-})
+}

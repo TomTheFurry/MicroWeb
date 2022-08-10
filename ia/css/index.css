@@ -375,6 +375,10 @@ clock {
     visibility: hidden;
 }
 
+.disable {
+    display: none;
+}
+
 .popup .overlay {
     position: fixed;
     top: 0px;
