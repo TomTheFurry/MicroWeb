@@ -4,6 +4,7 @@
 
 html, body, .main-box {
     margin: 0px;
+    min-height: 100%;
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -15,10 +16,7 @@ html, body, .main-box {
 }
 
 .main-box {
-    /* position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); */
+    /* transform: translateY(-50%); */
     width: auto;
 }
 
