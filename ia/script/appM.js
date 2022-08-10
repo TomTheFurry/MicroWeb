@@ -1,7 +1,7 @@
 const END_BOX = document.getElementById('end-box');
 
-// window.addEventListener('DOMContentLoaded', endBoxIntroStart);
-var endBoxIntroStart = () => {
+// window.addEventListener('DOMContentLoaded', startEndPage);
+var startEndPage = () => {
 	showPage(END_BOX);
 	setTimeout(() => {
 		let intro = END_BOX.querySelector('.intro');
