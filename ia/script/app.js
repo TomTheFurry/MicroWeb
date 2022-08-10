@@ -2,9 +2,9 @@ const GAME_BOX = document.getElementById('game-box');
 
 window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
-        let intro = document.querySelector('.intro');
-        let logo = document.querySelector('.logo-header');
-        let logoSpan = document.querySelectorAll('.logo');
+        let intro = GAME_BOX.querySelector('.intro');
+        let logo = GAME_BOX.querySelector('.logo-header');
+        let logoSpan = GAME_BOX.querySelectorAll('.logo');
 
         logoSpan.forEach((span, idx) => {
             setTimeout(() => {
