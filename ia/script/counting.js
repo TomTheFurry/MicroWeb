@@ -12,4 +12,4 @@ const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
     window.requestAnimationFrame(step);
 };
 
-counterAnim("#counter", 0, 700/*mark*/, 4000);
+// counterAnim("#counter", 0, 700/*mark*/, 4000);

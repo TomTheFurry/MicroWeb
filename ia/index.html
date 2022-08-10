@@ -16,7 +16,7 @@
 </head>
 <body>
 
-    <div id="game-box" class="main-box">
+    <div id="game-box" class="main-box disable">
         <div class="console">
             <div id="time-frame" class="ctrl-button frame">
                 <div>
@@ -142,7 +142,7 @@
     </div>
     <!-- end of game-box -->
 
-    <div id="end-box" class="main-box disable">
+    <div id="end-box" class="main-box ">
         <div class="center">
             <div class="top3">
                 <div class="two item">
@@ -226,24 +226,28 @@
                 </div>
             </a>
         </div>
-    </div>
 
-    <div class="intro">
-        <h1 class="logo-header">
-            <span class="logo" style="color:#ccbb99">Y</span><span class="logo" style="color:#ff0000">o</span><span class="logo" style="color:#aa00ff">u</span><span class="logo" style="color:#aaff00">r</span><br />
-            <span class="logo" style="color:#009944">m</span><span class="logo" style="color:#00bbff">a</span><span class="logo" style="color:#0000ff">r</span><span class="logo" style="color:#ff0088">k</span>
-            <span class="logo" style="color:#ff5500">i</span><span class="logo" style="color:#663300">s</span><span class="logo" style="color:#005522">:</span><br /><span class="logo">
-                <span id="counter"></span>
-                <script type="text/javascript" src="./script/counting.js"></script>
-            </span>
-        </h1>
-        <script src="./script/appM.js"></script>
+        <span class="store">
+            <div class="intro">
+                <h1 class="logo-header">
+                    <span class="logo" style="color:#ccbb99">Y</span><span class="logo" style="color:#ff0000">o</span><span class="logo" style="color:#aa00ff">u</span><span class="logo" style="color:#aaff00">r</span><br />
+                    <span class="logo" style="color:#009944">m</span><span class="logo" style="color:#00bbff">a</span><span class="logo" style="color:#0000ff">r</span><span class="logo" style="color:#ff0088">k</span>
+                    <span class="logo" style="color:#ff5500">i</span><span class="logo" style="color:#663300">s</span><span class="logo" style="color:#005522">:</span><br /><span class="logo">
+                        <span id="counter"></span>
+                        <script type="text/javascript" src="./script/counting.js"></script>
+                    </span>
+                </h1>
+                <script src="./script/appM.js"></script>
+            </div>
+        </span>
     </div>
     <!-- end of end-box -->
 
     <!-- script -->
     <script>
         includeHTML();
+        startGamePage();
+        // endBoxIntroStart();
     </script>
 
 </body>
