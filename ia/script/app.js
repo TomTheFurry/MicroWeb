@@ -34,6 +34,7 @@ var startGamePage = () => {
             });
             yield delayed(150);
             intro.classList.add('fade');
+            initGame();
         }));
         /* setTimeout(() => {
             logoSpan.forEach((span, idx) => {
