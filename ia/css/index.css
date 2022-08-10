@@ -15,6 +15,10 @@ html, body, .main-box {
 }
 
 .main-box {
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
     width: auto;
 }
 
@@ -26,15 +30,15 @@ html, body, .main-box {
     filter: drop-shadow(-1px 1px 3px #0006);
 }
 
-/*.frame {
-    border: 8px solid #888;
+.frame {
+    /* border: 8px solid #888;
     border-radius: 15px;
-    box-shadow: 0 0 13px #555a;
+    box-shadow: 0 0 13px #555a; */
     display: flex;
     align-items: center;
     justify-content: center;
     transition: 50ms;
-}*/
+}
 
     .frame * {
         -webkit-touch-callout: none;
@@ -67,10 +71,13 @@ html, body, .main-box {
 
 .button > div:hover {
     background-color: #fff !important;
+}
+
+.button:not(.game-box) > div:hover {
     transform: scale(1.1);
 }
 
-.button > div:active {
+.button:not(.game-box) > div:active {
     box-shadow: 0px 0px 13px #555a;
     width: 97%;
     height: 97%;
@@ -116,8 +123,6 @@ body > div {
     }
 
     .game-box.button > .game-button:active {
-        width: 100% !important;
-        height: 100% !important;
         transition: 15ms;
     }
 
@@ -155,7 +160,7 @@ body > div {
         20% {
             transform: translate(-5%, -5%);
         }
-        40% {
+        50% {
             transform: translate(-5%, 5%);
         }
         60% {
@@ -254,24 +259,32 @@ clock {
 }
 
 /* start count */
-#game-start-wrapper {
-    
+.game-start-count, .game-start-count * {
+    transition: 0ms;
 }
 
 .game-start-count {
-    transition: 0ms;
+    filter: drop-shadow(1px -1px 16px rgba(255, 0, 0, 0.3));
+
     visibility: hidden;
     position: absolute;
     z-index: 10;
-    overflow: hidden !important;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 40%;
     height: 40%;
+}
+
+.game-start-count.count {
+    visibility: visible;
+}
+
+.game-start-count > div {
+    width: 100%;
+    height: 100%;
+    overflow: hidden !important;
     background-color: #fde9e8 !important;
-    stroke: #942994;
-    stroke-width: 5;
 
     mask-image: url(../svg/icon/start.svg);
     mask-size: 100%;
@@ -285,7 +298,7 @@ clock {
 
 }
 
-    .game-start-count::after {
+    .game-start-count > div::after {
         --top: 21%;
         --bottom: 58%;  /* 100 - 21 - 21 = 58 */
         content: "";
@@ -299,11 +312,7 @@ clock {
         transform: translateY(var(--bottom));
     }
 
-    .game-start-count.count {
-        visibility: visible;
-    }
-
-        .game-start-count.count::after {
+        .game-start-count.count > div::after {
             animation: var(--count-time) linear forwards timer_indicator;
         }
 
