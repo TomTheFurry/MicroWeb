@@ -61,10 +61,10 @@ var selectedAnswersIsColors: boolean[];
 var successIndex = 0;
 var inputAllowed = false;
 var inputPaused = false;
-var colors = ["#000000", "#ff0000", "#ffff00", "#aaff00", 
-				"#00bbff", "#0000ff", "#ff0088", "#ff5500", 
-				"#663300", "#005522", "#aa00ff", "#ccbb99", 
-				"#009944", "#776655", "#ddeeff", "#ffbbee"];
+var colors = ["#ff0088", "#005522", "#aa00ff", "#00bbff",
+				"#ffbbee", "#ff5500", "#fff1e9", "#ddeeff",
+				"#663300", "#ffff00", "#000088", "#747eff",
+				"#aaff00", "#cc0000", "#00ffaa", "#888500"];
 
 var cssDisabledTile = "tile-disabled";
 var cssCorrectTile = "tile-correct";

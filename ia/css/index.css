@@ -112,7 +112,6 @@ body > div {
     justify-items: center;
     align-items: center;
 }
-
     .game-box.pointer {
         cursor: pointer;
     }
@@ -123,6 +122,7 @@ body > div {
         aspect-ratio: 1;
         /* place-items: center; */
         background-color: #e2e2e2;
+        box-shadow: 0 0 10px #5553;
     }
 
     .game-box.button > .game-button:active {
@@ -133,6 +133,7 @@ body > div {
         pointer-events: none;
         cursor: default;
         background-color: #c9caca;
+        box-shadow: 0 0 13px #5555;
     }
 
     .game-box.button > .game-button.tile-correct {
@@ -267,7 +268,7 @@ clock {
 }
 
 .game-start-count {
-    filter: drop-shadow(1px -1px 16px rgba(255, 0, 0, 0.3));
+    filter: drop-shadow(1px -1px 16px #555a);
 
     visibility: hidden;
     position: absolute;
@@ -287,7 +288,7 @@ clock {
     width: 100%;
     height: 100%;
     overflow: hidden !important;
-    background-color: #fde9e8 !important;
+    background-color: #eee !important;
 
     mask-image: url(../svg/icon/start.svg);
     mask-size: 100%;
@@ -303,11 +304,11 @@ clock {
 
 .game-box.pointer:hover .game-start-count > div,
 .game-box.pointer:active .game-start-count > div {
-    background-color: #fff !important;
+    transform: scale(1.125);
 }
 
 .game-box.pointer:active .game-start-count > div {
-    transform: scale(1.125);
+    transform: scale(1.0625);
 }
 
     .game-start-count > div::after {
@@ -457,4 +458,19 @@ h3 {
     display: inline-block;
     text-align: center;
     font-size: 25px;
+}
+
+
+/* for test */
+.line {
+    /* font-size: 32px; */
+    margin: 4px;
+}
+.text {
+    color: var(--color);
+}
+.one-line {
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

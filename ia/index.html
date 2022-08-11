@@ -6,6 +6,8 @@
     <link rel="icon" type="image/x-icon" href="./svg/icon/icon.svg">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/index.css" />
+    <link rel="stylesheet" href="./css/leaderboard.css" />
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://use.typekit.net/iju2lko.css">
 
@@ -25,7 +27,7 @@
             </div>
             
             <div class="info-box">
-                <h3><img src="./svg/icon/LVL.svg" width="58"> <span class="lv">1</span></h3>
+                <h3 class="one-line"><span class="colorful-text" colorful-index="0"></span> <span class="lv">1</span></h3>
                 <h3><img src="./svg/icon/Mark.svg" width="68"> <span class="score">100</span></h3>
             </div>
             
@@ -61,13 +63,13 @@
 
         <div id="continue-button" class="console">
             <div class="ctrl-button frame button">
-                <div>
+                <div onclick="startEndPage();">
                     <div class="frame-box" w3-include-html="./svg/icon/start.svg"></div>
                 </div>
             </div>
             <div class="ctrl-button frame button" onclick="togglePopup()">
                 <div>
-                    <div class="frame-box"  w3-include-html="./svg/icon/help.svg"></div>
+                    <div class="frame-box" w3-include-html="./svg/icon/help.svg"></div>
                 </div>
             </div>
             <a href="./StartPage.html">
@@ -135,7 +137,6 @@
                     <span class="logo" style="color:#aa00ff">S</span><span class="logo" style="color:#00bbff">t</span><span class="logo" style="color:#776655">a</span><span class="logo" style="color:#009944">r</span><span class="logo" style="color:#ccbb99">t</span><br/>
                     <span class="logo" style="color:#ff0000">N</span><span class="logo" style="color:#00bbff">o</span><span class="logo" style="color:#ff5500">w</span>
                 </h1>
-                <script src="./script/app.js"></script>
             </div>
         </span>
         
@@ -238,19 +239,22 @@
                     <span class="logo" style="color:#009944">m</span><span class="logo" style="color:#00bbff">a</span><span class="logo" style="color:#0000ff">r</span><span class="logo" style="color:#ff0088">k</span>
                     <span class="logo" style="color:#ff5500">i</span><span class="logo" style="color:#663300">s</span><span class="logo" style="color:#005522">:</span><br /><span class="logo">
                         <span id="counter"></span>
-                        <script type="text/javascript" src="./script/counting.js"></script>
+                        <!-- <script type="text/javascript" src="./script/counting.js"></script> -->
                     </span>
                 </h1>
-                <script src="./script/appM.js"></script>
+                <!-- <script src="./script/appM.js"></script> -->
             </div>
         </span>
     </div>
     <!-- end of end-box -->
 
     <!-- script -->
+    <script src="./script/app.js"></script>
     <script>
         includeHTML();
-        startGamePage();  // call startGamePage() to start main game page
+        testJSON();
+        startPage(1);
+        // startGamePage();  // call startGamePage() to start main game page
         // startEndPage();  // call startEndPage() to start end page
     </script>
 
