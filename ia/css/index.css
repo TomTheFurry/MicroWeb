@@ -28,6 +28,10 @@ html, body, .main-box {
     filter: drop-shadow(-1px 1px 3px #0006);
 }
 
+.icon > * {
+    transform: translateY(-50%);
+}
+
 .frame {
     /* border: 8px solid #888;
     border-radius: 15px;
@@ -94,7 +98,8 @@ body > div {
 }
 
 .game-box {
-    border: 30px solid #ffffff;
+    border: 30px solid #fff;
+    background-color: #fff;
     border-radius: 24px;
     box-shadow: 0 0 13px #555a;
     height: 500px;
@@ -114,9 +119,9 @@ body > div {
 
     .game-box > .game-button {
         width: 100%;
-        height: 100%;
+        padding: 50% 0;
         aspect-ratio: 1;
-        place-items: center;
+        /* place-items: center; */
         background-color: #e2e2e2;
     }
 
@@ -294,6 +299,15 @@ clock {
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
 
+}
+
+.game-box.pointer:hover .game-start-count > div,
+.game-box.pointer:active .game-start-count > div {
+    background-color: #fff !important;
+}
+
+.game-box.pointer:active .game-start-count > div {
+    transform: scale(1.125);
 }
 
     .game-start-count > div::after {
