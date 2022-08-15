@@ -20,6 +20,13 @@ const startPage = (idx) => {
     }
 }
 
+const readJson = async (path) => {
+    let requestJson = new Request(path, { method: 'GET' });
+    let response = await fetch(requestJson);
+    if (response.status === 200) { return response.json(); }
+    else { return null; }
+}
+
 const GAME_BOX = document.getElementById('game-box');
 const END_BOX = document.getElementById('end-box');
 
@@ -27,7 +34,7 @@ const startGamePage = () => {
     showPage(GAME_BOX);
     setTimeout(() => {
         let intro = GAME_BOX.querySelector('.intro');
-        let logo = GAME_BOX.querySelector('.logo-header');
+        // let logo = GAME_BOX.querySelector('.logo-header');
         let logoSpan = GAME_BOX.querySelectorAll('.logo');
 
         logoSpan.forEach((span, idx) => {
@@ -52,7 +59,7 @@ const startEndPage = () => {
     showPage(END_BOX);
     setTimeout(() => {
         let intro = END_BOX.querySelector('.intro');
-        let logo = END_BOX.querySelector('.logo-header');
+        // let logo = END_BOX.querySelector('.logo-header');
         let logoSpan = END_BOX.querySelectorAll('.logo');
 
         logoSpan.forEach((span, idx) => {
@@ -61,7 +68,7 @@ const startEndPage = () => {
             }, (idx + 1) * 75)
         });
         new Promise(async () => {
-            await delayed(logoSpan.length * 75);
+            await delayed(logoSpan.length * 75 - 100);
             counterAnim("#counter", 0, 700/*mark*/, 850);
             await delayed(1800);
             logoSpan.forEach((span, idx) => {
@@ -83,8 +90,8 @@ const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
         if (!startTimestamp) startTimestamp = timestamp;
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
         {
-            var showVar = Math.max(progress, 0.8) * (end - start) * 1.2;
-            if (progress > 0.8) showVar += (progress - 0.8) / (duration * 0.2)
+            var showVar = Math.min(progress, 0.8) * (end - start) * 1.2;
+            if (progress > 0.8) showVar += (progress - 0.8) / 0.2 * (end - start - showVar);
         }
         target.innerText = Math.floor(showVar + start);
         if (progress < 1) {
@@ -94,88 +101,76 @@ const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
     window.requestAnimationFrame(step);
 };
 
+// const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
+//     const target = document.querySelector(qSelector);
+//     let startTimestamp = null;
+//     const step = (timestamp) => {
+//         if (!startTimestamp) startTimestamp = timestamp;
+//         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+//         target.innerText = Math.floor(progress * (end - start) + start);
+//         if (progress < 1) {
+//             window.requestAnimationFrame(step);
+//         }
+//     };
+//     window.requestAnimationFrame(step);
+// };
 
-// for test
-const testJSON = () => {
+const assignColorfulText = async () => {
     let regex = /\s/;
 
-    let textsData = [
-        {
-            "index": 0,
-            "texts": [
-                "LVL - "
-            ],
-            "colors": [
-                "#008",
-                "#C00",
-                "#0FA",
-                "#A0F"
-            ]
-        },
-        {
-            "index": 1,
-            "texts": [
-                "Mark : "
-            ],
-            "colors": [
-                "#630",
-                "#F50",
-                "#052",
-                "#F08",
-                "#880"
-            ]
-        },
-        {
-            "index": 2,
-            "texts": [
-                "HOW TO PLAY"
-            ],
-            "colors": [
-                "#630",
-                "#FFE",
-                "#880",
-                "#0BF",
-                "#008",
-                "#A0F",
-                "#CC0",
-                "#F08",
-                "#FBE"
-            ]
-        }
-    ]
+    // colourfulText 'data/colourful-text.json'
+    await readJson('data/colourful-text.json').then((colourfulText) => {
+        let colorTexts = document.getElementsByClassName('colorful-texts');
 
-    let colorTexts = document.getElementsByClassName('colorful-text');
+        for (let i = 0; i < colorTexts.length && colourfulText !== null; ++i) {
+            let e = colorTexts.item(i);
+            let id = e.getAttribute('colorful-id');
+            e.removeAttribute('colorful-id');
 
-    for (let i = 0; i < colorTexts.length; ++i) {
-        let e = colorTexts.item(i);
-        let index = parseInt(e.getAttribute('colorful-index'), 10);
-        e.removeAttribute('colorful-index');
-        
-        let textData = textsData.find(e => e.index === index);
-        if (!textsData || typeof textData === "undefined") {
-            continue;
-        }
-
-        let colors = textData.colors;
-        textData.texts.forEach((text) => {
-            let newLine = document.createElement('span');
-            newLine.classList.add('line');
-
-            let colorIdx = 0;
-            for (let j = 0; j < text.length; ++j) {
-                let c = text.charAt(j);
-                if (!c) { continue; }
-                let newText = document.createElement('span');
-                newText.innerHTML = c;
-                if (!regex.test(c)) {
-                    newText.style = `--color:${(colors.length === 0) ? '#000' : colors[colorIdx++]}`;
-                    newText.classList.add('text');
-                }
-                if (colorIdx >= colors.length) colorIdx = 0;
-                newLine.appendChild(newText);
+            let textData = colourfulText.find(e => e.id === id);
+            if (!colourfulText || typeof textData === "undefined") {
+                continue;
             }
 
-            e.appendChild(newLine);
-        });
-    }
+            let colors = textData.colors;
+            let colorIdx = 0;
+            textData.texts.forEach((text, idx) => {
+                if (idx !== 0) {
+                    let newBr = document.createElement('br');
+                    e.appendChild(newBr);
+                }
+
+                let newLine = document.createElement('span');
+                newLine.classList.add('line');
+
+                for (let j = 0; j < text.length; ++j) {
+                    let c = text.charAt(j);
+                    let newText = document.createElement('span');
+                    
+                    if (!regex.test(c)) {
+                        newText.innerHTML = c;
+                        let color = '#000';
+                        if (colors.length >= 0) {
+                            color = '';
+                            if (colors[colorIdx].charAt(0) !== '#') { color += '#'; }
+                            color += colors[colorIdx++];
+                        }
+                        newText.style.setProperty('--color', color);
+                        newText.classList.add('colorful-text');
+                    }
+                    else {
+                        newText.innerHTML = '&nbsp';
+                    }
+
+                    if (e.classList.contains('logo-parent')) { newText.classList.add('logo'); }
+
+
+                    if (colorIdx >= colors.length) colorIdx = 0;
+                    newLine.appendChild(newText);
+                }
+
+                e.appendChild(newLine);
+            });
+        }
+    });
 }

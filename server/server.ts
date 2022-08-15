@@ -70,6 +70,7 @@ async function webGet(req: http.IncomingMessage, res: http.ServerResponse) : Pro
         if (loc.endsWith(".html")) type = 'text/html';
         if (loc.endsWith(".svg")) type = 'image/svg+xml';
         if (loc.endsWith(".js.map")) type = 'text/plain';
+        if (loc.endsWith(".json")) type = 'application/json';
 
         if (type == null) {
             console.log("File type not on whitelist. Respond with 404");

@@ -86,6 +86,8 @@ function webGet(req, res) {
                 type = 'image/svg+xml';
             if (loc.endsWith(".js.map"))
                 type = 'text/plain';
+            if (loc.endsWith(".json"))
+                type = 'application/json';
             if (type == null) {
                 console.log("File type not on whitelist. Respond with 404");
                 res.writeHead(404);
