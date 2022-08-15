@@ -1,6 +1,6 @@
 [
     {
-        "index": 0,
+        "id": "lv-",
         "texts": [
             "LVL - "
         ],
@@ -12,7 +12,7 @@
         ]
     },
     {
-        "index": 1,
+        "id": "mark",
         "texts": [
             "Mark : "
         ],
@@ -25,7 +25,7 @@
         ]
     },
     {
-        "index": 2,
+        "id": "how-to-play",
         "texts": [
             "HOW TO PLAY"
         ],
@@ -39,6 +39,43 @@
             "#CC0",
             "#F08",
             "#FBE"
+        ]
+    },
+    {
+        "id": "start-now",
+        "texts": [
+            "Start",
+            "Now"
+        ],
+        "colors": [
+            "#aa00ff",
+            "#00bbff",
+            "#776655",
+            "#009944",
+            "#ccbb99",
+            "#ff0000",
+            "#00bbff",
+            "#ff5500"
+        ]
+    },
+    {
+        "id": "mark-show",
+        "texts": [
+            "Your",
+            "mark is:"
+        ],
+        "colors": [
+            "#ccbb99",
+            "#ff0000",
+            "#aa00ff",
+            "#aaff00",
+            "#009944",
+            "#00bbff",
+            "#0000ff",
+            "#ff0088",
+            "#ff5500",
+            "#663300",
+            "#005522"
         ]
     }
 ]
