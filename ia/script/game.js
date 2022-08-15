@@ -170,7 +170,7 @@ var initGame = function () {
     {
         mColorIcon = document.getElementById("color-icon");
     }
-    hintIconBox = document.getElementsByClassName("icon-bar")[0].children[0];
+    hintIconBox = document.getElementById('tip-icon');
     startGame();
 };
 var buttonOnClick = function (ev) {
@@ -204,6 +204,7 @@ var buttonOnClick = function (ev) {
     }
     else {
         window['scoreIncorrect']();
+        window['addMistake']();
         showClickableIcons();
         updateClickable();
         new Promise(() => __awaiter(this, void 0, void 0, function* () {

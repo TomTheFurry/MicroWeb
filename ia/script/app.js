@@ -20,6 +20,11 @@ const startPage = (idx) => {
     }
 }
 
+function darkMode() {
+    // var element = document.body;
+    // element.classList.toggle("dark-mode");
+}
+
 const readJson = async (path) => {
     let requestJson = new Request(path, { method: 'GET' });
     let response = await fetch(requestJson);
@@ -27,32 +32,38 @@ const readJson = async (path) => {
     else { return null; }
 }
 
+const isUserIsDarkMode = () => { return window.matchMedia("(prefers-color-scheme: dark)").matches; }
+
 const GAME_BOX = document.getElementById('game-box');
 const END_BOX = document.getElementById('end-box');
+const MISTAKES = document.getElementsByClassName('mistake-icon');
+var mistakeIdx = 0;
+var colorfulTextParent = [];
+
+// pass data to server
+// {
+//     let entry = {
+//         score: 40,
+//         duration: 10,
+//         name: btoa(encodeURIComponent('分配')),
+//         level: 1
+//     }
+//     let jsonStr = JSON.stringify({postType: "time", entry: entry});
+//     let request = new Request("", { method: 'POST', body: jsonStr});
+//     let response = await fetch(request);
+//     let resObj = JSON.parse(await response.text());
+//     let topNArray = resObj.scoreboard;
+    
+//     console.log(topNArray);
+//     topNArray.forEach((e) => {
+//         console.log(e);
+//         console.log(decodeURIComponent(atob(e.name)))
+//     })
+
+// }
 
 const startGamePage = async () => {
-// pass data to server
-{
-    let entry = {
-        score: 40,
-        duration: 10,
-        name: btoa(encodeURIComponent('分配')),
-        level: 1
-    }
-    let jsonStr = JSON.stringify({postType: "time", entry: entry});
-    let request = new Request("", { method: 'POST', body: jsonStr});
-    let response = await fetch(request);
-    let resObj = JSON.parse(await response.text());
-    let topNArray = resObj.scoreboard;
-    
-    console.log(topNArray);
-    topNArray.forEach((e) => {
-        console.log(e);
-        console.log(decodeURIComponent(atob(e.name)))
-    })
-
-}
-
+    if (isUserIsDarkMode()) { darkMode(); }
 
     showPage(GAME_BOX);
 
@@ -94,7 +105,7 @@ const startEndPage = async () => {
     });
     new Promise(async () => {
         await delayed(logoSpan.length * 64);
-        counterAnim("#counter", 0, 700/*mark*/, 850);
+        counterAnim("#counter", 0, 100/*mark*/, 850);
         await delayed(1800);
         logoSpan.forEach((span, idx) => {
             span.classList.remove('active');
@@ -106,6 +117,7 @@ const startEndPage = async () => {
 }
 
 
+
 const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
     const target = document.querySelector(qSelector);
     let startTimestamp = null;
@@ -113,9 +125,9 @@ const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
         if (!startTimestamp) startTimestamp = timestamp;
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
         {
-            var showVar = Math.min(progress, 0.8) * (end - start) * 1.2;
-            for (let i = 0.5; i < 1; i += 0.1) {
-                if (progress >= i) showVar += (progress - i) / 0.2 * (end - start - showVar);
+            var showVar = Math.min(progress, 0.5) * (end - start) * 1.2;
+            for (let i = 0.5; i <= 1; i += 0.1) {
+                if (progress >= i) showVar += (progress - i) / (1 - i) * (end - start - showVar);
             }
         }
         target.innerText = Math.floor(showVar + start);
@@ -151,6 +163,9 @@ const assignColorfulText = async () => {
             let e = colorTexts.item(i);
             let id = e.getAttribute('colorful-id');
             e.removeAttribute('colorful-id');
+
+            colorfulTextParent.push(e);
+            e['id'] = id;
 
             let textData = colourfulText.find(e => e.id === id);
             if (!colourfulText || typeof textData === "undefined") {
@@ -198,4 +213,19 @@ const assignColorfulText = async () => {
             });
         }
     });
+}
+
+const initPage = () => {
+    new Promise(async () => {
+        await assignColorfulText();
+        includeHTML();
+        startPage(1);
+    });
+}
+
+var addMistake = () => {
+    if (mistakeIdx < MISTAKES.length) {
+        let e = MISTAKES.item(mistakeIdx++);
+        e.classList.add('mistake');
+    }
 }

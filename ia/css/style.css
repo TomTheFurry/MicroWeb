@@ -50,9 +50,15 @@ header {
     from {
         opacity: 1;
     }
-
+    57% {
+        pointer-events: none;
+    }
+    82% {
+        visibility: hidden;
+    }
     to {
         opacity: 0;
+        pointer-events: none;
         visibility: hidden;
     }
 }

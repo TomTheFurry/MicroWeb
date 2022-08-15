@@ -38,25 +38,28 @@
                 </h3>
             </div>
             
-
-            <div class="icon-bar frame">
-                <div></div>
+            <div id="time-frame" class="ctrl-button frame">
+                <div>
+                    <div id="tip-icon" class="frame-box"></div>
+                </div>
             </div>
+            <!-- <div class="icon-bar frame">
+                <div></div>
+            </div> -->
         </div>
 
         <div class="console">
             <div class="icon-bar frame">
                 <div>
-                    <img src="./svg/icon/mistake.svg" width="50">
+                    <div class="frame-box mistake-icon"></div>
                 </div>
                 <div>
-                    <img src="./svg/icon/mistake.svg" width="50">
+                    <div class="frame-box mistake-icon"></div>
                 </div>
                 <div>
-                    <img src="./svg/icon/mistake.svg" width="50">
+                    <div class="frame-box mistake-icon"></div>
                 </div>
             </div>
-
         </div>
         <br/>
         
@@ -87,6 +90,11 @@
         <div id="continue-button" class="console">
             <div class="ctrl-button frame button">
                 <div onclick="startEndPage();">
+                    <div class="frame-box" w3-include-html="./svg/icon/start.svg"></div>
+                </div>
+            </div>
+            <div class="ctrl-button frame button">
+                <div onclick="darkMode();">
                     <div class="frame-box" w3-include-html="./svg/icon/start.svg"></div>
                 </div>
             </div>
@@ -157,8 +165,6 @@
             <div class="intro">
                 <h1 class="logo-header">
                     <span class="colorful-texts logo-parent" colorful-id="start-now"></span>
-                    <!-- <span class="logo" style="color:#aa00ff">S</span><span class="logo" style="color:#00bbff">t</span><span class="logo" style="color:#776655">a</span><span class="logo" style="color:#009944">r</span><span class="logo" style="color:#ccbb99">t</span><br/>
-                    <span class="logo" style="color:#ff0000">N</span><span class="logo" style="color:#00bbff">o</span><span class="logo" style="color:#ff5500">w</span> -->
                 </h1>
             </div>
         </span>
@@ -258,11 +264,8 @@
         <span class="store">
             <div class="intro">
                 <h1 class="logo-header">
-                    <span class="colorful-texts logo-parent" colorful-id="mark-show"></span>
-                    <!-- <span class="logo" style="color:#ccbb99">Y</span><span class="logo" style="color:#ff0000">o</span><span class="logo" style="color:#aa00ff">u</span><span class="logo" style="color:#aaff00">r</span><br />
-                    <span class="logo" style="color:#009944">m</span><span class="logo" style="color:#00bbff">a</span><span class="logo" style="color:#0000ff">r</span><span class="logo" style="color:#ff0088">k</span>
-                    <span class="logo" style="color:#ff5500">i</span><span class="logo" style="color:#663300">s</span><span class="logo" style="color:#005522">:</span><br /> -->
-                    <br /><span class="logo">
+                    <span class="colorful-texts logo-parent" colorful-id="mark-show"></span><br />
+                    <span class="logo">
                         <span id="counter"></span>
                         <!-- <script type="text/javascript" src="./script/counting.js"></script> -->
                     </span>
@@ -276,14 +279,7 @@
     <!-- script -->
     <script src="./script/app.js"></script>
     <script>
-        new Promise(async () => {
-            includeHTML();
-            await assignColorfulText();
-            startPage(1);
-        });
-        
-        // startGamePage();  // call startGamePage() to start main game page
-        // startEndPage();  // call startEndPage() to start end page
+        initPage();
     </script>
 
 </body>

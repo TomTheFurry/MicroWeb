@@ -188,7 +188,7 @@ var initGame = function() {
 	{
 		mColorIcon = document.getElementById("color-icon") as HTMLElement;
 	}
-	hintIconBox = document.getElementsByClassName("icon-bar")[0].children[0] as HTMLElement;
+	hintIconBox = document.getElementById('tip-icon') as HTMLElement;
 	startGame();
 }
 
@@ -220,6 +220,7 @@ var buttonOnClick = function(ev : MouseEvent | TouchEvent) {
 	} else {
 		// incorrect
 		window['scoreIncorrect']();  // score
+		window['addMistake']();  // mistake anim
 		showClickableIcons();
 		updateClickable();
 		// incorrect anim

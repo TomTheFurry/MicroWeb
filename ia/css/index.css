@@ -1,9 +1,13 @@
 :root {
     --start-counter-z-index: 10;
+    --primary-color: #fff;
+    --secondary-color: #555a;
+
+    --icon-default-color: #898989;
 }
 
 * {
-    transition: 0.2s;
+    transition: all 200ms, color 20ms;
 }
 
 html, body, .main-box {
@@ -15,8 +19,15 @@ html, body, .main-box {
     justify-content: center;
 }
 
+body.dark-mode {
+    background-color: black;
+    color: white;
+    --primary-color: #777;
+    --secondary-color:#ccca;
+}
+
 .st0 {
-    fill: #898989;
+    fill: var(--icon-default-color);
 }
 
 .main-box {
@@ -32,17 +43,22 @@ html, body, .main-box {
     filter: drop-shadow(-1px 1px 3px #0006);
 }
 
+
+
 .icon > * {
     transform: translateY(-50%);
+}
+
+.frame, .frame > div, .frame .frame-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .frame {
     /* border: 8px solid #888;
     border-radius: 15px;
     box-shadow: 0 0 13px #555a; */
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: 50ms;
 }
 
@@ -61,14 +77,11 @@ html, body, .main-box {
         border-radius: 10px;
         background: #ffffff;
         margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         overflow: hidden;
         box-shadow: 0 0 13px #555a;
     }
 
-    .frame > div > .frame-box {
+    .frame .frame-box {
         width: 100%;
         height: 100%;
         box-sizing: border-box;
@@ -518,4 +531,40 @@ h3 {
     display: inline-block;
     text-align: center;
     font-size: 25px;
+}
+
+.mistake-icon {
+    background-color: var(--icon-default-color);
+    overflow: hidden;
+
+    mask-image: url(../svg/icon/mistake.svg);
+    mask-size: 100%;
+    mask-repeat: no-repeat;
+    mask-position: center;
+
+    -webkit-mask-image: url(../svg/icon/mistake.svg);
+    -webkit-mask-size: 100%;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+}
+
+.mistake-icon.mistake {
+    animation: 65ms 4 linear game-button-incorrect;
+}
+
+.mistake-icon.mistake::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #f00;
+    border-radius: 50%;
+
+    animation: 450ms 1 mistake_anim;
+}
+
+@keyframes mistake_anim {
+    0% {
+        transform: scale(0.1);
+        animation-timing-function: ease-in;
+    }
 }
