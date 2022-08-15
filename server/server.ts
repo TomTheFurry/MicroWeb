@@ -33,7 +33,7 @@ const requestPersionalBestDumpPath = "/DEBUG/personalBest.json"
 const blacklist = [];
 const MAX_NAME_LENGTH = 128;
 const SCOREBOARD_SIZE = 20;
-const VERBOSE = false;
+const VERBOSE = true;
 let database = open({
     path: databaseDir,
     // any options go here, we can turn on compression like this:
