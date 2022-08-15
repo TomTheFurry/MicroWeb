@@ -199,13 +199,16 @@ function timePost(req, res) {
                 res.end();
                 return true;
             }
+            console.log("POST to scoreboard: {name:" + entry.name + ", score:" + entry.score + ", time:" + entry.duration + ", level:" + entry.level + "}");
             var topN = yield database.transaction(() => {
                 var scoreDurationPair = dbPersionalBest.get(entry.name);
                 if (scoreDurationPair === undefined) {
+                    console.log("New player entry created for " + entry.name);
                     dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                     dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
                 }
                 else if (pairCompare([entry.score, -entry.duration], scoreDurationPair) > 0) {
+                    console.log("Player entry Personal-Best updated for " + entry.name);
                     {
                         let targets = dbPosition.getValues(scoreDurationPair).filter(e => e.name == entry.name).asArray;
                         if (targets.length != 1) {
@@ -216,11 +219,15 @@ function timePost(req, res) {
                     dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                     dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
                 }
+                else {
+                    console.log("POST to scoreboard for " + entry.name + " needs no action: Below Personal-Best.");
+                }
                 var topNArray = [];
                 dbPosition.getRange({ limit: SCOREBOARD_SIZE, reverse: true })
                     .forEach(({ key, value }) => {
                     topNArray.push({ score: key[0], duration: -key[1], name: value.name, level: value.level });
                 });
+                console.log("Returning " + topNArray.length + " scoreboard entries for the POST");
                 return topNArray;
             });
             res.writeHead(200, { "content-type": "application/json" });

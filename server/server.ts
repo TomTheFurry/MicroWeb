@@ -25,6 +25,8 @@ interface DBPosEntry {
 const port = process.env.port || 80
 const baseWebDir = "../ia";
 const databaseDir = "../database/scoreboard"
+// By sending 'GET' request with following path, the server will
+// respond with a json file of the current scoreboard.
 const requestScoreboardPath = "/scoreboard.json"
 const blacklist = [];
 const MAX_NAME_LENGTH = 128;
@@ -185,13 +187,16 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
             res.writeHead(400);
             res.end();
             return true;
-        } 
+        }
+        console.log("POST to scoreboard: {name:" + entry.name + ", score:" + entry.score + ", time:" + entry.duration + ", level:" + entry.level + "}");
         var topN = await database.transaction(() => {
             var scoreDurationPair = dbPersionalBest.get(entry.name);
             if (scoreDurationPair === undefined) {
+                console.log("New player entry created for " + entry.name);
                 dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                 dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
             } else if (pairCompare([entry.score, -entry.duration], scoreDurationPair) > 0) {
+                console.log("Player entry Personal-Best updated for " + entry.name);
                 {
                     let targets: DBPosEntry[] =
                         dbPosition.getValues(scoreDurationPair).filter(e => e.name == entry.name).asArray;
@@ -202,12 +207,15 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
                 }
                 dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                 dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
+            } else {
+                console.log("POST to scoreboard for " + entry.name + " needs no action: Below Personal-Best.");
             }
             var topNArray: ScoreboardEntry[] = [];
             dbPosition.getRange({ limit: SCOREBOARD_SIZE, reverse: true })
                 .forEach(({ key, value }) => {
                     topNArray.push({ score: key[0], duration: -key[1], name: value.name, level: value.level });
                 });
+            console.log("Returning "+ topNArray.length +" scoreboard entries for the POST");
             return topNArray;
         });
         res.writeHead(200, { "content-type": "application/json" });
