@@ -40,7 +40,8 @@ let database = (0, lmdb_1.open)({
     compression: true,
 });
 let dbPosition = database.openDB({
-    name: "position"
+    name: "position",
+    dupSort: true,
 });
 let dbPersionalBest = database.openDB({
     name: "personalBest"
@@ -110,7 +111,7 @@ function webGet(req, res) {
             });
             res.writeHead(200, { "content-type": "application/json" });
             res.end(JSON.stringify({ scoreboard: topN }));
-            return;
+            return true;
         }
         let fileDir = baseWebDir + loc;
         if (yield (0, util_1.promisify)(fs.exists)(fileDir)) {
@@ -205,9 +206,13 @@ function timePost(req, res) {
                     dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
                 }
                 else if (pairCompare(scoreDurationPair, [entry.score, -entry.duration]) > 0) {
-                    let worked = dbPosition.removeSync(scoreDurationPair);
-                    if (!worked)
-                        console.warn("Failed to remove old score from the position database! Possible database corruption!");
+                    {
+                        let targets = dbPosition.getValues(scoreDurationPair).filter(e => e.name == entry.name).asArray;
+                        if (targets.length != 1) {
+                            console.warn("Failed to remove old score from the position database! Possible database corruption!");
+                        }
+                        targets.forEach(e => dbPosition.remove(scoreDurationPair, e));
+                    }
                     dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                     dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
                 }

@@ -35,7 +35,8 @@ let database = open({
     compression: true,
 });
 let dbPosition: lmdb.Database<DBPosEntry, number[]> = database.openDB({
-    name: "position"
+    name: "position",
+    dupSort: true,
 });
 let dbPersionalBest: lmdb.Database<number[], string> = database.openDB({
     name: "personalBest"
@@ -190,8 +191,14 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
                 dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                 dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
             } else if (pairCompare(scoreDurationPair, [entry.score, -entry.duration]) > 0) {
-                let worked = dbPosition.removeSync(scoreDurationPair);
-                if (!worked) console.warn("Failed to remove old score from the position database! Possible database corruption!");
+                {
+                    let targets: DBPosEntry[] =
+                        dbPosition.getValues(scoreDurationPair).filter(e => e.name == entry.name).asArray;
+                    if (targets.length != 1) {
+                        console.warn("Failed to remove old score from the position database! Possible database corruption!");
+                    }
+                    targets.forEach(e => dbPosition.remove(scoreDurationPair, e));
+                }
                 dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                 dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
             }
