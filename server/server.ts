@@ -112,7 +112,7 @@ async function webGet(req: http.IncomingMessage, res: http.ServerResponse): Prom
         });
         res.writeHead(200, { "content-type": "application/json" });
         res.end(JSON.stringify({ scoreboard: topN }));
-        return;
+        return true;
     }
 
 
