@@ -28,9 +28,12 @@ const databaseDir = "../database/scoreboard"
 // By sending 'GET' request with following path, the server will
 // respond with a json file of the current scoreboard.
 const requestScoreboardPath = "/scoreboard.json"
+const requestScoreboardDumpPath = "/DEBUG/scoreboard.json"
+const requestPersionalBestDumpPath = "/DEBUG/personalBest.json"
 const blacklist = [];
 const MAX_NAME_LENGTH = 128;
 const SCOREBOARD_SIZE = 20;
+const VERBOSE = true;
 let database = open({
     path: databaseDir,
     // any options go here, we can turn on compression like this:
@@ -43,6 +46,9 @@ let dbPosition: lmdb.Database<DBPosEntry, number[]> = database.openDB({
 let dbPersionalBest: lmdb.Database<number[], string> = database.openDB({
     name: "personalBest"
 });
+
+let fileCache: Map<string, Buffer> = new Map();
+
 
 // DB structure:
 //
@@ -58,8 +64,6 @@ function pairCompare(pairA, pairB) : number {
 
 var server = http.createServer(
     async (req, res) => {
-        Promise.race([
-            (async () => {
                 if (req.aborted) {
                     console.log("req aborted");
                     return;
@@ -74,10 +78,8 @@ var server = http.createServer(
                 res.writeHead(400, "bad request");
                 res.end();
                 return;
-            })(),
-            promisify(setTimeout)(500)]);
-    });
-server.setTimeout(500);
+            });
+//server.setTimeout(500);
 server.listen(port);
 
 
@@ -92,7 +94,7 @@ async function webGet(req: http.IncomingMessage, res: http.ServerResponse): Prom
         return true;
     }
     if (loc == "/") {
-        console.log("folder redirection to index.html");
+        if (VERBOSE) console.log("folder redirection to index.html");
         loc += "index.html";
     }
 
@@ -104,7 +106,7 @@ async function webGet(req: http.IncomingMessage, res: http.ServerResponse): Prom
     }
 
     if (loc == requestScoreboardPath || '/' + loc == requestScoreboardPath) {
-        console.log("Scoreboard request.");
+        if (VERBOSE) console.log("Scoreboard request.");
         var topN = await database.transaction(() => {
             var topNArray: ScoreboardEntry[] = [];
             dbPosition.getRange({ limit: SCOREBOARD_SIZE, reverse: true })
@@ -117,17 +119,46 @@ async function webGet(req: http.IncomingMessage, res: http.ServerResponse): Prom
         res.end(JSON.stringify({ scoreboard: topN }));
         return true;
     }
+    if (loc == requestScoreboardDumpPath || '/' + loc == requestScoreboardDumpPath) {
+        if (VERBOSE) console.log("DEBUG scoreboard dump request");
+        var all = await database.transaction(() => {
+            var allArray: ScoreboardEntry[] = [];
+            dbPosition.getRange({ reverse: true })
+                .forEach(({ key, value }) => {
+                    allArray.push({ score: key[0], duration: -key[1], name: value.name, level: value.level });
+                });
+            return allArray;
+        });
+        res.writeHead(200, { "content-type": "application/json" });
+        res.end(JSON.stringify({ scoreboard: all }));
+        return true;
+    }
+    if (loc == requestPersionalBestDumpPath || '/' + loc == requestPersionalBestDumpPath) {
+        if (VERBOSE) console.log("DEBUG personalBest dump request");
+        var all = await database.transaction(() => {
+            var allArray: ScoreboardEntry[] = [];
+            dbPersionalBest.getRange({ reverse: true })
+                .forEach(({ key, value }) => {
+                    allArray.push({ score: value[0], duration: -value[1], name: key, level: undefined });
+                });
+            return allArray;
+        });
+        res.writeHead(200, { "content-type": "application/json" });
+        res.end(JSON.stringify({ persionalBest: all }));
+        return true;
+    }
+
 
 
     let fileDir = baseWebDir + loc;
     if (await promisify(fs.exists)(fileDir)) {
         if ((await promisify(fs.lstat)(fileDir)).isDirectory()) {
-            console.log("folder redirection to index.html");
+            if (VERBOSE) console.log("folder redirection to index.html");
             loc += "/index.html";
             fileDir = baseWebDir + loc;
         }
 
-        console.log("File request on " + fileDir);
+        if (VERBOSE) console.log("File request on " + fileDir);
 
         let type: string = null;
         if (loc.endsWith(".css")) type = 'text/css';
@@ -151,7 +182,12 @@ async function webGet(req: http.IncomingMessage, res: http.ServerResponse): Prom
             return true;
         }
         res.writeHead(200, { 'Content-Type': type });
-        res.end(await promisify(fs.readFile)(fileDir));
+        let fileData = fileCache.get(loc.toLowerCase());
+        if (fileData === undefined) {
+            fileData = await promisify(fs.readFile)(fileDir);
+            fileCache.set(loc.toLowerCase(), fileData);
+        }
+        res.end(fileData);
         return true;
     } else {
         console.log("Error 404: File request on " + fileDir + " not found.");
@@ -177,26 +213,28 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
         let entry : ScoreboardEntry = jData["entry"];
         // Verify the name string
         if (entry.name.length > MAX_NAME_LENGTH) {
-            console.log("Error 400: entry name too long.");
+            console.log("Error 400: POST entry name too long.");
             res.writeHead(400);
             res.end();
             return true;
         }
-        if (entry.level < 0 || entry.score < 0 || entry.duration <= 0) {
-            console.log("Error 400: Numbers outside valid range.");
+        if (entry.level < 0 || entry.score < 0 || entry.duration <= 0 ||
+            entry.duration > 10000 || (entry.score % 1 != 0.0) || entry.level > 1000 || entry.score > 1000000) {
+            console.log("Error 400: POST entry has invalid numbers.");
             res.writeHead(400);
             res.end();
             return true;
         }
-        console.log("POST to scoreboard: {name:" + entry.name + ", score:" + entry.score + ", time:" + entry.duration + ", level:" + entry.level + "}");
+
+        if (VERBOSE) console.log("POST to scoreboard: {name:" + entry.name + ", score:" + entry.score + ", time:" + entry.duration + ", level:" + entry.level + "}");
         var topN = await database.transaction(() => {
             var scoreDurationPair = dbPersionalBest.get(entry.name);
             if (scoreDurationPair === undefined) {
-                console.log("New player entry created for " + entry.name);
+                if (VERBOSE) console.log("New player entry created for " + entry.name);
                 dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                 dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
             } else if (pairCompare([entry.score, -entry.duration], scoreDurationPair) > 0) {
-                console.log("Player entry Personal-Best updated for " + entry.name);
+                if (VERBOSE) console.log("Player entry Personal-Best updated for " + entry.name);
                 {
                     let targets: DBPosEntry[] =
                         dbPosition.getValues(scoreDurationPair).filter(e => e.name == entry.name).asArray;
@@ -208,14 +246,14 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
                 dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                 dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
             } else {
-                console.log("POST to scoreboard for " + entry.name + " needs no action: Below Personal-Best.");
+                if (VERBOSE) console.log("POST to scoreboard for " + entry.name + " needs no action: Below Personal-Best.");
             }
             var topNArray: ScoreboardEntry[] = [];
             dbPosition.getRange({ limit: SCOREBOARD_SIZE, reverse: true })
                 .forEach(({ key, value }) => {
                     topNArray.push({ score: key[0], duration: -key[1], name: value.name, level: value.level });
                 });
-            console.log("Returning "+ topNArray.length +" scoreboard entries for the POST");
+            if (VERBOSE) console.log("Returning "+ topNArray.length +" scoreboard entries for the POST");
             return topNArray;
         });
         res.writeHead(200, { "content-type": "application/json" });

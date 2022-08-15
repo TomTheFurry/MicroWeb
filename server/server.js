@@ -30,10 +30,15 @@ function isScoreboardEntry(arg) {
 const port = process.env.port || 80;
 const baseWebDir = "../ia";
 const databaseDir = "../database/scoreboard";
+// By sending 'GET' request with following path, the server will
+// respond with a json file of the current scoreboard.
 const requestScoreboardPath = "/scoreboard.json";
+const requestScoreboardDumpPath = "/DEBUG/scoreboard.json";
+const requestPersionalBestDumpPath = "/DEBUG/personalBest.json";
 const blacklist = [];
 const MAX_NAME_LENGTH = 128;
 const SCOREBOARD_SIZE = 20;
+const VERBOSE = true;
 let database = (0, lmdb_1.open)({
     path: databaseDir,
     // any options go here, we can turn on compression like this:
@@ -46,6 +51,7 @@ let dbPosition = database.openDB({
 let dbPersionalBest = database.openDB({
     name: "personalBest"
 });
+let fileCache = new Map();
 // DB structure:
 //
 // [Score, (-)duration] -> {name, entry}
@@ -56,29 +62,24 @@ function pairCompare(pairA, pairB) {
     return pairA[1] - pairB[1];
 }
 var server = http.createServer((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    Promise.race([
-        (() => __awaiter(void 0, void 0, void 0, function* () {
-            if (req.aborted) {
-                console.log("req aborted");
-                return;
-            }
-            if (req.method == "GET") {
-                if (yield webGet(req, res))
-                    return;
-            }
-            if (req.method == "POST") {
-                if (yield timePost(req, res))
-                    return;
-            }
-            console.log("bad request: Unknown method");
-            res.writeHead(400, "bad request");
-            res.end();
+    if (req.aborted) {
+        console.log("req aborted");
+        return;
+    }
+    if (req.method == "GET") {
+        if (yield webGet(req, res))
             return;
-        }))(),
-        (0, util_1.promisify)(setTimeout)(500)
-    ]);
+    }
+    if (req.method == "POST") {
+        if (yield timePost(req, res))
+            return;
+    }
+    console.log("bad request: Unknown method");
+    res.writeHead(400, "bad request");
+    res.end();
+    return;
 }));
-server.setTimeout(500);
+//server.setTimeout(500);
 server.listen(port);
 function webGet(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -90,7 +91,8 @@ function webGet(req, res) {
             return true;
         }
         if (loc == "/") {
-            console.log("folder redirection to index.html");
+            if (VERBOSE)
+                console.log("folder redirection to index.html");
             loc += "index.html";
         }
         if (loc.includes("..")) { // Prevent '..' excape
@@ -100,7 +102,8 @@ function webGet(req, res) {
             return true;
         }
         if (loc == requestScoreboardPath || '/' + loc == requestScoreboardPath) {
-            console.log("Scoreboard request.");
+            if (VERBOSE)
+                console.log("Scoreboard request.");
             var topN = yield database.transaction(() => {
                 var topNArray = [];
                 dbPosition.getRange({ limit: SCOREBOARD_SIZE, reverse: true })
@@ -113,14 +116,46 @@ function webGet(req, res) {
             res.end(JSON.stringify({ scoreboard: topN }));
             return true;
         }
+        if (loc == requestScoreboardDumpPath || '/' + loc == requestScoreboardDumpPath) {
+            if (VERBOSE)
+                console.log("DEBUG scoreboard dump request");
+            var all = yield database.transaction(() => {
+                var allArray = [];
+                dbPosition.getRange({ reverse: true })
+                    .forEach(({ key, value }) => {
+                    allArray.push({ score: key[0], duration: -key[1], name: value.name, level: value.level });
+                });
+                return allArray;
+            });
+            res.writeHead(200, { "content-type": "application/json" });
+            res.end(JSON.stringify({ scoreboard: all }));
+            return true;
+        }
+        if (loc == requestPersionalBestDumpPath || '/' + loc == requestPersionalBestDumpPath) {
+            if (VERBOSE)
+                console.log("DEBUG personalBest dump request");
+            var all = yield database.transaction(() => {
+                var allArray = [];
+                dbPersionalBest.getRange({ reverse: true })
+                    .forEach(({ key, value }) => {
+                    allArray.push({ score: value[0], duration: -value[1], name: key, level: undefined });
+                });
+                return allArray;
+            });
+            res.writeHead(200, { "content-type": "application/json" });
+            res.end(JSON.stringify({ persionalBest: all }));
+            return true;
+        }
         let fileDir = baseWebDir + loc;
         if (yield (0, util_1.promisify)(fs.exists)(fileDir)) {
             if ((yield (0, util_1.promisify)(fs.lstat)(fileDir)).isDirectory()) {
-                console.log("folder redirection to index.html");
+                if (VERBOSE)
+                    console.log("folder redirection to index.html");
                 loc += "/index.html";
                 fileDir = baseWebDir + loc;
             }
-            console.log("File request on " + fileDir);
+            if (VERBOSE)
+                console.log("File request on " + fileDir);
             let type = null;
             if (loc.endsWith(".css"))
                 type = 'text/css';
@@ -147,7 +182,12 @@ function webGet(req, res) {
                 return true;
             }
             res.writeHead(200, { 'Content-Type': type });
-            res.end(yield (0, util_1.promisify)(fs.readFile)(fileDir));
+            let fileData = fileCache.get(loc.toLowerCase());
+            if (fileData === undefined) {
+                fileData = yield (0, util_1.promisify)(fs.readFile)(fileDir);
+                fileCache.set(loc.toLowerCase(), fileData);
+            }
+            res.end(fileData);
             return true;
         }
         else {
@@ -188,27 +228,31 @@ function timePost(req, res) {
             let entry = jData["entry"];
             // Verify the name string
             if (entry.name.length > MAX_NAME_LENGTH) {
-                console.log("Error 400: entry name too long.");
+                console.log("Error 400: POST entry name too long.");
                 res.writeHead(400);
                 res.end();
                 return true;
             }
-            if (entry.level < 0 || entry.score < 0 || entry.duration <= 0) {
-                console.log("Error 400: Numbers outside valid range.");
+            if (entry.level < 0 || entry.score < 0 || entry.duration <= 0 ||
+                entry.duration > 10000 || (entry.score % 1 != 0.0) || entry.level > 1000 || entry.score > 1000000) {
+                console.log("Error 400: POST entry has invalid numbers.");
                 res.writeHead(400);
                 res.end();
                 return true;
             }
-            console.log("POST to scoreboard: {name:" + entry.name + ", score:" + entry.score + ", time:" + entry.duration + ", level:" + entry.level + "}");
+            if (VERBOSE)
+                console.log("POST to scoreboard: {name:" + entry.name + ", score:" + entry.score + ", time:" + entry.duration + ", level:" + entry.level + "}");
             var topN = yield database.transaction(() => {
                 var scoreDurationPair = dbPersionalBest.get(entry.name);
                 if (scoreDurationPair === undefined) {
-                    console.log("New player entry created for " + entry.name);
+                    if (VERBOSE)
+                        console.log("New player entry created for " + entry.name);
                     dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                     dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
                 }
                 else if (pairCompare([entry.score, -entry.duration], scoreDurationPair) > 0) {
-                    console.log("Player entry Personal-Best updated for " + entry.name);
+                    if (VERBOSE)
+                        console.log("Player entry Personal-Best updated for " + entry.name);
                     {
                         let targets = dbPosition.getValues(scoreDurationPair).filter(e => e.name == entry.name).asArray;
                         if (targets.length != 1) {
@@ -220,14 +264,16 @@ function timePost(req, res) {
                     dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
                 }
                 else {
-                    console.log("POST to scoreboard for " + entry.name + " needs no action: Below Personal-Best.");
+                    if (VERBOSE)
+                        console.log("POST to scoreboard for " + entry.name + " needs no action: Below Personal-Best.");
                 }
                 var topNArray = [];
                 dbPosition.getRange({ limit: SCOREBOARD_SIZE, reverse: true })
                     .forEach(({ key, value }) => {
                     topNArray.push({ score: key[0], duration: -key[1], name: value.name, level: value.level });
                 });
-                console.log("Returning " + topNArray.length + " scoreboard entries for the POST");
+                if (VERBOSE)
+                    console.log("Returning " + topNArray.length + " scoreboard entries for the POST");
                 return topNArray;
             });
             res.writeHead(200, { "content-type": "application/json" });
