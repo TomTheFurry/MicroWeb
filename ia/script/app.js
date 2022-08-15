@@ -23,64 +23,87 @@ const startPage = (idx) => {
 const readJson = async (path) => {
     let requestJson = new Request(path, { method: 'GET' });
     let response = await fetch(requestJson);
-    if (response.status === 200) { return response.json(); }
+    if (response.status === 200) { return await response.json(); }
     else { return null; }
 }
 
 const GAME_BOX = document.getElementById('game-box');
 const END_BOX = document.getElementById('end-box');
 
-const startGamePage = () => {
+const startGamePage = async () => {
+// pass data to server
+{
+    let entry = {
+        score: 40,
+        duration: 10,
+        name: btoa(encodeURIComponent('分配')),
+        level: 1
+    }
+    let jsonStr = JSON.stringify({postType: "time", entry: entry});
+    let request = new Request("", { method: 'POST', body: jsonStr});
+    let response = await fetch(request);
+    let resObj = JSON.parse(await response.text());
+    let topNArray = resObj.scoreboard;
+    
+    console.log(topNArray);
+    topNArray.forEach((e) => {
+        console.log(e);
+        console.log(decodeURIComponent(atob(e.name)))
+    })
+
+}
+
+
     showPage(GAME_BOX);
-    setTimeout(() => {
-        let intro = GAME_BOX.querySelector('.intro');
-        // let logo = GAME_BOX.querySelector('.logo-header');
-        let logoSpan = GAME_BOX.querySelectorAll('.logo');
 
+    let intro = GAME_BOX.querySelector('.intro');
+    // let logo = GAME_BOX.querySelector('.logo-header');
+    let logoSpan = GAME_BOX.querySelectorAll('.logo');
+
+    logoSpan.forEach((span, idx) => {
+        setTimeout(() => {
+            span.classList.add('active');
+        }, (idx + 1) * 50)
+    });
+    new Promise(async () => {
+        await delayed(logoSpan.length * 50 + 920);
         logoSpan.forEach((span, idx) => {
-            setTimeout(() => {
-                span.classList.add('active');
-            }, (idx + 1) * 50)
+            span.classList.remove('active');
+            span.classList.add('fade'); // fade time in style.css '.logo.fade'
         });
-        new Promise(async () => {
-            await delayed(logoSpan.length * 50 + 920);
-            logoSpan.forEach((span, idx) => {
-                span.classList.remove('active');
-                span.classList.add('fade'); // fade time in style.css '.logo.fade'
-            });
-            await delayed(150);
-            intro.classList.add('fade');
-            initGame();
-        });
-    })
+        await delayed(150);
+        intro.classList.add('fade');
+        initGame();
+    });
 }
 
-const startEndPage = () => {
+const startEndPage = async () => {
+    
+
+    // show page
     showPage(END_BOX);
-    setTimeout(() => {
-        let intro = END_BOX.querySelector('.intro');
-        // let logo = END_BOX.querySelector('.logo-header');
-        let logoSpan = END_BOX.querySelectorAll('.logo');
 
+    let intro = END_BOX.querySelector('.intro');
+    // let logo = END_BOX.querySelector('.logo-header');
+    let logoSpan = END_BOX.querySelectorAll('.logo');
+
+    logoSpan.forEach((span, idx) => {
+        setTimeout(() => {
+            span.classList.add('active');
+        }, (idx + 1) * 64)
+    });
+    new Promise(async () => {
+        await delayed(logoSpan.length * 64);
+        counterAnim("#counter", 0, 700/*mark*/, 850);
+        await delayed(1800);
         logoSpan.forEach((span, idx) => {
-            setTimeout(() => {
-                span.classList.add('active');
-            }, (idx + 1) * 75)
+            span.classList.remove('active');
+            span.classList.add('fade'); // fade time in style.css '.logo.fade'
         });
-        new Promise(async () => {
-            await delayed(logoSpan.length * 75 - 100);
-            counterAnim("#counter", 0, 700/*mark*/, 850);
-            await delayed(1800);
-            logoSpan.forEach((span, idx) => {
-                span.classList.remove('active');
-                span.classList.add('fade'); // fade time in style.css '.logo.fade'
-            });
-            await delayed(150);
-            intro.classList.add('fade');
-        });
-    })
+        await delayed(150);
+        intro.classList.add('fade');
+    });
 }
-
 
 
 const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
@@ -91,7 +114,9 @@ const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
         {
             var showVar = Math.min(progress, 0.8) * (end - start) * 1.2;
-            if (progress > 0.8) showVar += (progress - 0.8) / 0.2 * (end - start - showVar);
+            for (let i = 0.5; i < 1; i += 0.1) {
+                if (progress >= i) showVar += (progress - i) / 0.2 * (end - start - showVar);
+            }
         }
         target.innerText = Math.floor(showVar + start);
         if (progress < 1) {

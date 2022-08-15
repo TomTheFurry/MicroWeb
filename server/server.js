@@ -53,7 +53,7 @@ let dbPersionalBest = database.openDB({
 function pairCompare(pairA, pairB) {
     if (pairA[0] != pairB[0])
         return pairA[0] - pairB[0];
-    return pairA[1] = pairB[1];
+    return pairA[1] - pairB[1];
 }
 var server = http.createServer((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     Promise.race([
@@ -166,7 +166,7 @@ function timePost(req, res) {
         try {
             for (req_1 = __asyncValues(req); req_1_1 = yield req_1.next(), !req_1_1.done;) {
                 const r = req_1_1.value;
-                buffer += r;
+                buffer.push(r);
             }
         }
         catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -205,7 +205,7 @@ function timePost(req, res) {
                     dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                     dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
                 }
-                else if (pairCompare(scoreDurationPair, [entry.score, -entry.duration]) > 0) {
+                else if (pairCompare([entry.score, -entry.duration], scoreDurationPair) > 0) {
                     {
                         let targets = dbPosition.getValues(scoreDurationPair).filter(e => e.name == entry.name).asArray;
                         if (targets.length != 1) {

@@ -49,7 +49,7 @@ let dbPersionalBest: lmdb.Database<number[], string> = database.openDB({
 
 function pairCompare(pairA, pairB) : number {
     if (pairA[0] != pairB[0]) return pairA[0] - pairB[0];
-    return pairA[1] = pairB[1];
+    return pairA[1] - pairB[1];
 }
 
 
@@ -162,7 +162,8 @@ async function webGet(req: http.IncomingMessage, res: http.ServerResponse): Prom
 
 async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
     var buffer = [];
-    for await (const r of req) buffer += r;
+    for await (const r of req)
+        buffer.push(r);
     var data = buffer.join('') as string;
 
     if (data.length == 0) return false;
@@ -190,7 +191,7 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
             if (scoreDurationPair === undefined) {
                 dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                 dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
-            } else if (pairCompare(scoreDurationPair, [entry.score, -entry.duration]) > 0) {
+            } else if (pairCompare([entry.score, -entry.duration], scoreDurationPair) > 0) {
                 {
                     let targets: DBPosEntry[] =
                         dbPosition.getValues(scoreDurationPair).filter(e => e.name == entry.name).asArray;
