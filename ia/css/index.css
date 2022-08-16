@@ -68,7 +68,7 @@ body.dark-mode {
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        font-family: sans-serif;
+        font-family: Bahnschrift SemiBold, monospace;
         font-size: 36px;
         font-weight: bold;
     }
@@ -104,7 +104,7 @@ body.dark-mode {
 
 h1 {
     font-size: 72px;
-    font-family: sans-serif;
+    font-family: Bahnschrift SemiBold, monospace;
 }
 
 body > div {
@@ -247,7 +247,7 @@ clock {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Montserrat', sans-serif;
+    font-family: Bahnschrift SemiBold, monospace;
     position: relative;
     overflow: hidden;
 }
@@ -494,7 +494,7 @@ clock {
     background: #fff;
     width: 450px;
     z-index: calc(var(--start-counter-z-index) + 10);
-    text-align: center;
+    /*text-align: center;*/
     padding: 20px;
     box-sizing: border-box;
     box-shadow: 0px 0px 25px #777;
@@ -512,7 +512,7 @@ clock {
     font-size: 25px;
     font-weight: 600;
     line-height: 30px;
-    text-align: center;
+    /*text-align: center;*/
     border-radius: 50%;
 }
 
@@ -531,6 +531,38 @@ h3 {
     display: inline-block;
     text-align: center;
     font-size: 25px;
+    text-shadow: 0px 0px 11px #555a;
+    font-family: Bahnschrift SemiBold, monospace;
+}
+
+div.title {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    font-size: 15px;
+    text-align: left;
+    line-height: 1.25;
+    font-family: Bahnschrift SemiBold, monospace;
+}
+
+div.text {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+    text-align: left;
+    line-height: 1.25;
+    font-family: Bahnschrift, monospace;
+}
+
+div.remark {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    font-size: 9.75px;
+    text-align: left;
+    line-height: 1.25;
+    font-family: Bahnschrift, monospace;
 }
 
 .mistake-icon {
