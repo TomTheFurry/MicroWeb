@@ -47,6 +47,7 @@ let dbPersionalBest: lmdb.Database<number[], string> = database.openDB({
     name: "personalBest"
 });
 
+const USE_FILE_CACHE = false;
 let fileCache: Map<string, Buffer> = new Map();
 
 
@@ -182,10 +183,10 @@ async function webGet(req: http.IncomingMessage, res: http.ServerResponse): Prom
             return true;
         }
         res.writeHead(200, { 'Content-Type': type });
-        let fileData = fileCache.get(loc.toLowerCase());
+        let fileData = USE_FILE_CACHE ? fileCache.get(loc.toLowerCase()) : undefined;
         if (fileData === undefined) {
             fileData = await promisify(fs.readFile)(fileDir);
-            fileCache.set(loc.toLowerCase(), fileData);
+            if (USE_FILE_CACHE) fileCache.set(loc.toLowerCase(), fileData);
         }
         res.end(fileData);
         return true;
