@@ -12,10 +12,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://use.typekit.net/iju2lko.css">
 
+    <script>window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+          t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+      
+        return t;
+      }(document, "script", "twitter-wjs"));</script>
+      <div id="fb-root"></div>
+      <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v14.0" nonce="aBnY8bjQ"></script>
     <script type="text/javascript" src="./script/score.js"></script>
     <script type="text/javascript" src="./script/w3c-includeHTML.js"></script>
     <script type="text/javascript" src="./script/game.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
 
@@ -269,6 +288,7 @@
                     </div>
                 </div>
             </a>
+            <div id="end-screen-share" url="3rdParty/sharing.html"></div>
             <a href="StartPage.html">
                 <div id="leave-button" class="ctrl-button frame button">
                     <div w3-include-html="./svg/icon/exit.svg">
