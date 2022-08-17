@@ -6,6 +6,10 @@
     --icon-default-color: #898989;
 }
 
+:root.dark-mode {
+    
+}
+
 * {
     transition: all 200ms, color 20ms;
 }
@@ -19,12 +23,12 @@ html, body, .main-box {
     justify-content: center;
 }
 
-body.dark-mode {
+/* body.dark-mode {
     background-color: black;
     color: white;
     --primary-color: #777;
     --secondary-color:#ccca;
-}
+} */
 
 .st0 {
     fill: var(--icon-default-color);
@@ -42,8 +46,6 @@ body.dark-mode {
     pointer-events: none;
     filter: drop-shadow(-1px 1px 3px #0006);
 }
-
-
 
 .icon > * {
     transform: translateY(-50%);

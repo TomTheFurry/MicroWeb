@@ -51,6 +51,7 @@ let dbPosition = database.openDB({
 let dbPersionalBest = database.openDB({
     name: "personalBest"
 });
+const USE_FILE_CACHE = false;
 let fileCache = new Map();
 // DB structure:
 //
@@ -182,10 +183,11 @@ function webGet(req, res) {
                 return true;
             }
             res.writeHead(200, { 'Content-Type': type });
-            let fileData = fileCache.get(loc.toLowerCase());
+            let fileData = USE_FILE_CACHE ? fileCache.get(loc.toLowerCase()) : undefined;
             if (fileData === undefined) {
                 fileData = yield (0, util_1.promisify)(fs.readFile)(fileDir);
-                fileCache.set(loc.toLowerCase(), fileData);
+                if (USE_FILE_CACHE)
+                    fileCache.set(loc.toLowerCase(), fileData);
             }
             res.end(fileData);
             return true;

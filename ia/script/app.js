@@ -21,8 +21,11 @@ const startPage = (idx) => {
 }
 
 function darkMode() {
-    // var element = document.body;
-    // element.classList.toggle("dark-mode");
+    let rootElement = document.documentElement;
+    rootElement.classList.toggle('dark-mode');
+    if (rootElement.classList.contains('dark-mode')) {
+
+    }
 }
 
 const readJson = async (path) => {
@@ -213,6 +216,10 @@ const assignColorfulText = async () => {
             });
         }
     });
+}
+
+const updateColorfulText = () => {
+    
 }
 
 const initPage = () => {
