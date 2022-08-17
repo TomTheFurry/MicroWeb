@@ -4,12 +4,12 @@
     --secondary-color: #555a;
     --icon-default-color: #898989;
     --warn-color: #f00;
-    --correct-color #b3ffb3;
-    --error-color ff6666;
-    --box-button-shadow-color #5555;
-    --box-shadow-color #5553;
-    --box-button-background--color #c9caca;
-    --box-background--color #e2e2e2;
+    --correct-color: #b3ffb3;
+    --error-color: ff6666;
+    --box-button-shadow-color: #5555;
+    --box-shadow-color: #5553;
+    --box-button-background--color: #c9caca;
+    --box-background--color: #e2e2e2;
     --icon-filter-color: #0006;
 }
 
