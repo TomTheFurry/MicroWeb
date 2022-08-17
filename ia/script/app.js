@@ -27,9 +27,6 @@ const isDarkMode = () => { return document.documentElement.classList.contains('d
 const darkMode = () => {
     let rootElement = document.documentElement;
     rootElement.classList.toggle('dark-mode');
-    if (rootElement.classList.contains('dark-mode')) {
-
-    }
 }
 
 const readJson = async (path) => {
@@ -141,25 +138,28 @@ const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
     window.requestAnimationFrame(step);
 };
 
-// const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
-//     const target = document.querySelector(qSelector);
-//     let startTimestamp = null;
-//     const step = (timestamp) => {
-//         if (!startTimestamp) startTimestamp = timestamp;
-//         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-//         target.innerText = Math.floor(progress * (end - start) + start);
-//         if (progress < 1) {
-//             window.requestAnimationFrame(step);
-//         }
-//     };
-//     window.requestAnimationFrame(step);
-// };
+const assignLinkOfButton = () => {
+    const buttons = document.getElementsByClassName('button');
+
+    const redirectWebsite = (url) => {
+        window.location.href = url;
+    }
+
+    for (let i = 0; i < buttons.length; ++i) {
+        let e = buttons.item(i);
+        if (!e.hasAttribute('redirect-url')) { continue; }
+
+        let url = e.getAttribute('redirect-url');
+
+        e.addEventListener("touchend", () => {redirectWebsite(url)});
+		e.addEventListener("mouseup", () => {redirectWebsite(url)});
+    }
+}
 
 const assignColorfulText = async () => {
-    const defaultColor = '#000'
     const regex = /\s/;
     let colorTexts = document.getElementsByClassName('colorful-texts');
-    if (colorTexts.length === 0) { return false; }
+    if (colorTexts.length === 0) { return; }
 
     // colourfulText 'data/colourful-text.json'
     await readJson('data/colourful-text.json').then((colourfulText) => {
@@ -181,8 +181,10 @@ const assignColorfulText = async () => {
             let textData = colourfulText.find(e => e.id === id);
             if (!colourfulText || typeof textData === "undefined") { continue; }
 
-            let colors = isDarkMode() ? textData.darkColors : textData.colors;
+            let colors = textData.colors;
+            let darkColors = textData.darkColors;
             let colorIdx = 0;
+            let dColorIdn = 0;
             textData.texts.forEach((text, idx) => {
                 if (idx !== 0) {
                     let newBr = document.createElement('br');
@@ -198,13 +200,26 @@ const assignColorfulText = async () => {
                     
                     if (!regex.test(c)) {
                         newText.innerHTML = c;
-                        let color = defaultColor;
-                        if (colors.length > 0) {
-                            color = '';
-                            if (colors[colorIdx].charAt(0) !== '#') { color += '#'; }
-                            color += colors[colorIdx++];
+                        {
+                            // normal color
+                            let color = '#111';
+                            if (colors.length > 0) {
+                                color = '';
+                                if (colors[colorIdx].charAt(0) !== '#') { color += '#'; }
+                                color += colors[colorIdx++];
+                            }
+                            newText.style.setProperty('--color', color);
                         }
-                        newText.style.setProperty('--color', color);
+                        {
+                            // dark color
+                            let dColor = '#fff';
+                            if (darkColors.length > 0) {
+                                dColor = '';
+                                if (darkColors[dColorIdn].charAt(0) !== '#') { dColor += '#'; }
+                                dColor += darkColors[dColorIdn++];
+                            }
+                            newText.style.setProperty('--dark-color', dColor);
+                        }
                         newText.classList.add('colorful-text');
                     }
                     else {
@@ -215,6 +230,7 @@ const assignColorfulText = async () => {
 
 
                     if (colorIdx >= colors.length) colorIdx = 0;
+                    if (dColorIdn >= darkColors.length) dColorIdn = 0;
                     newLine.appendChild(newText);
                 }
 
@@ -222,45 +238,6 @@ const assignColorfulText = async () => {
             });
         }
     });
-
-    return true;
-}
-
-const updateColorfulText = async () => {
-    const defaultColor = '#000';
-    const regex = /\s/;
-    if (colorfulTextParent.length === 0 && !assignColorfulText()) { return false; }
-
-    await readJson('data/colourful-text.json').then((colourfulText) => {
-        colorfulTextParent.forEach((e) => {
-            let id = e['id'];
-            let textData = colourfulText.find(e => e.id === id);
-
-            let colors = isDarkMode() ? textData.darkColors : textData.colors;
-            let colorIdx = 0;
-
-            let lines = e.getElementsByClassName('line');
-            for (let i = 0; i < lines.length; ++i) {
-                let line = lines.item(i);
-                let chars = line.getElementsByClassName('colorful-text');
-
-                for (let i = 0; i < chars.length; ++i) {
-                    let char = chars.item(i);
-                    if (!regex.test(char)) {
-                        let color = defaultColor;
-                        if (colors.length > 0) {
-                            color = '';
-                            if (colors[colorIdx].charAt(0) !== '#') { color += '#'; }
-                            color += colors[colorIdx++];
-                        }
-                        newText.style.setProperty('--color', color);
-                    }
-                }
-            }
-        });
-    });
-
-    return true;
 }
 
 const initPage = () => {
@@ -268,6 +245,7 @@ const initPage = () => {
         if (isUserIsDarkMode()) { darkMode(); }
         await assignColorfulText();
         includeHTML();
+        assignLinkOfButton();
         startPage(1);
     });
 }

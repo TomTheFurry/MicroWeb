@@ -98,18 +98,18 @@
                     <div class="frame-box" w3-include-html="./svg/icon/start.svg"></div>
                 </div>
             </div>
+            <!-- help button -->
             <div class="ctrl-button frame button" onclick="togglePopup()">
                 <div>
                     <div class="frame-box" w3-include-html="./svg/icon/help.svg"></div>
                 </div>
             </div>
-            <a href="./StartPage.html">
-                <div id="leave-button" class="ctrl-button frame button">
-                    <div>
-                        <div class="frame-box"  w3-include-html="./svg/icon/exit.svg"></div>
-                    </div>
+            <!-- exit button -->
+            <div id="leave-button" class="ctrl-button frame button" redirect-url="./StartPage.html">
+                <div>
+                    <div class="frame-box"  w3-include-html="./svg/icon/exit.svg"></div>
                 </div>
-            </a>
+            </div>
         </div>
 
         <span class="store">
@@ -158,7 +158,7 @@
                 <div class="overlay"></div>
                 <dr class="content">
                     <div class="close-btn" onclick="togglePopup()"><img src="./svg/icon/x.svg" width="15"></div>
-                    <img src="./svg/icon/HowToPlay.svg" width="350">
+                    <span class="colorful-texts" colorful-id="how-to-play"></span>
                     <p>
                         <div class="text">
                             Shapes will be shown before the game starts, for a few seconds, and you can choose to skip it after watching.<br />

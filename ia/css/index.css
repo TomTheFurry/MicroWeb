@@ -1,23 +1,48 @@
 :root {
     --start-counter-z-index: 10;
-    --primary-color: #fff;
-    --secondary-color: #555a;
+
+
+    --background-color: #fff;
+    --main-color: #fff;
     --icon-default-color: #898989;
-    --warn-color: #f00;
-    --correct-color: #b3ffb3;
-    --error-color: ff6666;
-    --box-button-shadow-color: #5555;
-    --box-shadow-color: #5553;
-    --box-button-background--color: #c9caca;
-    --box-background--color: #e2e2e2;
-    --icon-filter-color: #0006;
+    --warn-icon-color: #f00;
+    --button-hover-color: #fff;
+    
+    --game-button-color: #e2e2e2;
+    --game-button-disabled-color: #c9caca;
+    --game-button-correct-color: #b3ffb3;
+    --game-button-error-color: #f66;
+
+    
+    --font-color: #111;
+
+    
+    --icon-shadow: #0006;
+    --main-shadow-color: #555a;
+    --game-button-shadow-color: #5553;
+    --game-button-disabled-shadow-color: #5555;
 }
 
     :root.dark-mode {
+        --background-color: #111;
+        --main-color: #9f9f9f;
+        --icon-default-color: #ddd;
+        --button-hover-color: #afafaf;
+        
+
+        --font-color: #fff;
+
+        
+        --main-shadow-color:#ccca;
     }
 
 * {
-    transition: all 200ms, color 20ms;
+    transition: transform 200ms, 
+                color 200ms ease-in-out, 
+                background 400ms ease-out,
+                border 400ms ease-in-out;
+
+    color: var(--font-color);
 }
 
 html, body, .main-box {
@@ -29,12 +54,10 @@ html, body, .main-box {
     justify-content: center;
 }
 
-/* body.dark-mode {
-    background-color: black;
-    color: white;
-    --primary-color: var(--secondary-color);
-    --secondary-color:#ccca;
-} */
+body {
+    background-color: var(--background-color);
+    
+}
 
 .st0 {
     fill: var(--icon-default-color);
@@ -50,7 +73,7 @@ html, body, .main-box {
     height: 75%;
     box-sizing: border-box;
     pointer-events: none;
-    filter: drop-shadow(-1px 1px 3px #0006);
+    filter: drop-shadow(-1px 1px 3px var(--icon-shadow));
 }
 
     .icon > * {
@@ -66,8 +89,9 @@ html, body, .main-box {
 .frame {
     /* border: 8px solid #888;
     border-radius: 15px;
-    box-shadow: 0 0 13px var(--secondary-color); */
-    transition: 50ms;
+    box-shadow: 0 0 13px var(--main-shadow-color); */
+    transition: background 50ms ease-in-out,
+                border 50ms ease-in-out;
 }
 
     .frame * {
@@ -83,10 +107,10 @@ html, body, .main-box {
 
     .frame > div {
         border-radius: 10px;
-        background: var(--primary-color);
+        background: var(--main-color);
         margin: 0;
         overflow: hidden;
-        box-shadow: 0 0 13px var(--secondary-color);
+        box-shadow: 0 0 13px var(--main-shadow-color);
     }
 
     .frame .frame-box {
@@ -97,15 +121,16 @@ html, body, .main-box {
     }
 
 .button > div:hover {
-    background-color: var(--primary-color) !important;
+    background-color: var(--button-hover-color) !important;
 }
 
-.button:not(.game-box) > div:hover {
+.button:not(.game-box) > div:hover,
+.button:not(.game-box) > div:active {
     transform: scale(1.1);
 }
 
 .button:not(.game-box) > div:active {
-    box-shadow: 0px 0px 13px var(--secondary-color);
+    box-shadow: 0px 0px 13px var(--main-shadow-color);
     width: 97%;
     height: 97%;
 }
@@ -123,12 +148,13 @@ body > div {
 }
 
 .game-box {
-    border: 30px solid var(--primary-color);
-    background-color: var(--primary-color);
+    border: 30px solid var(--main-color);
+    background-color: var(--main-color);
     border-radius: 24px;
-    box-shadow: 0 0 13px var(--secondary-color);
+    box-shadow: 0 0 13px var(--main-shadow-color);
     height: 500px;
     width: 500px;
+    padding: 4px;
     position: relative;
     /*grid*/
     display: grid;
@@ -147,23 +173,23 @@ body > div {
         padding: 50% 0;
         aspect-ratio: 1;
         /* place-items: center; */
-        background-color: var(--box-background--color);
-        box-shadow: 0 0 10px var(--box-shadow-color);
+        background-color: var(--game-button-color);
+        box-shadow: 0 0 10px var(--game-button-shadow-color);
     }
 
     .game-box.button > .game-button:active {
-        transition: 15ms;
+        transition: all 15ms;
     }
 
     .game-box.button > .game-button.tile-disabled {
         pointer-events: none;
         cursor: default;
-        background-color: var(--box-button-background--color);
-        box-shadow: 0 0 13px var(--box-button-shadow-color);
+        background-color: var(--game-button-disabled-color);
+        box-shadow: 0 0 13px var(--game-button-disabled-shadow-color);
     }
 
     .game-box.button > .game-button.tile-correct {
-        background-color: var(--correct-color) !important;
+        background-color: var(--game-button-correct-color) !important;
         animation: 175ms 1 game-button-correct;
     }
 
@@ -184,7 +210,7 @@ body > div {
 }
 
 .game-box.button > .game-button.tile-incorrect {
-    background-color: var(--error-color) !important;
+    background-color: var(--game-button-error-color) !important;
     animation: 56ms 3 linear game-button-incorrect;
 }
 
@@ -242,7 +268,7 @@ body > div {
     display: flex;
     flex-flow: row;
     justify-content: space-between;
-    transition: 0.15s;
+    transition: transform 150ms;
 }
 
     .console:first-of-type {
@@ -295,11 +321,11 @@ clock {
 
 /* start count */
 .game-start-count, .game-start-count * {
-    transition: 0ms;
+    transition: all 0ms;
 }
 
 .game-start-count {
-    filter: drop-shadow(1px -1px 16px var(--secondary-color));
+    filter: drop-shadow(1px -1px 16px var(--main-shadow-color));
     visibility: hidden;
     position: absolute;
     z-index: var(--start-counter-z-index);
@@ -318,7 +344,7 @@ clock {
         width: 100%;
         height: 100%;
         overflow: hidden !important;
-        background-color: var(--primary-color) !important;
+        background-color: var(--main-color) !important;
         mask-image: url(../svg/icon/start.svg);
         mask-size: 100%;
         mask-repeat: no-repeat;
@@ -371,6 +397,10 @@ clock {
     color: var(--color);
 }
 
+:root.dark-mode .colorful-text {
+    color: var(--dark-color);
+}
+
 @media only screen and (max-width: 620px) and (min-width: 420px), only screen and (max-height: 812px) and (min-height: 710px) {
     .frame {
         border-width: 7px;
@@ -393,7 +423,7 @@ clock {
     }
 
     .button > div:active {
-        box-shadow: 0px 0px 11px var(--secondary-color);
+        box-shadow: 0px 0px 11px var(--main-shadow-color);
     }
 
     .icon-bar {
@@ -443,7 +473,7 @@ clock {
     }
 
     .button > div:active {
-        box-shadow: 0px 0px 5px var(--secondary-color);
+        box-shadow: 0px 0px 5px var(--main-shadow-color);
     }
 
     .icon-bar {
@@ -500,13 +530,13 @@ clock {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    background: var(--primary-color);
+    background: var(--main-color);
     width: 450px;
     z-index: calc(var(--start-counter-z-index) + 10);
     /*text-align: center;*/
     padding: 20px;
     box-sizing: border-box;
-    box-shadow: 0px 0px 25px var(--secondary-color);
+    box-shadow: 0px 0px 25px var(--main-shadow-color);
     border-radius: 10px;
 }
 
@@ -517,7 +547,7 @@ clock {
     top: 20px;
     width: 30px;
     height: 30px;
-    background: var(--primary-color);
+    background: var(--main-color);
     font-size: 25px;
     font-weight: 600;
     line-height: 30px;
@@ -540,7 +570,7 @@ h3 {
     display: inline-block;
     text-align: center;
     font-size: 25px;
-    text-shadow: 0px 0px 11px var(--secondary-color);
+    text-shadow: 0px 0px 11px var(--main-shadow-color);
     font-family: Bahnschrift SemiBold, monospace;
 }
 
@@ -595,7 +625,7 @@ div.remark {
             content: "";
             width: 100%;
             height: 100%;
-            background-color: var(--warn-color);
+            background-color: var(--warn-icon-color);
             border-radius: 50%;
             animation: 450ms 1 mistake_anim;
         }
@@ -603,6 +633,6 @@ div.remark {
 @keyframes mistake_anim {
     0% {
         transform: scale(0.1);
-        animation-timing-function: ease-in;
+        animation-timing-function: ease-out;
     }
 }
