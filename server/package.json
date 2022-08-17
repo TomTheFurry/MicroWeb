@@ -15,9 +15,6 @@
     "typescript": "^4.0.5"
   },
   "dependencies": {
-    "base-64": "^1.0.0",
-    "jsesc": "^3.0.2",
-    "lmdb": "^2.5.3",
-    "node-json-db": "^2.1.0"
+    "lmdb": "^2.5.3"
   }
 }
