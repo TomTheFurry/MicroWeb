@@ -76,7 +76,7 @@ var server = http.createServer((req, res) => __awaiter(void 0, void 0, void 0, f
             return;
     }
     console.log("bad request: Unknown method");
-    res.writeHead(400, "bad request");
+    res.writeHead(501, "unsupported method");
     res.end();
     return;
 }));
@@ -242,6 +242,7 @@ function timePost(req, res) {
                 res.end();
                 return true;
             }
+            let addSomething = false;
             if (VERBOSE)
                 console.log("POST to scoreboard: {name:" + entry.name + ", score:" + entry.score + ", time:" + entry.duration + ", level:" + entry.level + "}");
             var topN = yield database.transaction(() => {
@@ -251,6 +252,7 @@ function timePost(req, res) {
                         console.log("New player entry created for " + entry.name);
                     dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                     dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
+                    addSomething = true;
                 }
                 else if (pairCompare([entry.score, -entry.duration], scoreDurationPair) > 0) {
                     if (VERBOSE)
@@ -264,6 +266,7 @@ function timePost(req, res) {
                     }
                     dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                     dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
+                    addSomething = true;
                 }
                 else {
                     if (VERBOSE)
@@ -278,7 +281,7 @@ function timePost(req, res) {
                     console.log("Returning " + topNArray.length + " scoreboard entries for the POST");
                 return topNArray;
             });
-            res.writeHead(200, { "content-type": "application/json" });
+            res.writeHead(addSomething ? 201 : 200, { "content-type": "application/json" });
             res.end(JSON.stringify({ scoreboard: topN }));
             return true;
         }

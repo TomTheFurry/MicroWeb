@@ -76,7 +76,7 @@ var server = http.createServer(
                     if (await timePost(req, res)) return;
                 }
                 console.log("bad request: Unknown method");
-                res.writeHead(400, "bad request");
+                res.writeHead(501, "unsupported method");
                 res.end();
                 return;
             });
@@ -226,6 +226,7 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
             res.end();
             return true;
         }
+        let addSomething: boolean = false;
 
         if (VERBOSE) console.log("POST to scoreboard: {name:" + entry.name + ", score:" + entry.score + ", time:" + entry.duration + ", level:" + entry.level + "}");
         var topN = await database.transaction(() => {
@@ -234,6 +235,7 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
                 if (VERBOSE) console.log("New player entry created for " + entry.name);
                 dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                 dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
+                addSomething = true;
             } else if (pairCompare([entry.score, -entry.duration], scoreDurationPair) > 0) {
                 if (VERBOSE) console.log("Player entry Personal-Best updated for " + entry.name);
                 {
@@ -246,6 +248,7 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
                 }
                 dbPersionalBest.put(entry.name, [entry.score, -entry.duration]);
                 dbPosition.put([entry.score, -entry.duration], { name: entry.name, level: entry.level });
+                addSomething = true;
             } else {
                 if (VERBOSE) console.log("POST to scoreboard for " + entry.name + " needs no action: Below Personal-Best.");
             }
@@ -257,7 +260,7 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
             if (VERBOSE) console.log("Returning "+ topNArray.length +" scoreboard entries for the POST");
             return topNArray;
         });
-        res.writeHead(200, { "content-type": "application/json" });
+        res.writeHead(addSomething ? 201 : 200, { "content-type": "application/json" });
         res.end(JSON.stringify({scoreboard: topN}));
         return true;
     } catch (s) {

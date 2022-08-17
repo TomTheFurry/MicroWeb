@@ -113,6 +113,21 @@ const startEndPage = async () => {
         });
         await delayed(150);
         intro.classList.add('fade');
+        {
+            let twitterButton = document.getElementById("end-screen-share");
+            /* Make an HTTP request using the attribute value as the file name: */
+            xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) { twitterButton.innerHTML = this.responseText; }
+                }
+                twttr.widgets.load(twitterButton);
+                FB.XFBML.parse();
+            }
+            xhttp.open("GET", twitterButton.getAttribute("url"), true);
+            xhttp.send();
+        }
+
     });
 }
 
