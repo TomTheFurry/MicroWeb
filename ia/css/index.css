@@ -2,13 +2,19 @@
     --start-counter-z-index: 10;
     --primary-color: #fff;
     --secondary-color: #555a;
-
     --icon-default-color: #898989;
+    --warn-color: #f00;
+    --correct-color #b3ffb3;
+    --error-color ff6666;
+    --box-button-shadow-color #5555;
+    --box-shadow-color #5553;
+    --box-button-background--color #c9caca;
+    --box-background--color #e2e2e2;
+    --icon-filter-color: #0006;
 }
 
-:root.dark-mode {
-    
-}
+    :root.dark-mode {
+    }
 
 * {
     transition: all 200ms, color 20ms;
@@ -26,7 +32,7 @@ html, body, .main-box {
 /* body.dark-mode {
     background-color: black;
     color: white;
-    --primary-color: #777;
+    --primary-color: var(--secondary-color);
     --secondary-color:#ccca;
 } */
 
@@ -47,9 +53,9 @@ html, body, .main-box {
     filter: drop-shadow(-1px 1px 3px #0006);
 }
 
-.icon > * {
-    transform: translateY(-50%);
-}
+    .icon > * {
+        transform: translateY(-50%);
+    }
 
 .frame, .frame > div, .frame .frame-box {
     display: flex;
@@ -60,7 +66,7 @@ html, body, .main-box {
 .frame {
     /* border: 8px solid #888;
     border-radius: 15px;
-    box-shadow: 0 0 13px #555a; */
+    box-shadow: 0 0 13px var(--secondary-color); */
     transition: 50ms;
 }
 
@@ -77,10 +83,10 @@ html, body, .main-box {
 
     .frame > div {
         border-radius: 10px;
-        background: #ffffff;
+        background: var(--primary-color);
         margin: 0;
         overflow: hidden;
-        box-shadow: 0 0 13px #555a;
+        box-shadow: 0 0 13px var(--secondary-color);
     }
 
     .frame .frame-box {
@@ -91,7 +97,7 @@ html, body, .main-box {
     }
 
 .button > div:hover {
-    background-color: #fff !important;
+    background-color: var(--primary-color) !important;
 }
 
 .button:not(.game-box) > div:hover {
@@ -99,7 +105,7 @@ html, body, .main-box {
 }
 
 .button:not(.game-box) > div:active {
-    box-shadow: 0px 0px 13px #555a;
+    box-shadow: 0px 0px 13px var(--secondary-color);
     width: 97%;
     height: 97%;
 }
@@ -117,10 +123,10 @@ body > div {
 }
 
 .game-box {
-    border: 30px solid #fff;
-    background-color: #fff;
+    border: 30px solid var(--primary-color);
+    background-color: var(--primary-color);
     border-radius: 24px;
-    box-shadow: 0 0 13px #555a;
+    box-shadow: 0 0 13px var(--secondary-color);
     height: 500px;
     width: 500px;
     position: relative;
@@ -131,6 +137,7 @@ body > div {
     justify-items: center;
     align-items: center;
 }
+
     .game-box.pointer {
         cursor: pointer;
     }
@@ -140,8 +147,8 @@ body > div {
         padding: 50% 0;
         aspect-ratio: 1;
         /* place-items: center; */
-        background-color: #e2e2e2;
-        box-shadow: 0 0 10px #5553;
+        background-color: var(--box-background--color);
+        box-shadow: 0 0 10px var(--box-shadow-color);
     }
 
     .game-box.button > .game-button:active {
@@ -151,48 +158,53 @@ body > div {
     .game-box.button > .game-button.tile-disabled {
         pointer-events: none;
         cursor: default;
-        background-color: #c9caca;
-        box-shadow: 0 0 13px #5555;
+        background-color: var(--box-button-background--color);
+        box-shadow: 0 0 13px var(--box-button-shadow-color);
     }
 
     .game-box.button > .game-button.tile-correct {
-        background-color: #b3ffb3 !important;
+        background-color: var(--correct-color) !important;
         animation: 175ms 1 game-button-correct;
     }
 
-    @keyframes game-button-correct {
-        0% {
-            animation-timing-function: ease-out;
-        }
-        10% {
-            transform: translate(0, -10%);
-            transform: scale(1.05);
-        }
-        50% {
-            transform: scale(1.1);
-            animation-timing-function: ease-in;
-        }
+@keyframes game-button-correct {
+    0% {
+        animation-timing-function: ease-out;
     }
 
-    .game-box.button > .game-button.tile-incorrect {
-        background-color: #ff6666 !important;
-        animation: 56ms 3 linear game-button-incorrect;
+    10% {
+        transform: translate(0, -10%);
+        transform: scale(1.05);
     }
 
-    @keyframes game-button-incorrect {
-        20% {
-            transform: translate(-5%, -5%);
-        }
-        50% {
-            transform: translate(-5%, 5%);
-        }
-        60% {
-            transform: translate(5%, 5%);
-        }
-        80% {
-            transform: translate(5%, -5%);
-        }
+    50% {
+        transform: scale(1.1);
+        animation-timing-function: ease-in;
     }
+}
+
+.game-box.button > .game-button.tile-incorrect {
+    background-color: var(--error-color) !important;
+    animation: 56ms 3 linear game-button-incorrect;
+}
+
+@keyframes game-button-incorrect {
+    20% {
+        transform: translate(-5%, -5%);
+    }
+
+    50% {
+        transform: translate(-5%, 5%);
+    }
+
+    60% {
+        transform: translate(5%, 5%);
+    }
+
+    80% {
+        transform: translate(5%, -5%);
+    }
+}
 
 .ctrl-button {
     width: 72px;
@@ -287,8 +299,7 @@ clock {
 }
 
 .game-start-count {
-    filter: drop-shadow(1px -1px 16px #555a);
-
+    filter: drop-shadow(1px -1px 16px var(--secondary-color));
     visibility: hidden;
     position: absolute;
     z-index: var(--start-counter-z-index);
@@ -299,27 +310,24 @@ clock {
     height: 40%;
 }
 
-.game-start-count.count {
-    visibility: visible;
-}
+    .game-start-count.count {
+        visibility: visible;
+    }
 
-.game-start-count > div {
-    width: 100%;
-    height: 100%;
-    overflow: hidden !important;
-    background-color: #eee !important;
-
-    mask-image: url(../svg/icon/start.svg);
-    mask-size: 100%;
-    mask-repeat: no-repeat;
-    mask-position: center;
-
-    -webkit-mask-image: url(../svg/icon/start.svg);
-    -webkit-mask-size: 100%;
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-
-}
+    .game-start-count > div {
+        width: 100%;
+        height: 100%;
+        overflow: hidden !important;
+        background-color: var(--primary-color) !important;
+        mask-image: url(../svg/icon/start.svg);
+        mask-size: 100%;
+        mask-repeat: no-repeat;
+        mask-position: center;
+        -webkit-mask-image: url(../svg/icon/start.svg);
+        -webkit-mask-size: 100%;
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+    }
 
 .game-box.pointer:hover .game-start-count > div,
 .game-box.pointer:active .game-start-count > div {
@@ -330,28 +338,29 @@ clock {
     transform: scale(1.0625);
 }
 
-    .game-start-count > div::after {
-        --top: 21%;
-        --bottom: 58%;  /* 100 - 21 - 21 = 58 */
-        content: "";
-        position: absolute;
-        z-index: 30;
-        top: var(--top);
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.125);
-        transform: translateY(var(--bottom));
-    }
+.game-start-count > div::after {
+    --top: 21%;
+    --bottom: 58%; /* 100 - 21 - 21 = 58 */
+    content: "";
+    position: absolute;
+    z-index: 30;
+    top: var(--top);
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.125);
+    transform: translateY(var(--bottom));
+}
 
-        .game-start-count.count > div::after {
-            animation: var(--count-time) linear forwards timer_indicator;
-        }
+.game-start-count.count > div::after {
+    animation: var(--count-time) linear forwards timer_indicator;
+}
 
 @keyframes timer_indicator {
     from {
         transform: translateY(0%);
     }
+
     to {
         transform: translateY(var(--bottom));
     }
@@ -362,8 +371,7 @@ clock {
     color: var(--color);
 }
 
-@media only screen and (max-width: 620px) and (min-width: 420px),
-        only screen and (max-height: 812px) and (min-height: 710px) {
+@media only screen and (max-width: 620px) and (min-width: 420px), only screen and (max-height: 812px) and (min-height: 710px) {
     .frame {
         border-width: 7px;
     }
@@ -385,7 +393,7 @@ clock {
     }
 
     .button > div:active {
-        box-shadow: 0px 0px 11px #555a;
+        box-shadow: 0px 0px 11px var(--secondary-color);
     }
 
     .icon-bar {
@@ -413,8 +421,7 @@ clock {
 
 
 
-@media only screen and (max-width: 420px),
-        only screen and (max-height: 710px) {
+@media only screen and (max-width: 420px), only screen and (max-height: 710px) {
     .frame {
         border-width: 5px;
     }
@@ -436,7 +443,7 @@ clock {
     }
 
     .button > div:active {
-        box-shadow: 0px 0px 5px #555a;
+        box-shadow: 0px 0px 5px var(--secondary-color);
     }
 
     .icon-bar {
@@ -493,13 +500,13 @@ clock {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    background: #fff;
+    background: var(--primary-color);
     width: 450px;
     z-index: calc(var(--start-counter-z-index) + 10);
     /*text-align: center;*/
     padding: 20px;
     box-sizing: border-box;
-    box-shadow: 0px 0px 25px #777;
+    box-shadow: 0px 0px 25px var(--secondary-color);
     border-radius: 10px;
 }
 
@@ -510,7 +517,7 @@ clock {
     top: 20px;
     width: 30px;
     height: 30px;
-    background: #fff;
+    background: var(--primary-color);
     font-size: 25px;
     font-weight: 600;
     line-height: 30px;
@@ -533,7 +540,7 @@ h3 {
     display: inline-block;
     text-align: center;
     font-size: 25px;
-    text-shadow: 0px 0px 11px #555a;
+    text-shadow: 0px 0px 11px var(--secondary-color);
     font-family: Bahnschrift SemiBold, monospace;
 }
 
@@ -570,31 +577,28 @@ div.remark {
 .mistake-icon {
     background-color: var(--icon-default-color);
     overflow: hidden;
-
     mask-image: url(../svg/icon/mistake.svg);
     mask-size: 100%;
     mask-repeat: no-repeat;
     mask-position: center;
-
     -webkit-mask-image: url(../svg/icon/mistake.svg);
     -webkit-mask-size: 100%;
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
 }
 
-.mistake-icon.mistake {
-    animation: 65ms 4 linear game-button-incorrect;
-}
+    .mistake-icon.mistake {
+        animation: 65ms 4 linear game-button-incorrect;
+    }
 
-.mistake-icon.mistake::after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: #f00;
-    border-radius: 50%;
-
-    animation: 450ms 1 mistake_anim;
-}
+        .mistake-icon.mistake::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-color: var(--warn-color);
+            border-radius: 50%;
+            animation: 450ms 1 mistake_anim;
+        }
 
 @keyframes mistake_anim {
     0% {
