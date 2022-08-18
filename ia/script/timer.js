@@ -7,15 +7,19 @@ let timeLeft = TIME_LIMIT;
 let timerInterval = null;
 let intervalID = null;
 let isRunning = false;
+
+
 var totalTime = 0;
+
+let startTime = Date.now();
 
 const SECOND_IN_MS = 1000;
 const UPDATE_INTERVAL = SECOND_IN_MS / 60;
 
 window.addEventListener('load', () => setTime());
 
-function timerInit(addTotalTime = true) {
-    if (addTotalTime) { totalTime += timePassed; }
+function timerInit(addTotalTime = false) {
+    if (addTotalTime && isRunning) { totalTime +=  Date.now() - startTime; }
     isRunning = false;
     clearInterval(timerInterval);
     endCount();
@@ -24,7 +28,7 @@ function timerInit(addTotalTime = true) {
 }
 
 function onTimesUp() {
-    timerInit();
+    timerInit(true);
     gameTimeUp();
 }
 
@@ -33,6 +37,7 @@ function startTimer(timeLimit = TIME_LIMIT) {
         timerInit();
     }
 
+    startTime = Date.now();
     isRunning = true;
     setTime(timeLimit);
     setTimeout(() => TIMER.classList.add('beat'), 600);
