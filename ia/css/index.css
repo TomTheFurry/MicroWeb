@@ -1,9 +1,14 @@
 :root {
     --start-counter-z-index: 10;
+    --font-size: 36px;
+
+    --box-shadow-size-large-frame: 13px;
+    --box-shadow-size-small-frame: 10px;
 
 
     --background-color: #fff;
-    --main-color: #fff;
+    --main-color: var(--background-color);
+    --leaderboard-color: var(--background-color);
     --icon-default-color: #898989;
     --warn-icon-color: #f00;
     --button-hover-color: #fff;
@@ -24,8 +29,12 @@
 }
 
     :root.dark-mode {
+        --box-shadow-size-large-frame: 22px;
+        --box-shadow-size-small-frame: 15px;
+
         --background-color: #111;
         --main-color: #9f9f9f;
+        --leaderboard-color: #7f7f7f;
         --icon-default-color: #ddd;
         --button-hover-color: #afafaf;
         
@@ -33,15 +42,15 @@
         --font-color: #fff;
 
         
-        --main-shadow-color:#ccca;
+        --main-shadow-color:#cccc;
     }
 
 * {
-    transition: transform 200ms, 
-                color 200ms ease-in-out, 
+    transition: color 200ms ease-in-out, 
                 background 400ms ease-out,
                 border 400ms ease-in-out;
 
+    /* font-size: var(--font-size); */
     color: var(--font-color);
 }
 
@@ -55,8 +64,13 @@ html, body, .main-box {
 }
 
 body {
+    width: 100%;
     background-color: var(--background-color);
-    
+}
+
+.st0-svg {
+    width: 100%;
+    height: 100%;
 }
 
 .st0 {
@@ -86,12 +100,10 @@ body {
     justify-content: center;
 }
 
-.frame {
-    /* border: 8px solid #888;
-    border-radius: 15px;
-    box-shadow: 0 0 13px var(--main-shadow-color); */
-    transition: background 50ms ease-in-out,
-                border 50ms ease-in-out;
+.frame, frame *, .button, .button * {
+    transition: background 50ms ease-in,
+                border 50ms ease-in,
+                box-shadow 50ms ease-in;
 }
 
     .frame * {
@@ -101,7 +113,7 @@ body {
         -ms-user-select: none;
         user-select: none;
         font-family: Bahnschrift SemiBold, monospace;
-        font-size: 36px;
+        font-size: var(--font-size);
         font-weight: bold;
     }
 
@@ -110,7 +122,7 @@ body {
         background: var(--main-color);
         margin: 0;
         overflow: hidden;
-        box-shadow: 0 0 13px var(--main-shadow-color);
+        box-shadow: 0 0 var(--box-shadow-size-small-frame) var(--main-shadow-color);
     }
 
     .frame .frame-box {
@@ -130,13 +142,13 @@ body {
 }
 
 .button:not(.game-box) > div:active {
-    box-shadow: 0px 0px 13px var(--main-shadow-color);
+    box-shadow: 0px 0px var(--box-shadow-size-small-frame) var(--main-shadow-color);
     width: 97%;
     height: 97%;
 }
 
 h1 {
-    font-size: 72px;
+    font-size: calc(var(--font-size) * 2);
     font-family: Bahnschrift SemiBold, monospace;
 }
 
@@ -151,7 +163,7 @@ body > div {
     border: 30px solid var(--main-color);
     background-color: var(--main-color);
     border-radius: 24px;
-    box-shadow: 0 0 13px var(--main-shadow-color);
+    box-shadow: 0 0 var(--box-shadow-size-large-frame) var(--main-shadow-color);
     height: 500px;
     width: 500px;
     padding: 4px;
@@ -174,18 +186,14 @@ body > div {
         aspect-ratio: 1;
         /* place-items: center; */
         background-color: var(--game-button-color);
-        box-shadow: 0 0 10px var(--game-button-shadow-color);
-    }
-
-    .game-box.button > .game-button:active {
-        transition: all 15ms;
+        box-shadow: 0 0 var(--box-shadow-size-small-frame) var(--game-button-shadow-color);
     }
 
     .game-box.button > .game-button.tile-disabled {
         pointer-events: none;
         cursor: default;
         background-color: var(--game-button-disabled-color);
-        box-shadow: 0 0 13px var(--game-button-disabled-shadow-color);
+        box-shadow: 0 0 var(--box-shadow-size-small-frame) var(--game-button-disabled-shadow-color);
     }
 
     .game-box.button > .game-button.tile-correct {
@@ -211,7 +219,7 @@ body > div {
 
 .game-box.button > .game-button.tile-incorrect {
     background-color: var(--game-button-error-color) !important;
-    animation: 56ms 3 linear game-button-incorrect;
+    animation: 56ms 4 linear game-button-incorrect;
 }
 
 @keyframes game-button-incorrect {
@@ -265,6 +273,8 @@ body > div {
 
 .console {
     width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     flex-flow: row;
     justify-content: space-between;
@@ -283,7 +293,7 @@ body > div {
 clock {
     height: 100%;
     width: 100%;
-    font-size: 40px !important;
+    font-size: calc(var(--font-size) * 1.1) !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -393,6 +403,12 @@ clock {
 }
 
 /* other */
+.colorful-texts {
+    display: inline-flex;
+    flex-flow: column wrap;
+    justify-content: start;
+}
+
 .colorful-text {
     color: var(--color);
 }
@@ -402,13 +418,21 @@ clock {
 }
 
 @media only screen and (max-width: 620px) and (min-width: 420px), only screen and (max-height: 812px) and (min-height: 710px) {
+    :root {
+        --font-size: 27px;
+
+        --box-shadow-size-large-frame: 11px;
+        --box-shadow-size-small-frame: 9px;
+    }
+
+    :root.dark-mode {
+        --box-shadow-size-large-frame: 19px;
+        --box-shadow-size-small-frame: 14px;
+    }
+
     .frame {
         border-width: 7px;
     }
-
-        .frame > div {
-            font-size: 27px;
-        }
 
     .game-box {
         width: 400px;
@@ -420,10 +444,6 @@ clock {
     .ctrl-button {
         width: 56px;
         height: 56px;
-    }
-
-    .button > div:active {
-        box-shadow: 0px 0px 11px var(--main-shadow-color);
     }
 
     .icon-bar {
@@ -443,22 +463,26 @@ clock {
     .console:last-child {
         margin-top: 45px;
     }
-
-    clock {
-        font-size: 30px !important;
-    }
 }
 
 
 
 @media only screen and (max-width: 420px), only screen and (max-height: 710px) {
+    :root {
+        --font-size: 23px;
+
+        --box-shadow-size-large-frame: 5px;
+        --box-shadow-size-small-frame: 5px;
+    }
+
+    :root.dark-mode {
+        --box-shadow-size-large-frame: 10px;
+        --box-shadow-size-small-frame: 9px;
+    }
+
     .frame {
         border-width: 5px;
     }
-
-        .frame > div {
-            font-size: 23px;
-        }
 
     .game-box {
         width: 300px;
@@ -470,10 +494,6 @@ clock {
     .ctrl-button {
         width: 48px;
         height: 48px;
-    }
-
-    .button > div:active {
-        box-shadow: 0px 0px 5px var(--main-shadow-color);
     }
 
     .icon-bar {
@@ -492,10 +512,6 @@ clock {
 
     .console:last-child {
         margin-top: 30px;
-    }
-
-    clock {
-        font-size: 26px !important;
     }
 }
 
@@ -548,7 +564,7 @@ clock {
     width: 30px;
     height: 30px;
     background: var(--main-color);
-    font-size: 25px;
+    font-size: calc(var(--font-size) * 0.7);
     font-weight: 600;
     line-height: 30px;
     /*text-align: center;*/
@@ -556,9 +572,9 @@ clock {
 }
 
 
-.popup.active .overlay {
-    /*display: block;*/
-}
+/* .popup.active .overlay {
+    display: block;
+} */
 
 .popup.active .content {
     transition: all 300ms ease-in-out;
@@ -569,7 +585,7 @@ h3 {
     position: relative;
     display: inline-block;
     text-align: center;
-    font-size: 25px;
+    font-size: calc(var(--font-size) * 0.7);
     text-shadow: 0px 0px 11px var(--main-shadow-color);
     font-family: Bahnschrift SemiBold, monospace;
 }
@@ -578,7 +594,7 @@ div.title {
     position: relative;
     display: inline-block;
     text-align: center;
-    font-size: 20px;
+    font-size: calc(var(--font-size) * 0.55);
     text-align: left;
     line-height: 1.25;
     font-family: Bahnschrift SemiBold, monospace;
@@ -588,7 +604,7 @@ div.text {
     position: relative;
     display: inline-block;
     text-align: center;
-    font-size: 16px;
+    font-size: calc(var(--font-size) * 0.44);
     text-align: left;
     line-height: 1.25;
     font-family: Bahnschrift, monospace;

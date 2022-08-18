@@ -7,29 +7,32 @@
 
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/index.css" />
-    <link rel="stylesheet" href="./css/leaderboard.css" />
+    <link rel="stylesheet" href="./css/leaderboard-wide.css" />
+    <!-- <link rel="stylesheet" href="./css/leaderboard-wide.css" /> -->
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://use.typekit.net/iju2lko.css">
 
-    <script>window.twttr = (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0],
-          t = window.twttr || {};
-        if (d.getElementById(id)) return t;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://platform.twitter.com/widgets.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      
-        t._e = [];
-        t.ready = function(f) {
-          t._e.push(f);
-        };
-      
-        return t;
-      }(document, "script", "twitter-wjs"));</script>
-      <div id="fb-root"></div>
-      <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v14.0" nonce="aBnY8bjQ"></script>
+    <script>
+        window.twttr = (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+
+            t._e = [];
+            t.ready = function (f) {
+                t._e.push(f);
+            };
+
+            return t;
+        }(document, "script", "twitter-wjs"));
+    </script>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v14.0" nonce="aBnY8bjQ"></script>
     <script type="text/javascript" src="./script/score.js"></script>
     <script type="text/javascript" src="./script/w3c-includeHTML.js"></script>
     <script type="text/javascript" src="./script/game.js"></script>
@@ -48,16 +51,14 @@
             
             <div class="info-box">
                 <h3>
-                    <span class="colorful-texts" colorful-id="lv-"></span>
-                    <span class="lv">1</span>
+                    <span class="colorful-texts" colorful-id="lv-"></span><span class="lv">1</span>
                 </h3>
                 <h3>
-                    <span class="colorful-texts" colorful-id="mark"></span>
-                    <span class="score">100</span>
+                    <span class="colorful-texts" colorful-id="mark"></span><span class="score">100</span>
                 </h3>
             </div>
             
-            <div id="time-frame" class="ctrl-button frame">
+            <div class="ctrl-button frame">
                 <div>
                     <div id="tip-icon" class="frame-box"></div>
                 </div>
@@ -80,7 +81,6 @@
                 </div>
             </div>
         </div>
-        <br/>
         
         <div class="game-box frame button">
             <div class="game-button"></div>
@@ -175,28 +175,27 @@
 
  
             <div class="popup" id="popup-1">
-                <div class="overlay"></div>
-                <dr class="content">
+                <span class="content">
                     <div class="close-btn" onclick="togglePopup()"><img src="./svg/icon/x.svg" width="15"></div>
                     <span class="colorful-texts" colorful-id="how-to-play"></span>
-                    <p>
-                        <div class="text">
-                            Shapes will be shown before the game starts, for a few seconds, and you can choose to skip it after watching.<br />
-                            After the game starts, the upper right corner will display the Shape or color you need to find. <br />If you find it successfully, you will get 10 points. You need to answer 4 questions correctly in each level to pass.<br />
-                            After completion, you will enter the next level.<br />
-                            The goal is to get more points before the game is over.<br /><br />
-                        </div>
+                    <p>&nbsp;</p>
+                    <div class="text">
+                        Shapes will be shown before the game starts, for a few seconds, and you can choose to skip it after watching.<br />
+                        After the game starts, the upper right corner will display the Shape or color you need to find. <br />If you find it successfully, you will get 10 points. You need to answer 4 questions correctly in each level to pass.<br />
+                        After completion, you will enter the next level.<br />
+                        The goal is to get more points before the game is over.<br /><br />
+                    </div>
 
-                        <div class="title">End Condition</div><br />
-                        <div class="text">Failed to complete a level within 10s<br />
-                        Total error more than 3 times<br /></div>
-                        <div class="remark">* There will be a brief prompt after the error, showing the position of the Shapes and colors<br /><br /></div>
+                    <div class="title">End Condition</div><br />
+                    <div class="text">Failed to complete a level within 10s<br />
+                    Total error more than 3 times<br /></div>
+                    <div class="remark">* There will be a brief prompt after the error, showing the position of the Shapes and colors<br /><br /></div>
 
-                        <div class="title">Leaderboard</div><br />
-                        <div class="text">
-                            If your score reaches the top 10, the score will be recorded on the leaderboard, if the score is the same, <br />it will be ranked according to the completion date.
-                        </div>
-                    </p>
+                    <div class="title">Leaderboard</div><br />
+                    <div class="text">
+                        If your score reaches the top 10, the score will be recorded on the leaderboard, if the score is the same, <br />it will be ranked according to the completion date.
+                    </div>
+                </span>
             </div>
         
             <div class="intro">
@@ -315,9 +314,10 @@
     <!-- end of end-box -->
 
     <!-- script -->
-    <script src="./script/app.js"></script>
+    <script src="./script/app-game.js"></script>
+    <script src="./script/app-initPage.js"></script>
     <script>
-        initPage();
+        initGamePage();
     </script>
 
 </body>

@@ -1,32 +1,32 @@
 <html>
 <head>
     <title>Shapele</title>
+    <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/index.css" />
     <link rel="icon" type="image/x-icon" href="./svg/icon/icon.svg">
     <script type="text/javascript" src="./script/w3c-includeHTML.js"></script>
 </head>
 <body>
-
-    <br />
-    <img src="./svg/icon/icon.svg" class="center1">
-    <br />
-    <img src="./svg/icon/shapele.svg" class="center1">
-    <br /><br /><br />
-    <a href="./index.html">
-        <div class="ctrl-button frame button">
-            <div w3-include-html="./svg/icon/start.svg">
-
+    <div id="start-box" class="main-box">
+        <br />
+        <img src="./svg/icon/icon.svg" class="center1">
+        <br />
+        <img src="./svg/icon/shapele.svg" class="center1">
+        <br /><br /><br />
+        <a href="./index.html">
+            <div class="ctrl-button frame button">
+                <div w3-include-html="./svg/icon/start.svg">
+        
+                </div>
+        
             </div>
-
-        </div>
-    </a>
-
-    <div class="popup" id="popup-1">
-        <div class="overlay"></div>
-        <dr class="content">
-            <div class="close-btn" onclick="togglePopup()"><img src="./svg/icon/x.svg" width="15"></div>
-            <img src="./svg/icon/HowToPlay.svg" width="350">
-                        <p>
+        </a>
+        
+        <div class="popup" id="popup-1">
+            <span class="content">
+                <div class="close-btn" onclick="togglePopup()"><img src="./svg/icon/x.svg" width="15"></div>
+                <span class="colorful-texts" colorful-id="how-to-play"></span>
+                <p>&nbsp;</p>
                 <div class="text">
                     Shapes will be shown before the game starts, for a few seconds, and you can choose to skip it after watching.<br />
                     After the game starts, the upper right corner will display the Shape or color you need to find. <br />If you find it successfully, you will get 10 points. You need to answer 4 questions correctly in each level to pass.<br />
@@ -43,12 +43,14 @@
                 <div class="text">
                     If your score reaches the top 10, the score will be recorded on the leaderboard, if the score is the same, <br />it will be ranked according to the completion date.
                 </div>
-            </p>
+            </span>
+        </div>
     </div>
 
     <script src="./script/how.js"></script>
+    <script src="./script/app-initPage.js"></script>
     <script>
-        includeHTML();
+        initPage();
     </script>
 </body>
 </html>

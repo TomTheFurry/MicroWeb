@@ -1,9 +1,10 @@
-const BOUNS_SCORE = 30;
+const BOUNS_SCORE = 25;
 const CORRECT_SCORE = 10;
-const INCORRECT_SCORE = -5;
+const INCORRECT_SCORE = 0;
 
 var score = 0;
 var inputIncorrect = false;
+var bonusMagnification = 1;
 
 var scoreInitLv = () => {
     inputIncorrect = false;
@@ -21,7 +22,11 @@ var scoreIncorrect = () => {
 
 var scoreEndLv = () => {
     if (!inputIncorrect) {
-        scoreUpdate(BOUNS_SCORE);
+        scoreUpdate(BOUNS_SCORE * bonusMagnification);
+        if (bonusMagnification < 4) { bonusMagnification += 1; }
+    }
+    else {
+        bonusMagnification = 0;
     }
 }
 
