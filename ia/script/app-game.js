@@ -16,7 +16,7 @@ const startPage = (idx) => {
         startGamePage();
     }
     else if (idx === 2) {
-        startEndPage();
+        startScorePage();
     }
 }
 
@@ -72,9 +72,8 @@ const startGamePage = async () => {
     });
 }
 
-const startEndPage = async () => {
-    
-
+const startScorePage = async () => {
+    await initScorePage();
     // show page
     showPage(SCORE_BOX);
 
@@ -145,6 +144,50 @@ const initScorePage = async () => {
     let response = await fetch(request);
     let resObj = JSON.parse(await response.text());
     let topNArray = resObj.scoreboard;
+    console.log(topNArray);
+    return;
+    let top3 = document.createElement('div');
+    top3.classList.add('top3');
+    let list = document.createElement('div');
+    list.classList.add('list');
+
+    for (let i = 0; i < 10; ++i) {
+        let item = document.createElement('div');
+        item.classList.add('item');
+
+        if (i < 3) {
+            top3.appendChild(item);
+            if (i + 1 === 1) { item.classList.add('one'); }
+            if (i + 1 === 2) { item.classList.add('two'); }
+            if (i + 1 === 3) { item.classList.add('three'); }
+        }
+        else {
+            list.appendChild(item);
+        }
+
+        {
+            let pos = document.createElement('div');
+            pos.classList.add('pos');
+            pos.innerHTML = i + 1;
+            item.appendChild(pos);
+        }
+        {
+            let dataName = (i < topNArray.length) ? topNArray[i].name : 'No Data';
+
+            let name = document.createElement('div');
+            name.classList.add('name');
+            name.innerHTML = decodeURIComponent(atob(dataName));
+            item.appendChild(name);
+        }
+        {
+            let dataScore = (i < topNArray.length) ? topNArray[i].score : 'No Data ';
+
+            let score = document.createElement('div');
+            score.classList.add('score');
+            score.innerHTML = decodeURIComponent(atob(dataScore));
+            item.appendChild(score);
+        }
+    }
 }
 
 const initGamePage = () => {

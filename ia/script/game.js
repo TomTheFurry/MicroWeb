@@ -323,11 +323,11 @@ function uploadGameResult(name) {
     new Promise(() => __awaiter(this, void 0, void 0, function* () {
         let entry = {
             score: window['score'],
-            duration: window['totalTime'] / 1000,
+            duration: window['totalTime'],
             name: btoa(encodeURIComponent(name)),
             level: level
         };
-        console.log(entry)
+        console.log(entry);
         let jsonStr = JSON.stringify({ postType: "time", entry: entry });
         let request = new Request("", { method: 'POST', body: jsonStr });
         let response = yield fetch(request);

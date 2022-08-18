@@ -1,3 +1,8 @@
+.center {
+  display: flex;
+  flex-direction: row;
+}
+
 .top3 {
   display: flex;
   justify-content: center;

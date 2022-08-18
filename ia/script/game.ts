@@ -350,6 +350,7 @@ function uploadGameResult(name : string) {
 			name: btoa(encodeURIComponent(name)),
 			level: level
 		}
+		console.log(entry)
 		let jsonStr = JSON.stringify({postType: "time", entry: entry});
 		let request = new Request("", { method: 'POST', body: jsonStr});
 		let response = await fetch(request);
