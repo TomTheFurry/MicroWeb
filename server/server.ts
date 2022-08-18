@@ -3,6 +3,7 @@ import fs = require('fs');
 import { promisify } from 'util';
 import { open } from 'lmdb'; // or require
 import lmdb = require('lmdb');
+import { log } from 'console';
 
 interface ScoreboardEntry {
     score: number; // primary order
@@ -12,10 +13,10 @@ interface ScoreboardEntry {
 }
 function isScoreboardEntry(arg: any): arg is ScoreboardEntry {
     return arg
-        && arg.score && typeof (arg.score) == 'number'
-        && arg.duration && typeof (arg.duration) == 'number'
-        && arg.name && typeof (arg.name) == 'string'
-        && arg.level && typeof (arg.level) == 'number';
+        && (arg.score !== undefined) && typeof (arg.score) == 'number'
+        && (arg.duration !== undefined) && typeof (arg.duration) == 'number'
+        && (arg.name !== undefined) && typeof (arg.name) == 'string'
+        && (arg.level !== undefined) && typeof (arg.level) == 'number';
 }
 interface DBPosEntry {
     name: string;
@@ -75,7 +76,7 @@ var server = http.createServer(
                 if (req.method == "POST") {
                     if (await timePost(req, res)) return;
                 }
-                console.log("bad request: Unknown method");
+                console.log("bad request: Unknown method - " + req.method);
                 res.writeHead(501, "unsupported method");
                 res.end();
                 return;
@@ -209,7 +210,12 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
     try {
         var jData = JSON.parse(data);
         if (jData["postType"] != "time") return false;
-        if (!isScoreboardEntry(jData["entry"])) return false;
+        if (!isScoreboardEntry(jData["entry"])) {
+            console.log("Error 400: POST entry format is invalid.");
+            res.writeHead(400, "Invalid format");
+            res.end();
+            return true;
+        }
 
         let entry : ScoreboardEntry = jData["entry"];
         // Verify the name string
@@ -264,7 +270,11 @@ async function timePost(req: http.IncomingMessage, res: http.ServerResponse) {
         res.end(JSON.stringify({scoreboard: topN}));
         return true;
     } catch (s) {
-        if ((s instanceof SyntaxError) || (s instanceof ReferenceError)) return false;
-        throw s;
+        if ((s instanceof SyntaxError) || (s instanceof ReferenceError)) {
+            console.log("Error 400?: " + s.message);
+            res.writeHead(400, "Possible invalid JSON");
+            res.end();
+            return true;
+        }
     }
 }

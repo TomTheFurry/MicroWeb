@@ -22,10 +22,10 @@ const util_1 = require("util");
 const lmdb_1 = require("lmdb"); // or require
 function isScoreboardEntry(arg) {
     return arg
-        && arg.score && typeof (arg.score) == 'number'
-        && arg.duration && typeof (arg.duration) == 'number'
-        && arg.name && typeof (arg.name) == 'string'
-        && arg.level && typeof (arg.level) == 'number';
+        && (arg.score !== undefined) && typeof (arg.score) == 'number'
+        && (arg.duration !== undefined) && typeof (arg.duration) == 'number'
+        && (arg.name !== undefined) && typeof (arg.name) == 'string'
+        && (arg.level !== undefined) && typeof (arg.level) == 'number';
 }
 const port = process.env.port || 80;
 const baseWebDir = "../ia";
@@ -75,7 +75,7 @@ var server = http.createServer((req, res) => __awaiter(void 0, void 0, void 0, f
         if (yield timePost(req, res))
             return;
     }
-    console.log("bad request: Unknown method");
+    console.log("bad request: Unknown method - " + req.method);
     res.writeHead(501, "unsupported method");
     res.end();
     return;
@@ -225,8 +225,12 @@ function timePost(req, res) {
             var jData = JSON.parse(data);
             if (jData["postType"] != "time")
                 return false;
-            if (!isScoreboardEntry(jData["entry"]))
-                return false;
+            if (!isScoreboardEntry(jData["entry"])) {
+                console.log("Error 400: POST entry format is invalid.");
+                res.writeHead(400, "Invalid format");
+                res.end();
+                return true;
+            }
             let entry = jData["entry"];
             // Verify the name string
             if (entry.name.length > MAX_NAME_LENGTH) {
@@ -286,9 +290,12 @@ function timePost(req, res) {
             return true;
         }
         catch (s) {
-            if ((s instanceof SyntaxError) || (s instanceof ReferenceError))
-                return false;
-            throw s;
+            if ((s instanceof SyntaxError) || (s instanceof ReferenceError)) {
+                console.log("Error 400?: " + s.message);
+                res.writeHead(400, "Possible invalid JSON");
+                res.end();
+                return true;
+            }
         }
     });
 }
