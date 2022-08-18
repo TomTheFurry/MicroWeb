@@ -309,6 +309,7 @@ function gameTimeUp() {
     });
     updateClickable();
     showIcons();
+    uploadGameResult('分配');
     delayed(4000).then(() => {
         const gameBox = document.getElementsByClassName("game-box")[0];
         gameBox.classList.add('pointer');
@@ -317,5 +318,26 @@ function gameTimeUp() {
             window.location.reload();
         }, { once: true });
     });
+}
+function uploadGameResult(name) {
+    new Promise(() => __awaiter(this, void 0, void 0, function* () {
+        let entry = {
+            score: window['score'],
+            duration: window['totalTime'] / 1000,
+            name: btoa(encodeURIComponent(name)),
+            level: level
+        };
+        console.log(entry)
+        let jsonStr = JSON.stringify({ postType: "time", entry: entry });
+        let request = new Request("", { method: 'POST', body: jsonStr });
+        let response = yield fetch(request);
+        let resObj = JSON.parse(yield response.text());
+        let topNArray = resObj.scoreboard;
+        console.log(topNArray);
+        topNArray.forEach((e) => {
+            console.log(e);
+            console.log(decodeURIComponent(atob(e.name)));
+        });
+    }));
 }
 //# sourceMappingURL=game.js.map

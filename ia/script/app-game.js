@@ -22,7 +22,7 @@ const startPage = (idx) => {
 
 
 const GAME_BOX = document.getElementById('game-box');
-const END_BOX = document.getElementById('end-box');
+const SCORE_BOX = document.getElementById('score-box');
 const MISTAKES = document.getElementsByClassName('mistake-icon');
 var mistakeIdx = 0;
 
@@ -76,11 +76,11 @@ const startEndPage = async () => {
     
 
     // show page
-    showPage(END_BOX);
+    showPage(SCORE_BOX);
 
-    let intro = END_BOX.querySelector('.intro');
-    // let logo = END_BOX.querySelector('.logo-header');
-    let logoSpan = END_BOX.querySelectorAll('.logo');
+    let intro = SCORE_BOX.querySelector('.intro');
+    // let logo = SCORE_BOX.querySelector('.logo-header');
+    let logoSpan = SCORE_BOX.querySelectorAll('.logo');
 
     logoSpan.forEach((span, idx) => {
         setTimeout(() => {
@@ -135,6 +135,18 @@ const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
     window.requestAnimationFrame(step);
 };
 
+const initScorePage = async () => {
+    const scoreDiv = SCORE_BOX.getElementsByClassName('center')[0];
+    while (scoreDiv.firstChild) {
+        scoreDiv.removeChild(scoreDiv.lastChild);
+    }
+
+    let request = new Request("./scoreboard.json", { method: 'GET'});
+    let response = await fetch(request);
+    let resObj = JSON.parse(await response.text());
+    let topNArray = resObj.scoreboard;
+}
+
 const initGamePage = () => {
     new Promise(async () => {
         await initPage();
@@ -148,6 +160,6 @@ var addMistake = () => {
         e.classList.add('mistake');
     }
     if (mistakeIdx === MISTAKES.length) {
-        // onTimesUp();
+        onTimesUp();
     }
 }

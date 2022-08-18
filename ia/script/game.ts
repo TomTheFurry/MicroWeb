@@ -330,6 +330,7 @@ function gameTimeUp() {
 	});
 	updateClickable();
 	showIcons();
+	uploadGameResult('分配');
 	delayed(4000).then(() => {
 		const gameBox = document.getElementsByClassName("game-box")[0];
 		(gameBox as HTMLElement).classList.add('pointer');
@@ -338,4 +339,27 @@ function gameTimeUp() {
 			window.location.reload();
 		}, {once:true});
 	});
+}
+
+function uploadGameResult(name : string) {
+	// pass data to server
+	new Promise(async () => {
+		let entry = {
+			score: window['score'],
+			duration: window['totalTime'],
+			name: btoa(encodeURIComponent(name)),
+			level: level
+		}
+		let jsonStr = JSON.stringify({postType: "time", entry: entry});
+		let request = new Request("", { method: 'POST', body: jsonStr});
+		let response = await fetch(request);
+		let resObj = JSON.parse(await response.text());
+		let topNArray = resObj.scoreboard;
+		
+		console.log(topNArray);
+		topNArray.forEach((e) => {
+			console.log(e);
+			console.log(decodeURIComponent(atob(e.name)))
+		})
+	})
 }

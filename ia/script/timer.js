@@ -7,17 +7,18 @@ let timeLeft = TIME_LIMIT;
 let timerInterval = null;
 let intervalID = null;
 let isRunning = false;
+var totalTime = 0;
 
 const SECOND_IN_MS = 1000;
 const UPDATE_INTERVAL = SECOND_IN_MS / 60;
 
 window.addEventListener('load', () => setTime());
 
-function timerInit() {
+function timerInit(addTotalTime = true) {
+    if (addTotalTime) { totalTime += timePassed; }
     isRunning = false;
     clearInterval(timerInterval);
     endCount();
-    // remove class 'button' form game-box
     setTimeout(() => TIMER.classList.remove('beat'), 400);
     TIMER.classList.remove('counting');
 }
