@@ -52,14 +52,23 @@
 
   .top3 .item .score:after {
     display: block;
-    content: 'points';
+    content: ' points';
     opacity: 1;
   }
 
   .top3 .item.one {
+    order: 2;
     width: 10rem;
     height: 11rem;
     padding-top: 3.5rem;
+  }
+
+  .top3 .item.two {
+    order: 1;
+  }
+
+  .top3 .item.three {
+    order: 3;
   }
 
   .top3 .item.one .pic {
@@ -126,7 +135,7 @@
 
 .list .item .score:after {
   margin-right: 1rem;
-  content: 'points';
+  content: ' points';
   opacity: 1;
 }
 
@@ -134,16 +143,16 @@
   transform: scale(1.05);
 }
 
-.item .highlight-item {
-  background-color: gold !important;
+.item.highlight-item {
+  background-color: gold;
 }
 
-.highlight-score {
-  font-style: italic !important;
-  color: darkgreen !important;
+.item.highlight-score {
+  font-style: italic;
+  color: darkgreen;
 }
 
-.highlight-name {
-  font-style: italic !important;
-  color: darkgreen !important;
+.item.highlight-name {
+  font-style: italic;
+  color: darkgreen;
 }
