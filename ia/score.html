@@ -1,0 +1,75 @@
+<html>
+    <head>
+        
+    </head>
+    <body>
+        <div>
+            <div>score</div>
+            <div>
+                score:<input id="score-ipt" type="number" value="30"/>&nbsp;
+                duration:<input id="duration-ipt" type="number" value="12848" />&nbsp;
+                name:<input id="name-ipt" type="text" value="test1" />&nbsp;
+                level:<input id="level-ipt" type="number" value="3" />
+                <button onclick="sendScore();">send data</button>
+                <div id="score">
+
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            const scoreDiv = document.getElementById('score');
+
+            const scoreIpt = document.getElementById('score-ipt');
+            const durationIpt = document.getElementById('duration-ipt');
+            const nameIpt = document.getElementById('name-ipt');
+            const levelIpt = document.getElementById('level-ipt');
+
+            const sendScore = async () => {
+                let entry = {
+                    score: parseInt(scoreIpt.value),
+                    duration: parseInt(durationIpt.value),
+                    name: btoa(encodeURIComponent(nameIpt.value)),
+                    level: parseInt(levelIpt.value),
+                }
+                console.log('entrt:')
+                console.log(entry)
+                let jsonStr = JSON.stringify({postType: "time", entry: entry});
+                request = new Request("", { method: 'POST', body: jsonStr});
+                await fetch(request);
+                showScore();
+            }
+
+            const clearScore = () => {
+                scoreDiv.innerHTML = '';
+            }
+
+            const showScore = async () => {
+                clearScore();
+
+                let request = new Request("./DEBUG/scoreboard.json", { method: 'GET'});
+                let response = await fetch(request);
+                let resObj = JSON.parse(await response.text());
+                let topNArray = resObj.scoreboard;
+                console.log("topNArray:")
+                console.log(topNArray)
+
+
+                topNArray.forEach((e) => {
+                    let lineText = `"score": ${e.score}, 
+                                    "duration": ${e.duration},
+                                    "name": ${decodeURIComponent(atob(e.name))},
+                                    "level": ${e.level}`
+
+                    let newLine = document.createElement('div');
+                    newLine.classList.add('score-data');
+                    newLine.textContent = lineText;
+                    scoreDiv.appendChild(newLine);
+                });
+            }
+
+            showScore();
+        </script>
+    </body>
+</html>

@@ -1,4 +1,4 @@
-  #leaderboard-bottom-console {
+ #leaderboard-bottom-console {
     justify-content: center;
     gap: 6rem;
   }
@@ -30,7 +30,7 @@
     transform-origin: bottom;
     cursor: pointer;
     transition: transform 200ms ease-in-out;
-    box-shadow: 0 0 13px #555a;
+    box-shadow: 0 0 13px var(--main-shadow-color);
   }
 
     .top3 .item .pic {
@@ -43,7 +43,7 @@
       background-size: cover;
       background-position: center;
       margin-right: 1rem;
-      box-shadow: 0 0 13px #555a;
+      box-shadow: 0 0 13px var(--main-shadow-color);
     }
 
   .top3 .item .pos {
@@ -66,6 +66,7 @@
   .top3 .item .score:after {
     display: block;
     content: ' points';
+    font-weight: normal;
     opacity: 1;
   }
 
@@ -112,7 +113,7 @@
     transform-origin: left;
     cursor: pointer;
     transition: transform 200ms ease-in-out;
-    box-shadow: 0 0 13px #555a;
+    box-shadow: 0 0 13px var(--main-shadow-color);
   }
 
   .list .item .pos {
@@ -132,7 +133,7 @@
     background-size: cover;
     background-position: center;
     margin-right: 1rem;
-    box-shadow: 0 0 13px #555a;
+    box-shadow: 0 0 13px var(--main-shadow-color);
   }
 
   .list .item .name {
@@ -150,6 +151,7 @@
 .list .item .score:after {
   margin-right: 1rem;
   content: ' points';
+  font-weight: normal;
   opacity: 1;
 }
 
@@ -157,16 +159,22 @@
   transform: scale(1.05);
 }
 
-.item.highlight-item {
-  background-color: gold;
+.item .pos,
+.item .name,
+.item .score {
+  font-weight: bold;
 }
 
-.item.highlight-score {
-  font-style: italic;
-  color: darkgreen;
+.item.isUser {
+  background-color: var(--leaderboard-is-user-color);
 }
 
-.item.highlight-name {
-  font-style: italic;
-  color: darkgreen;
+.item.top-on-leaderboard {
+  background-color: var(--leaderboard-on-top-color);
+}
+
+.item.top-on-leaderboard .pos,
+.item.top-on-leaderboard .name,
+.item.top-on-leaderboard .score {
+  color: var(--leaderboard-on-top-font-color);
 }

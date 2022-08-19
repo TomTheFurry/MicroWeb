@@ -12,6 +12,8 @@
     --icon-default-color: #898989;
     --warn-icon-color: #f00;
     --button-hover-color: #fff;
+    --leaderboard-is-user-color: #83ff83;
+    --leaderboard-on-top-color: #ffd700;
     
     --game-button-color: #e2e2e2;
     --game-button-disabled-color: #c9caca;
@@ -20,7 +22,7 @@
 
     
     --font-color: #111;
-
+    --leaderboard-on-top-font-color: #10a810;
     
     --icon-shadow: #0006;
     --main-shadow-color: #555a;
@@ -37,9 +39,12 @@
         --leaderboard-color: #7f7f7f;
         --icon-default-color: #ddd;
         --button-hover-color: #afafaf;
+        --leaderboard-is-user-color: #099409;
+        --leaderboard-on-top-color: #c7a900;
         
 
         --font-color: #fff;
+        --leaderboard-on-top-font-color: #0f0;
 
         
         --main-shadow-color:#cccc;
@@ -78,7 +83,6 @@ body {
 }
 
 .main-box {
-    margin: 10px 0;
     width: auto;
 }
 
@@ -417,7 +421,8 @@ clock {
     color: var(--dark-color);
 }
 
-@media only screen and (max-width: 620px) and (min-width: 420px), only screen and (max-height: 812px) and (min-height: 710px) {
+@media only screen and (max-width: 620px) and (min-width: 420px),
+        only screen and (max-height: 870px) and (min-height: 710px) {
     :root {
         --font-size: 27px;
 

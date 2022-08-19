@@ -1,3 +1,7 @@
+#leaderboard-bottom-console {
+  margin-top: 0;
+}
+
 .top3 {
   display: flex;
   justify-content: center;
@@ -17,7 +21,7 @@
     transform-origin: bottom;
     cursor: pointer;
     transition: transform 200ms ease-in-out;
-    box-shadow: 0 0 13px #555a;
+    box-shadow: 0 0 13px var(--main-shadow-color);
   }
 
     .top3 .item .pic {
@@ -30,7 +34,7 @@
       background-size: cover;
       background-position: center;
       margin-right: 1rem;
-      box-shadow: 0 0 13px #555a;
+      box-shadow: 0 0 13px var(--main-shadow-color);
     }
 
   .top3 .item .pos {
@@ -47,12 +51,14 @@
   }
 
   .top3 .item .score {
+    font-size: 1rem;
     opacity: 1;
   }
 
   .top3 .item .score:after {
     display: block;
     content: ' points';
+    font-weight: normal;
     opacity: 1;
   }
 
@@ -98,7 +104,7 @@
     transform-origin: left;
     cursor: pointer;
     transition: transform 200ms ease-in-out;
-    box-shadow: 0 0 13px #555a;
+    box-shadow: 0 0 13px var(--main-shadow-color);
   }
 
   .list .item .pos {
@@ -118,7 +124,7 @@
     background-size: cover;
     background-position: center;
     margin-right: 1rem;
-    box-shadow: 0 0 13px #555a;
+    box-shadow: 0 0 13px var(--main-shadow-color);
   }
 
   .list .item .name {
@@ -130,12 +136,14 @@
 
   .list .item .score {
     margin-right: 1.5rem;
+    font-size: 1rem;
     opacity: 1;
   }
 
 .list .item .score:after {
   margin-right: 1rem;
   content: ' points';
+  font-weight: normal;
   opacity: 1;
 }
 
@@ -143,16 +151,102 @@
   transform: scale(1.05);
 }
 
-.item.highlight-item {
-  background-color: gold;
+.item .pos,
+.item .name,
+.item .score {
+  font-weight: bold;
 }
 
-.item.highlight-score {
-  font-style: italic;
-  color: darkgreen;
+.item.isUser {
+  background-color: var(--leaderboard-is-user-color);
 }
 
-.item.highlight-name {
-  font-style: italic;
-  color: darkgreen;
+.item.top-on-leaderboard {
+  background-color: var(--leaderboard-on-top-color);
+}
+
+.item.top-on-leaderboard .pos,
+.item.top-on-leaderboard .name,
+.item.top-on-leaderboard .score {
+  color: var(--leaderboard-on-top-font-color);
+}
+
+
+@media only screen and (max-width: 620px),
+        only screen and (max-height: 870px) {
+  .top3 .item {
+    width: 7.2rem;
+    height: 8rem;
+    padding: 2.24rem 0 0;
+    margin: 0.8rem 0.8rem 1.6rem;
+    /* border-radius: 0.5rem; */
+    /* box-shadow: 0 0 13px var(--main-shadow-color); */
+  }
+
+    .top3 .item .pic {
+      top: -1.6rem;
+      left: 2rem;
+      width: 3.2rem;
+      height: 3.2rem;
+      margin-right: 0.8rem;
+      /* box-shadow: 0 0 13px var(--main-shadow-color); */
+    }
+
+  .top3 .item .pos {
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .top3 .item .name {
+    font-size: 0.88rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .top3 .item .score {
+    font-size: 0.8rem;
+  }
+
+  .top3 .item.one {
+    width: 8rem;
+    height: 8.8rem;
+    padding-top: 2.8rem;
+  }
+  
+  .top3 .item.one .pic {
+    width: 4rem;
+    height: 4rem;
+    left: 2rem;
+  }
+
+  .list .item {
+    padding-left: 1.2rem;
+    height: 2.4rem;
+    /* border-radius: 0.5rem; */
+    margin-bottom: 1.6rem;
+    /* box-shadow: 0 0 13px var(--main-shadow-color); */
+  }
+
+  .list .item .pos {
+    margin-right: 0.8rem;
+    font-size: 1rem;
+    width: 1.2rem;
+  }
+
+  .list .item .pic {
+    width: 3.2rem;
+    height: 3.2rem;
+    /* border-radius: 50%; */
+    margin-right: 0.8rem;
+    /* box-shadow: 0 0 13px var(--main-shadow-color); */
+  }
+
+  .list .item .name {
+    flex-basis: 8rem;
+    font-size: 0.88rem;
+  }
+
+  .list .item .score {
+    margin-right: 1.2rem;
+    font-size: 0.8rem;
+  }
 }

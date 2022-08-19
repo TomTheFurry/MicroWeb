@@ -162,7 +162,8 @@ const initScorePage = async (doSubmit) => {
     let username = undefined;
     let userscore = undefined;
     if (doSubmit) {
-        username = window.prompt("Enter your name here:", "anonymous");
+        username = window.prompt("Enter your name here:", localStorage.getItem('lastTimeUserName'));
+        if (username === null) { username = 'null'; }
         userscore = score;
         let entry = {
             score: userscore,
@@ -178,7 +179,7 @@ const initScorePage = async (doSubmit) => {
     let response = await fetch(request);
     let resObj = JSON.parse(await response.text());
     let topNArray = resObj.scoreboard;
-    console.log(topNArray);
+    localStorage.setItem('lastTimeUserName', username);
     //return;
     let top3 = document.createElement('div');
     top3.classList.add('top3');
@@ -186,6 +187,9 @@ const initScorePage = async (doSubmit) => {
     list.classList.add('list');
 
     for (let i = 0; i < 10; ++i) {
+        let isCorrectUserName = false;
+
+
         let item = document.createElement('div');
         item.classList.add('item');
 
@@ -205,7 +209,7 @@ const initScorePage = async (doSubmit) => {
             pos.innerHTML = i + 1;
             item.appendChild(pos);
         }
-        let isCorrectUserName = false;
+        
         {
             let dataName = (i < topNArray.length) ?
                 decodeURIComponent(atob(topNArray[i].name)) : 'No Data';
@@ -213,9 +217,11 @@ const initScorePage = async (doSubmit) => {
             let nameDiv = document.createElement('div');
             nameDiv.classList.add('name');
             nameDiv.innerHTML = dataName;
+            console.log(`"${username}" + ' ' + "${dataName}"`)
+            console.log(username == dataName);
             if (username !== undefined && username == dataName) {
                 isCorrectUserName = true;
-                nameDiv.classList.add('top-on-leaderboard');
+                item.classList.add('isUser');
             }
             item.appendChild(nameDiv);
         }
@@ -226,7 +232,6 @@ const initScorePage = async (doSubmit) => {
             scoreDiv.classList.add('score');
             scoreDiv.innerHTML = dataScore;
             if (isCorrectUserName && userscore !== undefined && userscore == dataScore) {
-                scoreDiv.classList.add('top-on-leaderboard');
                 item.classList.add('top-on-leaderboard');
             }
             item.appendChild(scoreDiv);

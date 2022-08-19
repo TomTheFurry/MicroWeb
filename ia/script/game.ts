@@ -330,7 +330,6 @@ function gameTimeUp() {
 	});
 	updateClickable();
 	showIcons();
-	uploadGameResult('分配');
 	delayed(4000).then(() => {
 		const gameBox = document.getElementsByClassName("game-box")[0];
 		(gameBox as HTMLElement).classList.add('pointer');

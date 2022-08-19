@@ -114,6 +114,9 @@ const assignColorfulText = async () => {
 }
 
 const initPage = async () => {
+    if (localStorage.getItem('lastTimeUserName') === null) {
+        localStorage.setItem('lastTimeUserName', 'user1');
+    }
 	if (isUserIsDarkMode()) { darkMode(); }
 	await assignColorfulText();
 	includeHTML();
