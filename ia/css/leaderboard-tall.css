@@ -134,7 +134,7 @@
   transform: scale(1.05);
 }
 
-.item .highlight-item {
+.item.highlight-item {
   background-color: gold !important;
 }
 
