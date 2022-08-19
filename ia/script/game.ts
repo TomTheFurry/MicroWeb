@@ -1,4 +1,4 @@
-const START_TIME = 3300;  // time before start
+const START_TIME = 2300;  // time before start
 
 function promisify(f) {
 	return function (...args) { // return a wrapper-function (*)
@@ -101,7 +101,7 @@ var startGame = function() {
 		let lvBox = document.getElementsByClassName('lv');
 		for (let i=0; i<lvBox.length; i++) {
 			let e = (lvBox.item(i) as HTMLElement);
-			e.innerHTML = level.toString();
+			e.textContent = level.toString();
 		}
 	}
 	
@@ -116,7 +116,7 @@ var startGame = function() {
 
 	updateClickable();
 	showIcons();
-	this['setTime'](10000);
+	this['setTime'](6000);
 	// this['timerCount'](START_TIME);
 	{
 		// set start count anim
@@ -318,6 +318,7 @@ function onWin() {
 			appliedIcons += 1;
 		}
 		level += 1;
+		window['healMistake']();
 		startGame();
 	});
 }
