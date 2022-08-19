@@ -240,7 +240,7 @@ function timePost(req, res) {
                 return true;
             }
             if (entry.level < 0 || entry.score < 0 || entry.duration <= 0 ||
-                entry.duration > 10000 || (entry.score % 1 != 0.0) || entry.level > 1000 || entry.score > 1000000) {
+                entry.duration > 10000000 || (entry.score % 1 != 0.0) || entry.level > 1000 || entry.score > 1000000) {
                 console.log("Error 400: POST entry has invalid numbers.");
                 res.writeHead(400);
                 res.end();

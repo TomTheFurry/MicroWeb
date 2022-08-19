@@ -145,7 +145,7 @@ const initScorePage = async () => {
     let resObj = JSON.parse(await response.text());
     let topNArray = resObj.scoreboard;
     console.log(topNArray);
-    return;
+    //return;
     let top3 = document.createElement('div');
     top3.classList.add('top3');
     let list = document.createElement('div');
@@ -172,11 +172,12 @@ const initScorePage = async () => {
             item.appendChild(pos);
         }
         {
-            let dataName = (i < topNArray.length) ? topNArray[i].name : 'No Data';
+            let dataName = (i < topNArray.length) ?
+                decodeURIComponent(atob(topNArray[i].name)) : 'No Data';
 
             let name = document.createElement('div');
             name.classList.add('name');
-            name.innerHTML = decodeURIComponent(atob(dataName));
+            name.innerHTML = dataName;
             item.appendChild(name);
         }
         {
@@ -184,10 +185,13 @@ const initScorePage = async () => {
 
             let score = document.createElement('div');
             score.classList.add('score');
-            score.innerHTML = decodeURIComponent(atob(dataScore));
+            score.innerHTML = dataScore;
             item.appendChild(score);
         }
     }
+    scoreDiv.appendChild(top3);
+    scoreDiv.appendChild(list);
+
 }
 
 const initGamePage = () => {
