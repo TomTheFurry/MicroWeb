@@ -30,7 +30,7 @@ function timerInit(addTotalTime = false) {
 function onTimesUp() {
     timerInit(true);
     gameTimeUp();
-    setTimeout(() => startPage(2), 1000);
+    setTimeout(() => startScorePage(true), 1000);
 }
 
 function startTimer(timeLimit = TIME_LIMIT) {

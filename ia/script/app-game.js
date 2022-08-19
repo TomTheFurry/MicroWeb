@@ -72,8 +72,8 @@ const startGamePage = async () => {
     });
 }
 
-const startScorePage = async () => {
-    await initScorePage();
+const startScorePage = async (doSubmit = false) => {
+    await initScorePage(doSubmit);
     // show page
     showPage(SCORE_BOX);
 
@@ -134,13 +134,29 @@ const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
     window.requestAnimationFrame(step);
 };
 
-const initScorePage = async () => {
-    const scoreDiv = SCORE_BOX.getElementsByClassName('center')[0];
-    while (scoreDiv.firstChild) {
-        scoreDiv.removeChild(scoreDiv.lastChild);
+const initScorePage = async (doSubmit) => {
+    const scoreBoxDiv = SCORE_BOX.getElementsByClassName('center')[0];
+    while (scoreBoxDiv.firstChild) {
+        scoreBoxDiv.removeChild(scoreBoxDiv.lastChild);
     }
 
-    let request = new Request("./scoreboard.json", { method: 'GET'});
+    let request;
+    let username = undefined;
+    let userscore = undefined;
+    if (doSubmit) {
+        username = window.prompt("Enter your name here:", "anonymous");
+        userscore = score;
+        let entry = {
+            score: userscore,
+            duration: totalTime,
+            name: btoa(encodeURIComponent(username)),
+            level: level,
+        }
+        let jsonStr = JSON.stringify({postType: "time", entry: entry});
+        request = new Request("", { method: 'POST', body: jsonStr});
+    } else {
+        request = new Request("./scoreboard.json", { method: 'GET'});
+    }
     let response = await fetch(request);
     let resObj = JSON.parse(await response.text());
     let topNArray = resObj.scoreboard;
@@ -171,26 +187,35 @@ const initScorePage = async () => {
             pos.innerHTML = i + 1;
             item.appendChild(pos);
         }
+        let isCorrectUserName = false;
         {
             let dataName = (i < topNArray.length) ?
                 decodeURIComponent(atob(topNArray[i].name)) : 'No Data';
 
-            let name = document.createElement('div');
-            name.classList.add('name');
-            name.innerHTML = dataName;
-            item.appendChild(name);
+            let nameDiv = document.createElement('div');
+            nameDiv.classList.add('name');
+            nameDiv.innerHTML = dataName;
+            if (username !== undefined && username == dataName) {
+                isCorrectUserName = true;
+                nameDiv.classList.add('highlight-name');
+            }
+            item.appendChild(nameDiv);
         }
         {
             let dataScore = (i < topNArray.length) ? topNArray[i].score : 'No Data ';
 
-            let score = document.createElement('div');
-            score.classList.add('score');
-            score.innerHTML = dataScore;
-            item.appendChild(score);
+            let scoreDiv = document.createElement('div');
+            scoreDiv.classList.add('score');
+            scoreDiv.innerHTML = dataScore;
+            if (isCorrectUserName && userscore !== undefined && userscore == dataScore) {
+                scoreDiv.classList.add('highlight-score');
+                item.classList.add('highlight-item');
+            }
+            item.appendChild(scoreDiv);
         }
     }
-    scoreDiv.appendChild(top3);
-    scoreDiv.appendChild(list);
+    scoreBoxDiv.appendChild(top3);
+    scoreBoxDiv.appendChild(list);
 
 }
 

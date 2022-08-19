@@ -133,3 +133,17 @@
 .list .item:hover {
   transform: scale(1.05);
 }
+
+.item .highlight-item {
+  background-color: gold !important;
+}
+
+.highlight-score {
+  font-style: italic !important;
+  color: darkgreen !important;
+}
+
+.highlight-name {
+  font-style: italic !important;
+  color: darkgreen !important;
+}
