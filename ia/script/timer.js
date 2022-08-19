@@ -1,7 +1,7 @@
 const TIMER = document.getElementById('timer');
 
 //count time
-const TIME_LIMIT = 10 * 1000;
+const TIME_LIMIT = 6 * 1000;
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;

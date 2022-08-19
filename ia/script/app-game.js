@@ -253,3 +253,10 @@ var addMistake = () => {
         onTimesUp();
     }
 }
+
+var healMistake = () => {
+    if (mistakeIdx > 0) {
+        let e = MISTAKES.item(--mistakeIdx);
+        e.classList.remove('mistake');
+    }
+}
