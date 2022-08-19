@@ -215,7 +215,7 @@ const initScorePage = async (doSubmit) => {
             nameDiv.innerHTML = dataName;
             if (username !== undefined && username == dataName) {
                 isCorrectUserName = true;
-                nameDiv.classList.add('highlight-name');
+                nameDiv.classList.add('top-on-leaderboard');
             }
             item.appendChild(nameDiv);
         }
@@ -226,8 +226,8 @@ const initScorePage = async (doSubmit) => {
             scoreDiv.classList.add('score');
             scoreDiv.innerHTML = dataScore;
             if (isCorrectUserName && userscore !== undefined && userscore == dataScore) {
-                scoreDiv.classList.add('highlight-score');
-                item.classList.add('highlight-item');
+                scoreDiv.classList.add('top-on-leaderboard');
+                item.classList.add('top-on-leaderboard');
             }
             item.appendChild(scoreDiv);
         }
