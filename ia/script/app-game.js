@@ -88,7 +88,7 @@ const startScorePage = async () => {
     });
     new Promise(async () => {
         await delayed(logoSpan.length * 64);
-        counterAnim("#counter", 0, 100/*mark*/, 850);
+        counterAnim("#counter", 0, score, 850);
         await delayed(1800);
         logoSpan.forEach((span, idx) => {
             span.classList.remove('active');
