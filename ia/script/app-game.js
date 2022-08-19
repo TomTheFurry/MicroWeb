@@ -81,21 +81,40 @@ const startScorePage = async (doSubmit = false) => {
     // let logo = SCORE_BOX.querySelector('.logo-header');
     let logoSpan = SCORE_BOX.querySelectorAll('.logo');
 
-    logoSpan.forEach((span, idx) => {
-        setTimeout(() => {
-            span.classList.add('active');
-        }, (idx + 1) * 64)
-    });
-    new Promise(async () => {
-        await delayed(logoSpan.length * 64);
-        counterAnim("#counter", 0, score, 850);
-        await delayed(1800);
+    if (doSubmit) {
         logoSpan.forEach((span, idx) => {
-            span.classList.remove('active');
-            span.classList.add('fade'); // fade time in style.css '.logo.fade'
+            setTimeout(() => {
+                span.classList.add('active');
+            }, (idx + 1) * 64)
         });
-        await delayed(150);
+        new Promise(async () => {
+            await delayed(logoSpan.length * 64);
+            counterAnim("#counter", 0, score, 850);
+            await delayed(1800);
+            logoSpan.forEach((span, idx) => {
+                span.classList.remove('active');
+                span.classList.add('fade'); // fade time in style.css '.logo.fade'
+            });
+            await delayed(150);
+            intro.classList.add('fade');
+            {
+                let twitterButton = document.getElementById("end-screen-share");
+                /* Make an HTTP request using the attribute value as the file name: */
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) { twitterButton.innerHTML = this.responseText; }
+                    }
+                    twttr.widgets.load(twitterButton);
+                    FB.XFBML.parse();
+                }
+                xhttp.open("GET", twitterButton.getAttribute("url"), true);
+                xhttp.send();
+            }
+        });
+    } else {
         intro.classList.add('fade');
+        logoSpan.forEach((span) => span.classList.add('fade'));
         {
             let twitterButton = document.getElementById("end-screen-share");
             /* Make an HTTP request using the attribute value as the file name: */
@@ -110,8 +129,7 @@ const startScorePage = async (doSubmit = false) => {
             xhttp.open("GET", twitterButton.getAttribute("url"), true);
             xhttp.send();
         }
-
-    });
+    }
 }
 
 const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
