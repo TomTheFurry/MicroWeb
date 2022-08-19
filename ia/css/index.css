@@ -614,7 +614,7 @@ div.remark {
     position: relative;
     display: inline-block;
     text-align: center;
-    font-size: 9.75px;
+    font-size: calc(var(--font-size) * 0.33);
     text-align: left;
     line-height: 1.25;
     font-family: Bahnschrift, monospace;
