@@ -35,6 +35,6 @@ var scoreUpdate = (s = 0) => {
     let scoreBox = document.getElementsByClassName('score');
 	for (let i=0; i<scoreBox.length; i++) {
 		let e = scoreBox.item(i);
-		e.innerHTML = score.toString();
+		e.textContent = score.toString();
 	}
 }

@@ -144,7 +144,7 @@ const counterAnim = (qSelector, start = 0, end, duration = 1000) => {
                 if (progress >= i) showVar += (progress - i) / (1 - i) * (end - start - showVar);
             }
         }
-        target.innerText = Math.floor(showVar + start);
+        target.textContent = Math.floor(showVar + start);
         if (progress < 1) {
             window.requestAnimationFrame(step);
         }
@@ -202,7 +202,7 @@ const initScorePage = async (doSubmit) => {
         {
             let pos = document.createElement('div');
             pos.classList.add('pos');
-            pos.innerHTML = i + 1;
+            pos.textContent = i + 1;
             item.appendChild(pos);
         }
         let isCorrectUserName = false;
@@ -212,7 +212,7 @@ const initScorePage = async (doSubmit) => {
 
             let nameDiv = document.createElement('div');
             nameDiv.classList.add('name');
-            nameDiv.innerHTML = dataName;
+            nameDiv.textContent = dataName;
             if (username !== undefined && username == dataName) {
                 isCorrectUserName = true;
                 nameDiv.classList.add('top-on-leaderboard');
@@ -224,7 +224,7 @@ const initScorePage = async (doSubmit) => {
 
             let scoreDiv = document.createElement('div');
             scoreDiv.classList.add('score');
-            scoreDiv.innerHTML = dataScore;
+            scoreDiv.textContent = dataScore;
             if (isCorrectUserName && userscore !== undefined && userscore == dataScore) {
                 scoreDiv.classList.add('top-on-leaderboard');
                 item.classList.add('top-on-leaderboard');

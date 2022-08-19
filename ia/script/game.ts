@@ -101,7 +101,7 @@ var startGame = function() {
 		let lvBox = document.getElementsByClassName('lv');
 		for (let i=0; i<lvBox.length; i++) {
 			let e = (lvBox.item(i) as HTMLElement);
-			e.innerHTML = level.toString();
+			e.textContent = level.toString();
 		}
 	}
 	
