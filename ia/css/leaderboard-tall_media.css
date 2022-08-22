@@ -1,0 +1,51 @@
+@media only screen and (max-width: 620px),
+        only screen and (max-height: 870px) {
+  :root {
+    --font-size: 27px;
+
+    --box-shadow-size-large-frame: 11px;
+    --box-shadow-size-small-frame: 9px;
+
+    font-size: 12.8px;
+  }
+
+  :root.dark-mode {
+    --box-shadow-size-large-frame: 19px;
+    --box-shadow-size-small-frame: 14px;
+  }
+  
+  .frame {
+    border-width: 8px;
+  }
+
+  .ctrl-button {
+    width: 57.6px;
+    height: 57.6px;
+  }
+}
+
+@media only screen and (max-width: 485px),
+        only screen and (max-height: 700px) {
+  :root {
+    --font-size: 23px;
+    
+    --box-shadow-size-large-frame: 5px;
+    --box-shadow-size-small-frame: 5px;
+
+    font-size: 9.6px;
+  }
+
+  :root.dark-mode {
+    --box-shadow-size-large-frame: 10px;
+    --box-shadow-size-small-frame: 9px;
+  }
+  
+  .frame {
+    border-width: 6px;
+  }
+
+  .ctrl-button {
+    width: 43.3px;
+    height: 43.3px;
+  }
+}

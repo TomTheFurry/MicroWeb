@@ -6,9 +6,13 @@
     <link rel="icon" type="image/x-icon" href="./svg/icon/icon.svg">
 
     <link rel="stylesheet" href="./css/style.css">
-    <link rel="stylesheet" href="./css/index.css" />
-    <link rel="stylesheet" href="./css/leaderboard-tall.css" media="only screen and (max-aspect-ratio: 5/4)"/>
-    <link rel="stylesheet" href="./css/leaderboard-wide.css" media="only screen and (min-aspect-ratio: 5/4)"/>
+    <link rel="stylesheet" href="./css/index.css"/>
+    <link class="css-media" rel="stylesheet" href="./css/game_media.css" pageIdx="0"/>
+    <link rel="stylesheet" href="./css/leaderboard-tall.css" media="only screen and (max-aspect-ratio: 5/4)" />
+    <link class="css-media" rel="stylesheet" href="./css/leaderboard-tall_media.css"  media="only screen and (max-aspect-ratio: 5/4)" pageIdx="1" />
+    <link rel="stylesheet" href="./css/leaderboard-wide.css" media="only screen and (min-aspect-ratio: 5/4)" />
+    <link class="css-media" rel="stylesheet" href="./css/leaderboard-wide_media.css" media="only screen and (min-aspect-ratio: 5/4)" pageIdx="1" />
+
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://use.typekit.net/iju2lko.css">
@@ -31,17 +35,18 @@
             return t;
         }(document, "script", "twitter-wjs"));
     </script>
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v14.0" nonce="aBnY8bjQ"></script>
+    
     <script type="text/javascript" src="./script/score.js"></script>
     <script type="text/javascript" src="./script/w3c-includeHTML.js"></script>
     <script type="text/javascript" src="./script/game.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v14.0" nonce="aBnY8bjQ"></script>
 </head>
 <body>
 
-    <div id="game-box" class="main-box disable">
+    <div id="game-box" class="main-box disable" pageIdx="0">
         <div class="console">
             <div id="time-frame" class="ctrl-button frame">
                 <div>
@@ -107,15 +112,16 @@
         </div>
 
         <div id="continue-button" class="console">
-            <div class="ctrl-button frame button">
-                <div onclick="startPage(2);">
-                    <div class="frame-box" w3-include-html="./svg/icon/start.svg"></div>
+            <!-- dark mode button -->
+            <div class="ctrl-button frame button dark-mode-btn">
+                <div onclick="setDarkMode();">
+                    <div class="frame-box" w3-include-html="./svg/icon/DarkMode.svg"></div>
                 </div>
             </div>
-            <!-- dark mode button -->
-            <div class="ctrl-button frame button">
-                <div onclick="darkMode();">
-                    <div class="frame-box" w3-include-html="./svg/icon/DarkMode.svg"></div>
+            <!-- dark mode auto button -->
+            <div class="ctrl-button frame button auto-dark-mode-btn">
+                <div onclick="setAutoDarkMode();">
+                    <div class="frame-box"></div>
                 </div>
             </div>
             <!-- help button -->
@@ -212,8 +218,9 @@
     </div>
     <!-- end of game-box -->
 
-    <div id="score-box" class="main-box ">
+    <div id="score-box" class="main-box" pageIdx="1">
         <div class="center">
+            <!-- for demo element -->
             <div class="top3">
                 <div class="two item">
                     <div class="pos">2</div>
@@ -279,23 +286,32 @@
                     </div>
                 </div>
             </div>
+            <!-- end of for demo element -->
         </div>
         <div id="leaderboard-bottom-console" class="ctrl-console console">
-            <a href="index.html">
-                <div class="ctrl-button frame button">
-                    <div w3-include-html="./svg/icon/again.svg">
-
-                    </div>
+            <!-- dark mode button -->
+            <div class="ctrl-button frame button dark-mode-btn">
+                <div onclick="setDarkMode();">
+                    <div class="frame-box" w3-include-html="./svg/icon/DarkMode.svg"></div>
                 </div>
-            </a>
+            </div>
+            <!-- dark mode auto button -->
+            <div class="ctrl-button frame button auto-dark-mode-btn">
+                <div onclick="setAutoDarkMode();">
+                    <div class="frame-box"></div>
+                </div>
+            </div>
             <div id="end-screen-share" url="3rdParty/sharing.html"></div>
-            <a href="StartPage.html">
-                <div id="leave-button" class="ctrl-button frame button">
-                    <div w3-include-html="./svg/icon/exit.svg">
-
-                    </div>
+            <div class="ctrl-button frame button" redirect-url="./index.html">
+                <div>
+                    <div class="frame-box"  w3-include-html="./svg/icon/again.svg"></div>
                 </div>
-            </a>
+            </div>
+            <div id="leave-button" class="ctrl-button frame button" redirect-url="./StartPage.html">
+                <div>
+                    <div class="frame-box" w3-include-html="./svg/icon/exit.svg"></div>
+                </div>
+            </div>
         </div>
 
         <span class="store">

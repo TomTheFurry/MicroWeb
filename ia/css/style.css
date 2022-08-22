@@ -39,6 +39,7 @@ header {
 }
 
 .intro * {
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -65,6 +66,7 @@ header {
 
 .logo-header {
     position: absolute;
+    
     width: fit-content;
     top: 40%;
     left: 50%;

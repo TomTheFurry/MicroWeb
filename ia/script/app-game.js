@@ -1,13 +1,26 @@
+'use strict';
+const GAME_BOX = document.getElementById('game-box');
+const SCORE_BOX = document.getElementById('score-box');
+const MAIN_BOX = [GAME_BOX, SCORE_BOX];
+
 const hideAllPage = () => {
-    const MAIN_BOX = document.getElementsByClassName('main-box');
     for (let i = 0; i < MAIN_BOX.length; ++i) {
-        let e = MAIN_BOX.item(i);
+        let e = MAIN_BOX[i];
+        let css = document.getElementsByClassName('css-media');
+        for (let i = 0; i < css.length; ++i) { css[i].disabled = true; }
         e.classList.add('disable');
     }
 }
 
 const showPage = (e) => {
     hideAllPage();
+    let pageIdx = e.getAttribute('pageIdx');
+    if (pageIdx !== undefined) {
+        let css = document.getElementsByClassName('css-media');
+        for (let i = 0; i < css.length; ++i) {
+            if (css[i].getAttribute('pageIdx') === pageIdx) { css[i].disabled = false; }
+        }
+    }
     e.classList.remove('disable');
 }
 
@@ -20,33 +33,8 @@ const startPage = (idx) => {
     }
 }
 
-
-const GAME_BOX = document.getElementById('game-box');
-const SCORE_BOX = document.getElementById('score-box');
 const MISTAKES = document.getElementsByClassName('mistake-icon');
 var mistakeIdx = 0;
-
-// pass data to server
-// {
-//     let entry = {
-//         score: 40,
-//         duration: 10,
-//         name: btoa(encodeURIComponent('分配')),
-//         level: 1
-//     }
-//     let jsonStr = JSON.stringify({postType: "time", entry: entry});
-//     let request = new Request("", { method: 'POST', body: jsonStr});
-//     let response = await fetch(request);
-//     let resObj = JSON.parse(await response.text());
-//     let topNArray = resObj.scoreboard;
-    
-//     console.log(topNArray);
-//     topNArray.forEach((e) => {
-//         console.log(e);
-//         console.log(decodeURIComponent(atob(e.name)))
-//     })
-
-// }
 
 const startGamePage = async () => {
     showPage(GAME_BOX);
@@ -100,7 +88,7 @@ const startScorePage = async (doSubmit = false) => {
             {
                 let twitterButton = document.getElementById("end-screen-share");
                 /* Make an HTTP request using the attribute value as the file name: */
-                xhttp = new XMLHttpRequest();
+                let xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         if (this.status == 200) { twitterButton.innerHTML = this.responseText; }
@@ -118,7 +106,7 @@ const startScorePage = async (doSubmit = false) => {
         {
             let twitterButton = document.getElementById("end-screen-share");
             /* Make an HTTP request using the attribute value as the file name: */
-            xhttp = new XMLHttpRequest();
+            let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     if (this.status == 200) { twitterButton.innerHTML = this.responseText; }
@@ -171,10 +159,10 @@ const initScorePage = async (doSubmit) => {
             name: btoa(encodeURIComponent(username)),
             level: level,
         }
-        let jsonStr = JSON.stringify({postType: "time", entry: entry});
-        request = new Request("", { method: 'POST', body: jsonStr});
+        let jsonStr = JSON.stringify({ postType: "time", entry: entry });
+        request = new Request("", { method: 'POST', body: jsonStr });
     } else {
-        request = new Request("./scoreboard.json", { method: 'GET'});
+        request = new Request("./scoreboard.json", { method: 'GET' });
     }
     let response = await fetch(request);
     let resObj = JSON.parse(await response.text());
@@ -209,7 +197,7 @@ const initScorePage = async (doSubmit) => {
             pos.textContent = i + 1;
             item.appendChild(pos);
         }
-        
+
         {
             let dataName = (i < topNArray.length) ?
                 decodeURIComponent(atob(topNArray[i].name)) : 'No Data';
@@ -256,6 +244,7 @@ var addMistake = () => {
         onTimesUp();
     }
 }
+
 
 var healMistake = () => {
     if (mistakeIdx > 0) {

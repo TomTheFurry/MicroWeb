@@ -4,9 +4,75 @@ const isUserIsDarkMode = () => { return window.matchMedia("(prefers-color-scheme
 
 const isDarkMode = () => { return document.documentElement.classList.contains('dark-mode'); }
 
-const darkMode = () => {
+const updateDarkModeBtn = () => {
+    // const darkBtn = document.getElementsByClassName('dark-mode-btn');
+
+    const autoDarkBtn = document.getElementsByClassName('auto-dark-mode-btn');
+    const boolIsAutoDarkMode = JSON.parse(localStorage.getItem('auto-dark-mode'));
+    for (let i = 0; i < autoDarkBtn.length; ++i) {
+        let e = autoDarkBtn[i];
+        if (boolIsAutoDarkMode) { e.classList.add('enable'); }
+        else { e.classList.remove('enable'); }
+    }
+}
+
+const setAutoDarkMode = (changeMode = true) => {
+    // for button call
+    const darkModeAuto = () => { 
+        localStorage.setItem('dark-mode', JSON.stringify(isUserIsDarkMode()));
+        darkMode(true);
+    }
+
+    let autoDark = localStorage.getItem('auto-dark-mode');
+    do {
+        if (autoDark === undefined) { break; }
+
+        let boolAutoDark = JSON.parse(autoDark);
+        if (boolAutoDark === undefined) { break; }
+
+        if (changeMode) { boolAutoDark = !boolAutoDark; }
+        if (boolAutoDark) { break; }
+
+        localStorage.setItem('auto-dark-mode', 'false');
+        updateDarkModeBtn();
+        return false;
+    } while (false);
+
+    localStorage.setItem('auto-dark-mode', 'true');
+    updateDarkModeBtn();
+    darkModeAuto();
+    return true;
+}
+
+const darkMode = (setByCookies = false) => {
     let rootElement = document.documentElement;
-    rootElement.classList.toggle('dark-mode');
+    let isDark;
+    if (setByCookies) {
+        isDark = JSON.parse(localStorage.getItem('dark-mode'));
+    }
+    else {
+        isDark = !isDarkMode();
+        localStorage.setItem('dark-mode', JSON.stringify(isDark));
+    }
+
+    if (isDark) { rootElement.classList.add('dark-mode'); }
+    else { rootElement.classList.remove('dark-mode'); }
+}
+
+const setDarkMode = () => {
+    // for button call
+    localStorage.setItem('auto-dark-mode', 'false');
+    updateDarkModeBtn();
+    darkMode();
+}
+
+const darkModeInit = () => {
+    if (setAutoDarkMode(false)) { return; };
+    
+    let boolDarkMode = localStorage.getItem('dark-mode');
+    if (boolDarkMode !== undefined && JSON.parse(boolDarkMode) === true) {
+        darkMode(true);
+    }
 }
 
 const readJson = async (path) => {
@@ -114,10 +180,7 @@ const assignColorfulText = async () => {
 }
 
 const initPage = async () => {
-    if (localStorage.getItem('lastTimeUserName') === null) {
-        localStorage.setItem('lastTimeUserName', 'user1');
-    }
-	if (isUserIsDarkMode()) { darkMode(); }
+    darkModeInit();
 	await assignColorfulText();
 	includeHTML();
 	assignLinkOfButton();

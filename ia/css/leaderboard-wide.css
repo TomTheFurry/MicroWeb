@@ -1,7 +1,6 @@
- #leaderboard-bottom-console {
-    justify-content: center;
-    gap: 6rem;
-  }
+#leaderboard-bottom-console {
+  justify-content: space-around;
+}
 
 .center {
   display: flex;
