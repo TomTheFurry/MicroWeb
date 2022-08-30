@@ -162,6 +162,8 @@
 .item .name,
 .item .score {
   font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .item.isUser {
