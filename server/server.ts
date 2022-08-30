@@ -96,8 +96,8 @@ async function webGet(req: http.IncomingMessage, res: http.ServerResponse): Prom
         return true;
     }
     if (loc == "/") {
-        if (VERBOSE) console.log("folder redirection to index.html");
-        loc += "index.html";
+        if (VERBOSE) console.log("folder redirection to startPage.html");
+        loc += "startPage.html";
     }
 
     if (loc.includes("..")) { // Prevent '..' excape

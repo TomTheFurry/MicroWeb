@@ -93,8 +93,8 @@ function webGet(req, res) {
         }
         if (loc == "/") {
             if (VERBOSE)
-                console.log("folder redirection to index.html");
-            loc += "index.html";
+                console.log("folder redirection to startPage.html");
+            loc += "startPage.html";
         }
         if (loc.includes("..")) { // Prevent '..' excape
             console.log("Invalid loc: Contains '..'");
