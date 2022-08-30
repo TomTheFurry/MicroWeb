@@ -151,7 +151,7 @@ const initScorePage = async (doSubmit) => {
     let userscore = undefined;
     if (doSubmit) {
         username = localStorage.getItem('lastTimeUserName');
-        if (username === undefined) username = 'Anonymous';
+        if (username === undefined || username == null) username = 'Anonymous';
         username = window.prompt("Enter your name here:", username);
         if (username === null) { username = 'Anonymous'; }
         userscore = score;
