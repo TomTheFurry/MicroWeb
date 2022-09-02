@@ -7,7 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const START_TIME = 2300;
+const START_TIME = 7400;
+const LEVEL_TIME = 10000;
 function promisify(f) {
     return function (...args) {
         return new Promise((resolve, reject) => {
@@ -105,7 +106,7 @@ var startGame = function () {
     }
     updateClickable();
     showIcons();
-    this['setTime'](6000);
+    this['setTime'](LEVEL_TIME);
     {
         let startCount = document.getElementsByClassName('game-start-count');
         for (let i = 0; i < startCount.length; i++) {
@@ -130,7 +131,7 @@ var startGame = function () {
             }
         }
         inputAllowed = true;
-        this['startTimer']();
+        this['startTimer'](LEVEL_TIME);
         updateClickable();
         updateHintIcon();
     });

@@ -1,4 +1,5 @@
-const START_TIME = 2300;  // time before start
+const START_TIME = 7400;  // time before start
+const LEVEL_TIME = 10000;  // time in 1 level
 
 function promisify(f) {
 	return function (...args) { // return a wrapper-function (*)
@@ -116,7 +117,7 @@ var startGame = function() {
 
 	updateClickable();
 	showIcons();
-	this['setTime'](6000);
+	this['setTime'](LEVEL_TIME);
 	// this['timerCount'](START_TIME);
 	{
 		// set start count anim
@@ -144,7 +145,7 @@ var startGame = function() {
 			}
 		}
 		inputAllowed = true;
-		this['startTimer']();
+		this['startTimer'](LEVEL_TIME);
 		updateClickable();
 		updateHintIcon();
 	});
