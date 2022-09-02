@@ -91,7 +91,14 @@ body {
     height: 75%;
     box-sizing: border-box;
     pointer-events: none;
+}
+
+.icon {
     filter: drop-shadow(-1px 1px 3px var(--icon-shadow));
+}
+
+.mini-icon {
+    filter: drop-shadow(-1px 1px 5px var(--icon-shadow));
 }
 
     .icon > * {
